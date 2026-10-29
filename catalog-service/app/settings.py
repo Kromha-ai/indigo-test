@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -28,16 +29,21 @@ class Settings:
             raise ConfigError("RATE_LIMIT_PER_MINUTE must be at least 1")
 
     @classmethod
-    def from_env(cls, env: dict[str, str] | None = None) -> Settings:
+    def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
+        """Read the variables that are set; anything missing keeps the field's default."""
         env = os.environ if env is None else env
-        keys = tuple(k.strip() for k in env.get("CATALOG_API_KEYS", "").split(",") if k.strip())
-        data_path = Path(env.get("CATALOG_DATA_PATH", "data/catalog.json"))
-        if not data_path.is_absolute():
-            data_path = SERVICE_ROOT / data_path
-        return cls(
-            api_keys=keys,
-            data_path=data_path,
-            public_base_url=env.get("PUBLIC_BASE_URL", "http://localhost:8000").rstrip("/"),
-            rate_limit_per_minute=int(env.get("RATE_LIMIT_PER_MINUTE", "120")),
-            log_level=env.get("LOG_LEVEL", "INFO"),
-        )
+        kwargs: dict[str, object] = {
+            "api_keys": tuple(
+                k.strip() for k in env.get("CATALOG_API_KEYS", "").split(",") if k.strip()
+            )
+        }
+        if "CATALOG_DATA_PATH" in env:
+            data_path = Path(env["CATALOG_DATA_PATH"])
+            kwargs["data_path"] = data_path if data_path.is_absolute() else SERVICE_ROOT / data_path
+        if "PUBLIC_BASE_URL" in env:
+            kwargs["public_base_url"] = env["PUBLIC_BASE_URL"].rstrip("/")
+        if "RATE_LIMIT_PER_MINUTE" in env:
+            kwargs["rate_limit_per_minute"] = int(env["RATE_LIMIT_PER_MINUTE"])
+        if "LOG_LEVEL" in env:
+            kwargs["log_level"] = env["LOG_LEVEL"]
+        return cls(**kwargs)

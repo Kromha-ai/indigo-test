@@ -96,67 +96,83 @@ def optional(raw: str) -> str | None:
     return value or None
 
 
-def _parse_row(row: dict, problems: list[str], result: BuildResult) -> dict | None:
-    pid = row["product_id"].strip()
-    before = len(problems)
+@dataclass
+class ParsedRow:
+    record: dict | None  # None when the row has problems
+    problems: list[str]
+    category_fix: tuple[str, str, str] | None = None  # id, raw value, canonical name
 
-    def bad(message: str) -> None:
+
+def _non_negative_int(raw: str) -> int | None:
+    try:
+        value = int(raw.strip())
+    except ValueError:
+        return None
+    return value if value >= 0 else None
+
+
+def _price(raw: str) -> Decimal | None:
+    try:
+        price = Decimal(raw.strip()).quantize(Decimal("0.01"))
+    except InvalidOperation:
+        return None
+    return price if price >= 0 else None
+
+
+def _parse_row(row: dict) -> ParsedRow:
+    pid = row["product_id"].strip()
+    problems: list[str] = []
+
+    def report_problem(message: str) -> None:
         problems.append(f"{pid}: {message}")
 
+    category_fix = None
     canonical = CATEGORY_BY_KEY.get(category_key(row["category"]))
     if canonical is None:
-        bad(f"unknown category {row['category']!r}")
+        report_problem(f"unknown category {row['category']!r}")
     elif row["category"] != canonical:
-        result.category_fixes.append((pid, row["category"], canonical))
+        category_fix = (pid, row["category"], canonical)
 
-    try:
-        price = Decimal(row["price_eur"].strip()).quantize(Decimal("0.01"))
-        if price < 0:
-            raise InvalidOperation
-    except InvalidOperation:
-        bad(f"unparseable price {row['price_eur']!r}")
-        price = None
+    price = _price(row["price_eur"])
+    if price is None:
+        report_problem(f"unparseable price {row['price_eur']!r}")
 
-    def parse_int(column: str) -> int | None:
-        try:
-            value = int(row[column].strip())
-            if value < 0:
-                raise ValueError
-            return value
-        except ValueError:
-            bad(f"unparseable {column} {row[column]!r}")
-            return None
-
-    stock = parse_int("stock")
-    shipping_days = parse_int("shipping_days")
+    stock = _non_negative_int(row["stock"])
+    if stock is None:
+        report_problem(f"unparseable stock {row['stock']!r}")
+    shipping_days = _non_negative_int(row["shipping_days"])
+    if shipping_days is None:
+        report_problem(f"unparseable shipping_days {row['shipping_days']!r}")
 
     rating = reviews = None
     if row["rating"].strip():
         try:
             rating = float(row["rating"])
         except ValueError:
-            bad(f"unparseable rating {row['rating']!r}")
+            report_problem(f"unparseable rating {row['rating']!r}")
     if row["reviews_count"].strip():
-        reviews = parse_int("reviews_count")
+        reviews = _non_negative_int(row["reviews_count"])
+        if reviews is None:
+            report_problem(f"unparseable reviews_count {row['reviews_count']!r}")
 
     recipient = row["recipient"].strip().lower()
     if recipient not in RECIPIENTS:
-        bad(f"unknown recipient {row['recipient']!r}")
+        report_problem(f"unknown recipient {row['recipient']!r}")
 
     occasions = split_list(row["occasion"])
     for occasion in occasions:
         if occasion not in OCCASIONS:
-            bad(f"unknown occasion {occasion!r}")
+            report_problem(f"unknown occasion {occasion!r}")
 
     gift_wrap = row["gift_wrap"].strip().lower()
     if gift_wrap not in ("yes", "no"):
-        bad(f"unparseable gift_wrap {row['gift_wrap']!r}")
+        report_problem(f"unparseable gift_wrap {row['gift_wrap']!r}")
 
-    if len(problems) > before:
-        return None
+    if problems:
+        return ParsedRow(record=None, problems=problems)
 
     subcategory = row["subcategory"].strip()
-    return {
+    record = {
         "product_id": pid,
         "name": row["name"].strip(),
         "category": canonical,
@@ -183,6 +199,7 @@ def _parse_row(row: dict, problems: list[str], result: BuildResult) -> dict | No
         "is_digital": shipping_days == 0,
         "description": row["description"].strip(),
     }
+    return ParsedRow(record=record, problems=[], category_fix=category_fix)
 
 
 def _rating_constants(products: list[dict]) -> tuple[float, float]:
@@ -230,9 +247,12 @@ def build(source: Path = DEFAULT_SOURCE, synonyms: Path = DEFAULT_SYNONYMS) -> B
             problems.append(f"{row['product_id']}: duplicate product_id")
             continue
         seen_ids.add(row["product_id"].strip())
-        record = _parse_row(row, problems, result)
-        if record is not None:
-            products.append(record)
+        parsed = _parse_row(row)
+        problems.extend(parsed.problems)
+        if parsed.record is not None:
+            products.append(parsed.record)
+        if parsed.category_fix is not None:
+            result.category_fixes.append(parsed.category_fix)
     if problems:
         raise BuildError(problems)
 

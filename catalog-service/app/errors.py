@@ -73,12 +73,67 @@ class CatalogError(Exception):
         )
 
 
+# --- recoverable: 200 with found: false -------------------------------------------------------
+
+
+def category_not_found(raw: str, did_you_mean: list[str], valid: list[str]) -> CatalogError:
+    return CatalogError(
+        "category_not_found",
+        f"No category matches '{raw}'.",
+        "Use one of the slugs in 'did_you_mean', or call get_categories for the full list.",
+        did_you_mean=did_you_mean,
+        valid_values=valid,
+    )
+
+
+def subcategory_not_found(
+    raw: str, category: str, did_you_mean: list[str], valid: list[str], elsewhere: list[str]
+) -> CatalogError:
+    if elsewhere:
+        hint = f"'{raw}' is a subcategory of {', '.join(elsewhere)}: browse that category instead."
+    else:
+        hint = "Use one of 'valid_values', or drop the subcategory to browse the category."
+    return CatalogError(
+        "subcategory_not_found",
+        f"'{raw}' is not a subcategory of {category}.",
+        hint,
+        did_you_mean=did_you_mean or None,
+        valid_values=valid,
+    )
+
+
+def product_not_found(raw: str, did_you_mean: list[str]) -> CatalogError:
+    return CatalogError(
+        "product_not_found",
+        f"No product has the ID '{raw}'.",
+        "Use an ID from search_products or get_products_by_category results.",
+        did_you_mean=did_you_mean or None,
+    )
+
+
+# --- failures: real HTTP status -------------------------------------------------------------
+
+
 def unauthorized() -> CatalogError:
     return CatalogError(
         "unauthorized",
         "Missing or invalid API key.",
         "Send a valid key in the X-API-Key header.",
         status_code=401,
+    )
+
+
+def invalid_parameter(message: str, hint: str) -> CatalogError:
+    return CatalogError("invalid_parameter", message, hint, status_code=422)
+
+
+def rate_limited(retry_after: int) -> CatalogError:
+    return CatalogError(
+        "rate_limited",
+        "Too many requests for this API key.",
+        "Retry after the number of seconds in Retry-After.",
+        status_code=429,
+        headers={"Retry-After": str(retry_after)},
     )
 
 
@@ -97,11 +152,8 @@ def install_handlers(app: FastAPI) -> None:
     async def _validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
         request.state.error_code = "invalid_parameter"
         message = "; ".join(_describe(error) for error in exc.errors())
-        return CatalogError(
-            "invalid_parameter",
-            f"Invalid parameters: {message}.",
-            "Fix the listed parameters and call again.",
-            status_code=422,
+        return invalid_parameter(
+            f"Invalid parameters: {message}.", "Fix the listed parameters and call again."
         ).response()
 
     @app.exception_handler(Exception)

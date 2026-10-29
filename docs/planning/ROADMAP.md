@@ -14,7 +14,7 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 | Phase | Goal | Status |
 |---|---|---|
 | 1 | Walking skeleton on the platform | In progress: service live at catalog.builtbykromha.com (2026-10-29); platform tasks next |
-| 2 | Browse and detail tools | Not started |
+| 2 | Browse and detail tools | Built and tested 2026-10-29; redeploy and re-import pending |
 | 3 | Search, recovery, and LLM-ready OpenAPI | Not started |
 | 4 | The assistant | Not started |
 | 5 | Hardening and handover | Not started |
@@ -58,15 +58,15 @@ Goal: `get_products_by_category` and `get_product_details` complete, with the fu
 
 Prerequisite: Phase 1.
 
-- [ ] `ProductSummary` (with `tags`, `shipping_days`, `also_listed_in` on cross-listed products) and `ProductDetail` response models with field descriptions
-- [ ] Category resolution: slug, display name, case and whitespace insensitive, `and`/`&`
-- [ ] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, `sort=best_rated` by `rating_score`, pagination (`limit` default 15, max 25), `ListResponse`
-- [ ] Recipient semantics: `her`/`him`/`couple` include `anyone`; `kids` exact
-- [ ] `GET /products/{product_id}`: case-insensitive ID, `also_listed_in`
+- [x] `ProductSummary` (with `tags`, `shipping_days`, `also_listed_in` on cross-listed products) and `ProductDetail` response models with field descriptions
+- [x] Category resolution: slug, display name, case and whitespace insensitive, `and`/`&`
+- [x] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, `sort=best_rated` by `rating_score`, pagination (`limit` default 15, max 25), `ListResponse`
+- [x] Recipient semantics: `her`/`him`/`couple` include `anyone`; `kids` exact
+- [x] `GET /products/{product_id}`: case-insensitive ID, `also_listed_in`
 - [x] Error envelope plus exception handlers; replace the default 422 body with plain-language `invalid_parameter` (built in Phase 1)
-- [ ] Tests for `invalid_parameter` once routes take parameters (e.g. `max_price` < `min_price`, `limit=0`)
-- [ ] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
-- [ ] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25)
+- [x] Tests for `invalid_parameter` once routes take parameters (e.g. `max_price` < `min_price`, `limit=0`)
+- [x] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
+- [x] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25)
 - [ ] Redeploy, re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
 
 ## Phase 3: Search, recovery and LLM-ready OpenAPI
@@ -75,13 +75,13 @@ Goal: `search_products` (filters only) working, every response within its budget
 
 - [ ] `GET /products/search`, declared before `/products/{product_id}`: category, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; `400 search_too_broad` without a constraint
 - [ ] Deduplicate cross-listed products in search results (primary listing only)
-- [ ] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec)
+- [ ] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec); done for browsing in Phase 2, add for search
 - [ ] Empty-result `suggestions` on both list tools (one relaxation at a time, at most 3, only ones that match)
-- [ ] `outside_price_range` on both list tools (`above_max` / `below_min`, count and nearest price, over every other filter)
-- [ ] `applied_filters` echo
+- [ ] `outside_price_range` on `search_products` (done for browsing in Phase 2: `above_max` / `below_min`, count and nearest price, over every other filter)
+- [x] `applied_filters` echo (Phase 2, shared by both list tools)
 - [ ] Write the final operation, parameter and field descriptions (start from the spec drafts)
 - [x] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description (`tests/test_openapi.py`, Phase 1; covers new operations automatically)
-- [ ] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` suggests `tech-gadgets`; Knives under €100 reports the €149 knife in `outside_price_range`)
+- [ ] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` and Knives-under-€100 already covered in Phase 2)
 - [x] Structured request logging with key fingerprint (brought forward, done 2026-10-29)
 - [ ] Redeploy, re-import the tool collection, check every operation in the test agent
 - [x] Per-key rate limit (`429 rate_limited`) (brought forward, done 2026-10-29)

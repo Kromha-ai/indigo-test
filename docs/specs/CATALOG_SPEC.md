@@ -119,7 +119,7 @@ Both return a `ListResponse` of `ProductSummary` items and share these parameter
 
 They differ as follows:
 
-- **`get_products_by_category`**: `category` (path, slug or display name, case-insensitive) is required; `subcategory` (case-insensitive exact match) is optional. For a shopper who names a kind of product.
+- **`get_products_by_category`**: `category` (path, slug or display name, case-insensitive) is required; `subcategory` (case-insensitive; singular or plural, so `candle` finds `Candles`) is optional. For a shopper who names a kind of product.
 - **`search_products`**: an optional `category` narrows the search. At least one of `category`, a price bound, `recipient`, `occasion`, `max_shipping_days` or `gift_wrap` is required (otherwise `400 search_too_broad`). It returns one listing per product. There is no free-text parameter. For gift requests defined by constraints.
 
 ### `get_product_details`
@@ -153,7 +153,7 @@ They differ as follows:
 
 - `found` and `category` are on browse responses only.
 - `applied_filters` echoes the normalised input.
-- `outside_price_range` (present when a price filter is set) counts the products that match every other filter but fall outside the band (`above_max` / `below_min`, each with the nearest price).
+- `outside_price_range` (present when a price filter is set) counts the products that match every other filter but fall outside the band: `above_max: {count, min_price_eur}` and/or `below_min: {count, max_price_eur}`, each carrying the nearest price.
 - `suggestions`: see *Empty results*.
 
 ### Response budget

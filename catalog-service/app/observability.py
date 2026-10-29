@@ -22,6 +22,7 @@ def install_request_logging(app: FastAPI) -> None:
         started = time.perf_counter()
         response = await call_next(request)
         route = request.scope.get("route")
+        operation = getattr(route, "operation_id", None) or getattr(route, "name", None)
         state = request.state
         access_logger.info(
             json.dumps(
@@ -29,7 +30,7 @@ def install_request_logging(app: FastAPI) -> None:
                     "method": request.method,
                     "path": request.url.path,
                     "query": request.url.query or None,
-                    "operation": getattr(route, "operation_id", None),
+                    "operation": operation,
                     "status": response.status_code,
                     "latency_ms": round((time.perf_counter() - started) * 1000, 1),
                     "result_count": getattr(state, "result_count", None),

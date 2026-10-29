@@ -5,12 +5,10 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, ValidationError
 
-Availability = Literal["in_stock", "low_stock", "out_of_stock"]
-Recipient = Literal["her", "him", "couple", "kids", "anyone"]
+from app.domain import Availability, Listing, Occasion, Recipient
 
 SCHEMA_VERSION = 1
 
@@ -21,11 +19,6 @@ class CatalogLoadError(Exception):
 
 class _Strict(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
-
-
-class Listing(_Strict):
-    product_id: str
-    category_slug: str
 
 
 class ProductRecord(_Strict):
@@ -45,7 +38,7 @@ class ProductRecord(_Strict):
     rating_score: float
     recipient: Recipient
     recipients_match: list[Recipient]
-    occasions: list[str]
+    occasions: list[Occasion]
     tags: list[str]
     color: str | None
     material: str | None

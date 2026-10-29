@@ -28,7 +28,8 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
    uv run uvicorn app.main:create_app --factory --env-file .env --reload
    curl -s localhost:8000/health
    curl -s -H "X-API-Key: $KEY" localhost:8000/categories
-   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/kitchen-dining/products?subcategory=Knives&max_price=100"   # from Phase 2
+   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/kitchen-dining/products?subcategory=Knives&max_price=100"
+   curl -s -H "X-API-Key: $KEY" localhost:8000/products/HL-003
    curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"     # from Phase 3
    ```
 

@@ -70,3 +70,20 @@ def test_tools_present(spec):
 
 def test_health_is_not_a_tool(spec):
     assert "/health" not in spec["paths"]
+
+
+@pytest.mark.parametrize(
+    "schema", ["ListResponse", "ProductSummary", "ProductDetail", "CategoriesResponse"]
+)
+def test_response_schemas_expose_their_fields(spec, schema):
+    # A custom serializer can silently turn a model into an opaque object in the document,
+    # hiding every field description from the LLM.
+    properties = spec["components"]["schemas"][schema].get("properties", {})
+    assert properties, f"{schema} is published without its fields"
+
+
+def test_vocabularies_are_enums(spec):
+    schemas = spec["components"]["schemas"]
+    assert schemas["Availability"]["enum"] == ["in_stock", "low_stock", "out_of_stock"]
+    assert "anyone" in schemas["Recipient"]["enum"]
+    assert "thank-you" in schemas["Occasion"]["enum"]

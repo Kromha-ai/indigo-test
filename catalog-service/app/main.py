@@ -6,13 +6,13 @@ import logging
 
 from fastapi import APIRouter, Depends, FastAPI
 
-from app.auth import require_api_key
+from app.auth import enforce_rate_limit, require_api_key
 from app.catalog import Catalog
 from app.errors import ErrorResponse, install_handlers
 from app.loader import load_catalog
 from app.observability import install_request_logging
 from app.ratelimit import RateLimiter
-from app.routes import categories, health
+from app.routes import categories, health, products
 from app.settings import Settings
 
 DESCRIPTION = """\
@@ -30,8 +30,9 @@ per key (HTTP 429 with `Retry-After` when exceeded).
 
 
 def create_app(settings: Settings | None = None, catalog: Catalog | None = None) -> FastAPI:
-    settings = settings or Settings.from_env()
-    logging.basicConfig(level=settings.log_level)
+    if settings is None:
+        settings = Settings.from_env()
+        logging.basicConfig(level=settings.log_level)
     catalog = catalog or Catalog(load_catalog(settings.data_path))
 
     app = FastAPI(
@@ -47,7 +48,8 @@ def create_app(settings: Settings | None = None, catalog: Catalog | None = None)
     install_request_logging(app)
 
     data = APIRouter(
-        dependencies=[Depends(require_api_key)],
+        # In order: reject unknown keys first, then count the request against its key.
+        dependencies=[Depends(require_api_key), Depends(enforce_rate_limit)],
         responses={
             401: {"model": ErrorResponse, "description": "Missing or invalid API key."},
             429: {
@@ -57,6 +59,7 @@ def create_app(settings: Settings | None = None, catalog: Catalog | None = None)
         },
     )
     data.include_router(categories.router)
+    data.include_router(products.router)
     app.include_router(data)
     app.include_router(health.router)
     return app
