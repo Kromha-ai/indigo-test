@@ -2,7 +2,7 @@
 
 **Last updated**: 2026-10-29
 
-> Commands below are the target set by `docs/specs/CATALOG_SPEC.md`. They become real in roadmap Phase 1. Update this guide if they change.
+> Update this guide if a command changes.
 
 ---
 
@@ -27,8 +27,8 @@ Tests need no network, no database and no secrets. The test settings inject a fi
 | `tests/test_build.py` | The build step: normalisation, derived fields, cross-listings, report, determinism, and the staleness check on the committed `data/catalog.json` |
 | `tests/test_loader.py` | Startup validation of `catalog.json` (a truncated or malformed file refuses to load) |
 | `tests/test_auth.py` | Missing, wrong and valid keys; unauthenticated routes stay open |
-| `tests/test_<tool>.py` | One file per tool, exercised through `TestClient` |
-| `tests/test_errors.py` | Every error code in the spec and its recovery content |
+| `tests/test_categories.py` (then one file per tool) | Each tool through `TestClient`, plus `/health` |
+| `tests/test_errors.py` (Phase 2) | Every error code in the spec and its recovery content |
 | `tests/test_openapi.py` | Contract of the OpenAPI document (below) |
 | `tests/fixtures/*.csv` | Tiny hand-written CSVs for edge cases (bad price, unknown category, empty fields) |
 
@@ -40,7 +40,7 @@ Tests need no network, no database and no secrets. The test settings inject a fi
 - **Edge cases use small fixture CSVs** fed to the build (bad price, unknown category, unknown recipient), so each test shows its own input.
 - **Assert the shape the agent reads**: `found`, `error.code`, `hint` and `did_you_mean`, not only the status code. Recoverable cases are `200` (decision D2), so a status-only assertion would pass on a broken response.
 - **The OpenAPI document is under contract.** `test_openapi.py` fails if any operation lacks `operationId`, `summary` or `description`, or if any parameter or response field lacks a description. Tool descriptions drive the agent, so a missing one is a bug.
-- **Response budget.** Tests request `limit=25` on both list tools and a product detail, and assert the serialised size stays under the budget in the spec's *Response budget* table (characters / 3.6 as the token estimate).
+- **Response budget.** Tests request `limit=25` on both list tools and assert the serialised size stays under the budget in the spec's *Response budget* table (characters / 3.6 as the token estimate).
 - **Bug fixes ship with a failing test first** (see `WORKFLOW.md`, Step 4).
 
 ## Gift Assistant

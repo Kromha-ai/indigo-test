@@ -104,6 +104,6 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 4. A product is never recommended twice. `search_products` returns one listing per product, and cross-listed products carry `also_listed_in` wherever they appear.
 5. `recipient=kids` never matches `anyone` products (the `anyone` bucket includes knives).
 6. Unrated means `null`, never `0`.
-7. Every response stays within the spec's response budget (lists: 15 by default, at most 25 summaries, about 2.5k tokens; descriptions never in lists, capped at 300 characters) and every error carries a `hint` the agent can act on.
+7. Every response stays within the spec's response budget (lists: 15 by default, at most 25 summaries, about 2.5k tokens; descriptions never in lists) and every error carries a `hint` the agent can act on.
 8. Every data endpoint requires `X-API-Key` (`AUTHENTICATION.md`, decision D1). One key per consumer and environment. Keys never appear in the repo, logs or prompts; on the platform they live only in the `CATALOG_API_KEY` workspace secret.
 9. Tool and parameter descriptions are part of the contract. They are edited in code, never in the platform form. Changing one means redeploying, re-importing the tool collection, re-running the evals and publishing.

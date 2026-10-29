@@ -13,7 +13,7 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 
 | Phase | Goal | Status |
 |---|---|---|
-| 1 | Walking skeleton on the platform | Not started |
+| 1 | Walking skeleton on the platform | In progress: local work done 2026-10-29; droplet and platform tasks next |
 | 2 | Browse and detail tools | Not started |
 | 3 | Search, recovery, and LLM-ready OpenAPI | Not started |
 | 4 | The assistant | Not started |
@@ -26,20 +26,20 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 
 Goal: a deployed, authenticated service with `get_categories` bound as a tool on the indigo.ai platform, and the remaining platform unknowns answered.
 
-- [ ] Scaffold `catalog-service/`: `pyproject.toml` (uv), FastAPI app factory, settings from env, `ruff`, `pytest`
-- [ ] Build step `catalog_build/build_catalog.py`: every normalisation rule (including the 300-character description cap, with cuts listed in the report), derived fields (`availability`, `rating_score`, `recipients_match`, `listing_group`, `is_primary_listing`, `also_listed_in`), and fail-fast on bad rows
-- [ ] `catalog_build/synonyms.toml` (category synonyms for `did_you_mean`)
-- [ ] Generate and commit `data/catalog.json`, `data/catalog.normalized.csv` and `data/BUILD_REPORT.md`; review the report
-- [ ] Build tests against the real CSV: 152 records, 11 categories, the 6 drifted rows land in the right category, the 2 cross-listed pairs share a `listing_group` and point to each other in `also_listed_in`, 5 unrated products stay `null`, `kids` never in an `anyone` product's `recipients_match`
-- [ ] Build tests against small fixture CSVs: unknown category, bad price and unknown recipient abort the build; two runs give byte-identical output; committed `catalog.json` is not stale
-- [ ] `app/loader.py`: load and validate `catalog.json` at startup, refuse to start on a malformed file
+- [x] Scaffold `catalog-service/`: `pyproject.toml` (uv), FastAPI app factory, settings from env, `ruff`, `pytest`
+- [x] Build step `catalog_build/build_catalog.py`: every normalisation rule, derived fields (`availability`, `rating_score`, `recipients_match`, `listing_group`, `is_primary_listing`, `also_listed_in`), and fail-fast on bad rows
+- [x] `catalog_build/synonyms.toml` (category synonyms for `did_you_mean`)
+- [x] Generate `data/catalog.json`, `data/catalog.normalized.csv` and `data/BUILD_REPORT.md` (developer commits); review the report
+- [x] Build tests against the real CSV: 152 records, 11 categories, the 6 drifted rows land in the right category, the 2 cross-listed pairs share a `listing_group` and point to each other in `also_listed_in`, 5 unrated products stay `null`, `kids` never in an `anyone` product's `recipients_match`
+- [x] Build tests against small fixture CSVs: unknown category, bad price and unknown recipient abort the build; two runs give byte-identical output; committed `catalog.json` is not stale
+- [x] `app/loader.py`: load and validate `catalog.json` at startup, refuse to start on a malformed file
 - [x] Sign off the authentication decision in `AUTHENTICATION.md` (Accepted 2026-10-29)
-- [ ] `X-API-Key` auth dependency with multiple keys; refuse to start without keys; tests for missing, wrong and valid key
-- [ ] `GET /categories` (with subcategories, price ranges, `in_stock_by_occasion`) and `GET /health`
-- [ ] `servers` populated from `PUBLIC_BASE_URL`
-- [ ] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
-- [ ] Dockerfile (ships `data/catalog.json`), `.env.example`
-- [ ] `deploy/`: `docker-compose.yml` (service bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`; Caddy), `Caddyfile` (`catalog.builtbykromha.com`), `.env.example`
+- [x] `X-API-Key` auth dependency with multiple keys; refuse to start without keys; tests for missing, wrong and valid key
+- [x] `GET /categories` (with subcategories, price ranges, `in_stock_by_occasion`) and `GET /health`
+- [x] `servers` populated from `PUBLIC_BASE_URL`
+- [x] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
+- [x] Dockerfile (ships `data/catalog.json`), `.env.example`
+- [x] `deploy/`: `docker-compose.yml` (service bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`; Caddy), `Caddyfile` (`catalog.builtbykromha.com`), `.env.example`
 - [ ] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), firewall (22/80/443), Docker; first deploy per `PLAYBOOK.md`; smoke-test `https://catalog.builtbykromha.com/health`
 - [ ] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
@@ -49,7 +49,7 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [ ] Spike: check what the model sees on a 4xx (for the README; not blocking, see decision D2)
 - [ ] Spike: the tool-call timeout (measure with a deliberately slow test endpoint if undocumented; for the README, since the VPS has no cold starts), whether a secret change needs a Publish, and how the public link works (which environment it serves)
 - [ ] Record the spike answers in `AGENT_SPEC.md` (*Still to verify in Phase 1*), and in `AUTHENTICATION.md` / the secrets guide if a secret change needs a Publish
-- [ ] Mark `CATALOG_SPEC.md` **Approved**
+- [x] Mark `CATALOG_SPEC.md` **Approved**
 
 ## Phase 2: Browse and detail tools
 
@@ -73,7 +73,7 @@ Goal: `search_products` (filters only) working, every response within its budget
 
 - [ ] `GET /products/search`, declared before `/products/{product_id}`: category, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; `400 search_too_broad` without a constraint
 - [ ] Deduplicate cross-listed products in search results (primary listing only)
-- [ ] Response budget tests: `limit=25` under 2.6k tokens, detail under 250 tokens (*Response budget* in the spec)
+- [ ] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec)
 
 - [ ] Empty-result `suggestions` on both list tools (one relaxation at a time, at most 3, only ones that match)
 - [ ] `outside_price_range` on both list tools (`above_max` / `below_min`, count and nearest price, over every other filter)

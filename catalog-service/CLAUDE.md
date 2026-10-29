@@ -2,8 +2,6 @@
 
 FastAPI service exposing the gift shop catalogue as agent tools. The contract is `../docs/specs/CATALOG_SPEC.md`. Read it before changing any route, parameter, response field or description.
 
-> Scaffolded in roadmap Phase 1. Until then, the commands below are the target.
-
 ## Stack
 
 Python 3.12 · FastAPI · Pydantic v2 · Uvicorn · uv · pytest · ruff
@@ -14,30 +12,31 @@ Python 3.12 · FastAPI · Pydantic v2 · Uvicorn · uv · pytest · ruff
 uv sync                                    # install
 cp .env.example .env                       # then set CATALOG_API_KEYS
 uv run python -m catalog_build.build_catalog       # regenerate data/ from ../raw_data/ after any export or mapping change
-uv run uvicorn app.main:app --reload       # http://localhost:8000/docs
+uv run uvicorn app.main:create_app --factory --env-file .env --reload   # http://localhost:8000/docs
 uv run pytest                              # tests
 uv run ruff check . && uv run ruff format .
 docker build -t catalog-service .           # the image ships data/catalog.json, not the raw CSV
 # deployment (DigitalOcean droplet, Caddy in front): ../deploy/, see ../PLAYBOOK.md
 ```
 
-## Layout (target)
+## Layout
 
 ```
 catalog_build/
-  build_catalog.py   raw CSV → data/ (normalise, derive, index, report)
+  build_catalog.py   raw CSV → data/ (normalise, derive, report)
   synonyms.toml      category synonyms for did_you_mean
 data/              build outputs, committed: catalog.json, catalog.normalized.csv, BUILD_REPORT.md
 app/
-  main.py        app factory, exception handlers, OpenAPI customisation
+  main.py        app factory (`create_app`): settings, catalogue, handlers, routers
   settings.py    env-driven settings
   auth.py        X-API-Key dependency
-  loader.py      reads and validates data/catalog.json (pure, no FastAPI imports)
-  catalog.py     in-memory index, filtering, search dedup, outside_price_range, relaxation suggestions
+  loader.py      reads and validates data/catalog.json (record model, no FastAPI imports)
+  catalog.py     in-memory catalogue and queries (category overview now; filtering, search, outside_price_range and suggestions from Phase 2)
   models.py      Pydantic response models with field descriptions
-  errors.py      error envelope and codes
-  routes/        one module per tool
+  errors.py      error envelope, CatalogError, exception handlers
+  routes/        one module per tool (+ health)
 tests/
+  conftest.py    shared settings, catalogue and TestClient (keys: test-key, second-key)
   fixtures/      small edge-case CSVs
 ```
 

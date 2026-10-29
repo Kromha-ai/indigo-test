@@ -1,0 +1,6297 @@
+{
+  "categories": [
+    {
+      "name": "Home & Living",
+      "slug": "home-living"
+    },
+    {
+      "name": "Kitchen & Dining",
+      "slug": "kitchen-dining"
+    },
+    {
+      "name": "Tech & Gadgets",
+      "slug": "tech-gadgets"
+    },
+    {
+      "name": "Beauty & Wellness",
+      "slug": "beauty-wellness"
+    },
+    {
+      "name": "Books & Stationery",
+      "slug": "books-stationery"
+    },
+    {
+      "name": "Games & Puzzles",
+      "slug": "games-puzzles"
+    },
+    {
+      "name": "Outdoor & Travel",
+      "slug": "outdoor-travel"
+    },
+    {
+      "name": "Jewellery",
+      "slug": "jewellery"
+    },
+    {
+      "name": "Kids",
+      "slug": "kids"
+    },
+    {
+      "name": "Pets",
+      "slug": "pets"
+    },
+    {
+      "name": "Experiences",
+      "slug": "experiences"
+    }
+  ],
+  "category_synonyms": {
+    "audio": "tech-gadgets",
+    "baby": "kids",
+    "beauty": "beauty-wellness",
+    "books": "books-stationery",
+    "cats": "pets",
+    "children": "kids",
+    "cooking": "kitchen-dining",
+    "decor": "home-living",
+    "dining": "kitchen-dining",
+    "dogs": "pets",
+    "electronics": "tech-gadgets",
+    "gadgets": "tech-gadgets",
+    "games": "games-puzzles",
+    "gift-cards": "experiences",
+    "giftcards": "experiences",
+    "home": "home-living",
+    "jewelry": "jewellery",
+    "jewels": "jewellery",
+    "kitchen": "kitchen-dining",
+    "living": "home-living",
+    "outdoor": "outdoor-travel",
+    "outdoors": "outdoor-travel",
+    "pet": "pets",
+    "puzzles": "games-puzzles",
+    "selfcare": "beauty-wellness",
+    "skincare": "beauty-wellness",
+    "stationary": "books-stationery",
+    "stationery": "books-stationery",
+    "tech": "tech-gadgets",
+    "technology": "tech-gadgets",
+    "toys": "kids",
+    "travel": "outdoor-travel",
+    "vouchers": "experiences",
+    "wellness": "beauty-wellness"
+  },
+  "constants": {
+    "low_stock_max": 5,
+    "rating_mean": 4.3735,
+    "rating_prior_weight": 96.0
+  },
+  "occasions": [
+    "birthday",
+    "thank-you",
+    "christmas",
+    "housewarming",
+    "anniversary",
+    "graduation"
+  ],
+  "products": [
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Navy",
+      "description": "Converter and two cartridges included. Writes wet, which suits most paper and not thin notebooks.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-001",
+      "material": "Resin, steel nib",
+      "name": "Fountain Pen, Medium Nib",
+      "occasions": [
+        "graduation",
+        "anniversary"
+      ],
+      "price_eur": 129.0,
+      "product_id": "BS-001",
+      "rating": 4.7,
+      "rating_score": 4.6129,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 264,
+      "shipping_days": 3,
+      "stock": 15,
+      "subcategory": "Pens",
+      "subcategory_slug": "pens",
+      "tags": [
+        "pen",
+        "fountain",
+        "writing",
+        "gift"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Graphite",
+      "description": "Heavier than it looks. Takes standard refills, so it will never be orphaned.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-002",
+      "material": "Brass",
+      "name": "Rollerball Pen",
+      "occasions": [
+        "graduation",
+        "thank-you"
+      ],
+      "price_eur": 64.0,
+      "product_id": "BS-002",
+      "rating": 4.4,
+      "rating_score": 4.3896,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 148,
+      "shipping_days": 3,
+      "stock": 32,
+      "subcategory": "Pens",
+      "subcategory_slug": "pens",
+      "tags": [
+        "pen",
+        "rollerball",
+        "writing",
+        "desk"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Multi",
+      "description": "Six 10ml bottles, from a blue-black to an unreasonable orange.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-003",
+      "material": "Glass",
+      "name": "Ink Sampler, Six Bottles",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 42.0,
+      "product_id": "BS-003",
+      "rating": 4.5,
+      "rating_score": 4.4367,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 96,
+      "shipping_days": 3,
+      "stock": 27,
+      "subcategory": "Pens",
+      "subcategory_slug": "pens",
+      "tags": [
+        "ink",
+        "set",
+        "fountain",
+        "colour"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Forest",
+      "description": "Lies flat, 100gsm so fountain pen does not bleed. 192 pages.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-004",
+      "material": "Cloth, 100gsm paper",
+      "name": "Hardcover Notebook A5, Dotted",
+      "occasions": [
+        "thank-you",
+        "graduation"
+      ],
+      "price_eur": 28.0,
+      "product_id": "BS-004",
+      "rating": 4.6,
+      "rating_score": 4.5642,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 512,
+      "shipping_days": 2,
+      "stock": 88,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "notebook",
+        "dotted",
+        "a5",
+        "hardcover"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Mixed",
+      "description": "Three pocket notebooks that survive a back pocket for a month.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-005",
+      "material": "Card, 90gsm paper",
+      "name": "Notebook Trio A6",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 24.0,
+      "product_id": "BS-005",
+      "rating": 4.3,
+      "rating_score": 4.3236,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 203,
+      "shipping_days": 2,
+      "stock": 74,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "notebook",
+        "set",
+        "pocket",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Tan",
+      "description": "Refillable, so the same cover carries twenty notebooks. Can be blind-embossed with initials.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-006",
+      "material": "Full-grain leather",
+      "name": "Leather Journal Cover A5",
+      "occasions": [
+        "anniversary",
+        "graduation"
+      ],
+      "price_eur": 95.0,
+      "product_id": "BS-006",
+      "rating": 4.5,
+      "rating_score": 4.4336,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 87,
+      "shipping_days": 4,
+      "stock": 11,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "journal",
+        "leather",
+        "cover",
+        "refillable"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Burgundy",
+      "description": "Week to view with a ribbon and a pocket. Dated, so it is a December gift or nothing.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-007",
+      "material": "Cloth, paper",
+      "name": "Desk Diary 2027",
+      "occasions": [
+        "christmas"
+      ],
+      "price_eur": 46.0,
+      "product_id": "BS-007",
+      "rating": 4.2,
+      "rating_score": 4.3041,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 64,
+      "shipping_days": 3,
+      "stock": 0,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "diary",
+        "planner",
+        "dated",
+        "desk"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Blush",
+      "description": "Fifty-two undated weeks, so it survives being started in March.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-008",
+      "material": "Card, paper",
+      "name": "Undated Weekly Planner",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 38.0,
+      "product_id": "BS-008",
+      "rating": 4.4,
+      "rating_score": 4.3887,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 129,
+      "shipping_days": 2,
+      "stock": 43,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "planner",
+        "undated",
+        "weekly",
+        "flexible"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vellum",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Multi",
+      "description": "Ninety recipes that assume six hours and no supervision. Photography is unusually good.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-009",
+      "material": "Paper",
+      "name": "The Art of Slow Cooking",
+      "occasions": [
+        "christmas",
+        "housewarming"
+      ],
+      "price_eur": 42.0,
+      "product_id": "BS-009",
+      "rating": 4.6,
+      "rating_score": 4.5206,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 178,
+      "shipping_days": 3,
+      "stock": 29,
+      "subcategory": "Books",
+      "subcategory_slug": "books",
+      "tags": [
+        "book",
+        "cookbook",
+        "hardcover",
+        "recipes"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vellum",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Blue",
+      "description": "Fifty islands the author has never visited, one map and one story each. Reliably delightful.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-010",
+      "material": "Paper",
+      "name": "Atlas of Remote Islands",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 36.0,
+      "product_id": "BS-010",
+      "rating": 4.8,
+      "rating_score": 4.7063,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 341,
+      "shipping_days": 3,
+      "stock": 22,
+      "subcategory": "Books",
+      "subcategory_slug": "books",
+      "tags": [
+        "book",
+        "atlas",
+        "illustrated",
+        "travel"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vellum",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Cream",
+      "description": "Cloth-bound, foil-stamped, in a slipcase. Bought for the shelf as much as the reading.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-011",
+      "material": "Cloth, paper",
+      "name": "Boxed Classics, Set of Six",
+      "occasions": [
+        "graduation",
+        "christmas"
+      ],
+      "price_eur": 89.0,
+      "product_id": "BS-011",
+      "rating": 4.5,
+      "rating_score": 4.4416,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 112,
+      "shipping_days": 4,
+      "stock": 13,
+      "subcategory": "Books",
+      "subcategory_slug": "books",
+      "tags": [
+        "book",
+        "set",
+        "classics",
+        "boxed"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vellum",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Green",
+      "description": "Two hundred short poems in a book that fits a coat pocket.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-012",
+      "material": "Paper",
+      "name": "Poetry Anthology, Pocket",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 22.0,
+      "product_id": "BS-012",
+      "rating": 4.3,
+      "rating_score": 4.3381,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 89,
+      "shipping_days": 2,
+      "stock": 51,
+      "subcategory": "Books",
+      "subcategory_slug": "books",
+      "tags": [
+        "book",
+        "poetry",
+        "pocket",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Black",
+      "description": "Holder, five nibs, ink and a practice pad with guidelines. Instructions are clear.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-013",
+      "material": "Wood, steel, ink",
+      "name": "Calligraphy Starter Kit",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 58.0,
+      "product_id": "BS-013",
+      "rating": 4.1,
+      "rating_score": 4.2544,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 74,
+      "shipping_days": 3,
+      "stock": 18,
+      "subcategory": "Craft",
+      "subcategory_slug": "craft",
+      "tags": [
+        "calligraphy",
+        "kit",
+        "beginner",
+        "craft"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Natural",
+      "description": "Makes three sewn notebooks. A slow, satisfying afternoon.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": false,
+      "listing_group": "BS-014",
+      "material": "Linen thread, board, paper",
+      "name": "Bookbinding Kit",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 76.0,
+      "product_id": "BS-014",
+      "rating": null,
+      "rating_score": 4.3735,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": null,
+      "shipping_days": 4,
+      "stock": 9,
+      "subcategory": "Craft",
+      "subcategory_slug": "craft",
+      "tags": [
+        "bookbinding",
+        "kit",
+        "craft",
+        "beginner"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Cream",
+      "description": "A card.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-015",
+      "material": "Cotton paper",
+      "name": "Letterpress Card, Single",
+      "occasions": [],
+      "price_eur": 6.5,
+      "product_id": "BS-015",
+      "rating": 3.6,
+      "rating_score": 4.1847,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 31,
+      "shipping_days": 2,
+      "stock": 240,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "card",
+        "letterpress",
+        "small",
+        "addon"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Marginalia",
+      "category": "Books & Stationery",
+      "category_slug": "books-stationery",
+      "color": "Mixed",
+      "description": "Ten blank cards with envelopes, cotton paper, properly pressed so the type has a dent in it.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BS-016",
+      "material": "Cotton paper",
+      "name": "Letterpress Card Box, Ten",
+      "occasions": [
+        "thank-you",
+        "christmas"
+      ],
+      "price_eur": 42.0,
+      "product_id": "BS-016",
+      "rating": 4.2,
+      "rating_score": 4.3081,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 58,
+      "shipping_days": 2,
+      "stock": 36,
+      "subcategory": "Paper",
+      "subcategory_slug": "paper",
+      "tags": [
+        "cards",
+        "set",
+        "letterpress",
+        "blank"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Pearl",
+      "description": "Two cases, machine washable on cold. Gentler on hair than cotton, which is the actual reason people love them.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-001",
+      "material": "22 momme silk",
+      "name": "Silk Pillowcase Pair",
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "christmas"
+      ],
+      "price_eur": 119.0,
+      "product_id": "BW-001",
+      "rating": 4.7,
+      "rating_score": 4.6461,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 486,
+      "shipping_days": 3,
+      "stock": 23,
+      "subcategory": "Sleep",
+      "subcategory_slug": "sleep",
+      "tags": [
+        "silk",
+        "sleep",
+        "hair",
+        "pair"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Charcoal",
+      "description": "Warms in the microwave or chills in the freezer. Heavy enough to feel like something.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-002",
+      "material": "Silk, glass beads",
+      "name": "Weighted Eye Mask",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 42.0,
+      "product_id": "BW-002",
+      "rating": 4.5,
+      "rating_score": 4.4702,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 312,
+      "shipping_days": 2,
+      "stock": 46,
+      "subcategory": "Sleep",
+      "subcategory_slug": "sleep",
+      "tags": [
+        "sleep",
+        "mask",
+        "weighted",
+        "relax"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Mixed",
+      "description": "Five travel sizes of the full range. The sensible way to gift skincare without guessing.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-003",
+      "material": "Glass",
+      "name": "Skincare Discovery Set",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 78.0,
+      "product_id": "BW-003",
+      "rating": 4.4,
+      "rating_score": 4.3948,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 398,
+      "shipping_days": 3,
+      "stock": 31,
+      "subcategory": "Skincare",
+      "subcategory_slug": "skincare",
+      "tags": [
+        "skincare",
+        "set",
+        "travel",
+        "discovery"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Amber",
+      "description": "15% L-ascorbic acid in an opaque pump. Six months once opened.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-004",
+      "material": "Glass",
+      "name": "Vitamin C Serum 30ml",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 64.0,
+      "product_id": "BW-004",
+      "rating": 4.6,
+      "rating_score": 4.5734,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 721,
+      "shipping_days": 2,
+      "stock": 29,
+      "subcategory": "Skincare",
+      "subcategory_slug": "skincare",
+      "tags": [
+        "serum",
+        "vitaminc",
+        "brightening",
+        "skincare"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Mixed",
+      "description": "Three scents, handbag size. The default thank-you gift for a reason.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-005",
+      "material": "Aluminium tube",
+      "name": "Hand Cream Trio",
+      "occasions": [
+        "thank-you",
+        "christmas"
+      ],
+      "price_eur": 36.0,
+      "product_id": "BW-005",
+      "rating": 4.3,
+      "rating_score": 4.3202,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 254,
+      "shipping_days": 2,
+      "stock": 67,
+      "subcategory": "Skincare",
+      "subcategory_slug": "skincare",
+      "tags": [
+        "handcream",
+        "set",
+        "small",
+        "scented"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Amber",
+      "description": "Oil, balm, comb and scissors in a tin. Cedar and bergamot, not the usual sweet stuff.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-006",
+      "material": "Glass, wood",
+      "name": "Beard Care Kit",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 68.0,
+      "product_id": "BW-006",
+      "rating": 4.2,
+      "rating_score": 4.2612,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 176,
+      "shipping_days": 3,
+      "stock": 19,
+      "subcategory": "Grooming",
+      "subcategory_slug": "grooming",
+      "tags": [
+        "beard",
+        "kit",
+        "grooming",
+        "oil"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Chrome",
+      "description": "Razor, stand, brush and twenty blades. Cheaper than cartridges within four months.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-007",
+      "material": "Brass, steel",
+      "name": "Safety Razor Set",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 89.0,
+      "product_id": "BW-007",
+      "rating": 4.6,
+      "rating_score": 4.5335,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 231,
+      "shipping_days": 3,
+      "stock": 14,
+      "subcategory": "Grooming",
+      "subcategory_slug": "grooming",
+      "tags": [
+        "razor",
+        "shaving",
+        "steel",
+        "sustainable"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Cream",
+      "description": "Sandalwood, lasts about six months of daily use. Refills sold separately.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-008",
+      "material": "Ceramic, soap",
+      "name": "Shaving Soap & Bowl",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 44.0,
+      "product_id": "BW-008",
+      "rating": 4.4,
+      "rating_score": 4.3881,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 118,
+      "shipping_days": 3,
+      "stock": 26,
+      "subcategory": "Grooming",
+      "subcategory_slug": "grooming",
+      "tags": [
+        "shaving",
+        "soap",
+        "bowl",
+        "traditional"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Clear",
+      "description": "Fifty millilitres, unisex, dries down warm. Risky as a gift unless you know the person's taste.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-009",
+      "material": "Glass",
+      "name": "Eau de Parfum, Fig & Cedar",
+      "occasions": [
+        "anniversary",
+        "birthday"
+      ],
+      "price_eur": 145.0,
+      "product_id": "BW-009",
+      "rating": 4.5,
+      "rating_score": 4.4594,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 203,
+      "shipping_days": 3,
+      "stock": 12,
+      "subcategory": "Fragrance",
+      "subcategory_slug": "fragrance",
+      "tags": [
+        "perfume",
+        "unisex",
+        "woody",
+        "50ml"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Mixed",
+      "description": "Six 2ml vials with a voucher towards a full bottle. The answer to the risk above.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-010",
+      "material": "Glass",
+      "name": "Fragrance Discovery Vials",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 48.0,
+      "product_id": "BW-010",
+      "rating": 4.1,
+      "rating_score": 4.1998,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 167,
+      "shipping_days": 2,
+      "stock": 52,
+      "subcategory": "Fragrance",
+      "subcategory_slug": "fragrance",
+      "tags": [
+        "perfume",
+        "set",
+        "sample",
+        "discovery"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Black",
+      "description": "Four heads, five speeds, quiet enough to use in front of the television.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-011",
+      "material": "Aluminium, silicone",
+      "name": "Massage Gun, Compact",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 159.0,
+      "product_id": "BW-011",
+      "rating": 4.3,
+      "rating_score": 4.3131,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 442,
+      "shipping_days": 3,
+      "stock": 16,
+      "subcategory": "Recovery",
+      "subcategory_slug": "recovery",
+      "tags": [
+        "massage",
+        "recovery",
+        "sport",
+        "percussive"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Indigo",
+      "description": "Mat and pillow with a carry bag. The first three minutes are unpleasant and then they are not.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-012",
+      "material": "Cotton, foam",
+      "name": "Acupressure Mat Set",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 72.0,
+      "product_id": "BW-012",
+      "rating": 4.0,
+      "rating_score": 4.0931,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 289,
+      "shipping_days": 4,
+      "stock": 0,
+      "subcategory": "Recovery",
+      "subcategory_slug": "recovery",
+      "tags": [
+        "mat",
+        "acupressure",
+        "back",
+        "relax"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Charcoal",
+      "description": "Firm density, textured surface. Not for beginners, who should get the smooth one.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-013",
+      "material": "EVA foam",
+      "name": "Foam Roller, Textured",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 46.0,
+      "product_id": "BW-013",
+      "rating": 4.2,
+      "rating_score": 4.257,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 196,
+      "shipping_days": 3,
+      "stock": 38,
+      "subcategory": "Recovery",
+      "subcategory_slug": "recovery",
+      "tags": [
+        "roller",
+        "recovery",
+        "sport",
+        "foam"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Aurelia",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Mixed",
+      "description": "Four jars: magnesium, rose, eucalyptus, seaweed. Wooden scoop in the box.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-014",
+      "material": "Glass jar",
+      "name": "Bath Soak Collection",
+      "occasions": [
+        "birthday",
+        "thank-you",
+        "christmas"
+      ],
+      "price_eur": 54.0,
+      "product_id": "BW-014",
+      "rating": 4.5,
+      "rating_score": 4.4608,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 214,
+      "shipping_days": 2,
+      "stock": 41,
+      "subcategory": "Bath",
+      "subcategory_slug": "bath",
+      "tags": [
+        "bath",
+        "salts",
+        "set",
+        "relax"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Sand",
+      "description": "Two bath, two hand. Thin, fast-drying, and they get softer for about a year.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-015",
+      "material": "Turkish cotton",
+      "name": "Turkish Bath Towel Set",
+      "occasions": [
+        "housewarming",
+        "anniversary"
+      ],
+      "price_eur": 86.0,
+      "product_id": "BW-015",
+      "rating": 4.4,
+      "rating_score": 4.3893,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 141,
+      "shipping_days": 4,
+      "stock": 20,
+      "subcategory": "Bath",
+      "subcategory_slug": "bath",
+      "tags": [
+        "towel",
+        "set",
+        "cotton",
+        "turkish"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "low_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Grey",
+      "description": "Infrared, folds into a cupboard. Big, expensive, and only right for someone who has mentioned wanting one.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-016",
+      "material": "PU leather, ceramic",
+      "name": "Sauna Blanket",
+      "occasions": [
+        "anniversary",
+        "christmas"
+      ],
+      "price_eur": 399.0,
+      "product_id": "BW-016",
+      "rating": 3.7,
+      "rating_score": 4.1198,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 58,
+      "shipping_days": 7,
+      "stock": 3,
+      "subcategory": "Recovery",
+      "subcategory_slug": "recovery",
+      "tags": [
+        "sauna",
+        "infrared",
+        "recovery",
+        "luxury"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Natural",
+      "description": "Grip improves as your hands get damp, which is the opposite of foam mats.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-017",
+      "material": "Cork, rubber",
+      "name": "Yoga Mat, Cork",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 98.0,
+      "product_id": "BW-017",
+      "rating": 4.6,
+      "rating_score": 4.5232,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 187,
+      "shipping_days": 4,
+      "stock": 24,
+      "subcategory": "Fitness",
+      "subcategory_slug": "fitness",
+      "tags": [
+        "yoga",
+        "mat",
+        "cork",
+        "grip"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramble",
+      "category": "Beauty & Wellness",
+      "category_slug": "beauty-wellness",
+      "color": "Mixed",
+      "description": "Five resistances, fabric not rubber, so they do not roll up on the thighs.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "BW-018",
+      "material": "Latex, fabric",
+      "name": "Resistance Band Set",
+      "occasions": [
+        "thank-you",
+        "graduation"
+      ],
+      "price_eur": 38.0,
+      "product_id": "BW-018",
+      "rating": 4.1,
+      "rating_score": 4.1622,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 326,
+      "shipping_days": 2,
+      "stock": 59,
+      "subcategory": "Fitness",
+      "subcategory_slug": "fitness",
+      "tags": [
+        "fitness",
+        "bands",
+        "home",
+        "travel"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "indigo Gift Shop",
+      "category": "Experiences",
+      "category_slug": "experiences",
+      "color": null,
+      "description": "Digital, delivered by email, no expiry. The honest answer when you do not know the person.",
+      "gift_wrap": false,
+      "is_digital": true,
+      "is_primary_listing": true,
+      "is_rated": false,
+      "listing_group": "EX-001",
+      "material": null,
+      "name": "Gift Card, 50 EUR",
+      "occasions": [
+        "birthday",
+        "christmas",
+        "thank-you",
+        "graduation",
+        "anniversary",
+        "housewarming"
+      ],
+      "price_eur": 50.0,
+      "product_id": "EX-001",
+      "rating": null,
+      "rating_score": 4.3735,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": null,
+      "shipping_days": 0,
+      "stock": 999,
+      "subcategory": "Gift Cards",
+      "subcategory_slug": "gift-cards",
+      "tags": [
+        "giftcard",
+        "flexible",
+        "digital",
+        "instant"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "indigo Gift Shop",
+      "category": "Experiences",
+      "category_slug": "experiences",
+      "color": null,
+      "description": "Digital, delivered by email, no expiry.",
+      "gift_wrap": false,
+      "is_digital": true,
+      "is_primary_listing": true,
+      "is_rated": false,
+      "listing_group": "EX-002",
+      "material": null,
+      "name": "Gift Card, 100 EUR",
+      "occasions": [
+        "birthday",
+        "christmas",
+        "anniversary"
+      ],
+      "price_eur": 100.0,
+      "product_id": "EX-002",
+      "rating": null,
+      "rating_score": 4.3735,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": null,
+      "shipping_days": 0,
+      "stock": 999,
+      "subcategory": "Gift Cards",
+      "subcategory_slug": "gift-cards",
+      "tags": [
+        "giftcard",
+        "flexible",
+        "digital",
+        "instant"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Multi",
+      "description": "Sixty to ninety minutes, two to four players. Teaches in ten minutes and stays interesting for fifty games.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-001",
+      "material": "Card, wood",
+      "name": "Strategy Board Game, Trade Routes",
+      "occasions": [
+        "christmas",
+        "birthday"
+      ],
+      "price_eur": 64.0,
+      "product_id": "GP-001",
+      "rating": 4.7,
+      "rating_score": 4.6542,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 588,
+      "shipping_days": 3,
+      "stock": 26,
+      "subcategory": "Board Games",
+      "subcategory_slug": "board-games",
+      "tags": [
+        "boardgame",
+        "strategy",
+        "2-4players",
+        "60min"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Blue",
+      "description": "Everyone against the board. Good for households where competition ends badly.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-002",
+      "material": "Card, plastic",
+      "name": "Cooperative Game, Deep Water",
+      "occasions": [
+        "christmas",
+        "thank-you"
+      ],
+      "price_eur": 52.0,
+      "product_id": "GP-002",
+      "rating": 4.5,
+      "rating_score": 4.4723,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 342,
+      "shipping_days": 3,
+      "stock": 31,
+      "subcategory": "Board Games",
+      "subcategory_slug": "board-games",
+      "tags": [
+        "boardgame",
+        "cooperative",
+        "1-4players",
+        "45min"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Red",
+      "description": "Twenty minutes, fits in a jacket. The one to pack for a holiday.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-003",
+      "material": "Card",
+      "name": "Two-Player Card Game",
+      "occasions": [
+        "anniversary",
+        "thank-you"
+      ],
+      "price_eur": 26.0,
+      "product_id": "GP-003",
+      "rating": 4.6,
+      "rating_score": 4.5576,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 417,
+      "shipping_days": 2,
+      "stock": 58,
+      "subcategory": "Board Games",
+      "subcategory_slug": "board-games",
+      "tags": [
+        "cardgame",
+        "2players",
+        "travel",
+        "20min"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Yellow",
+      "description": "Loud, quick, needs at least four people and one extrovert.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-004",
+      "material": "Card",
+      "name": "Party Game, Eighty Prompts",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 34.0,
+      "product_id": "GP-004",
+      "rating": 3.9,
+      "rating_score": 4.0399,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 229,
+      "shipping_days": 2,
+      "stock": 44,
+      "subcategory": "Board Games",
+      "subcategory_slug": "board-games",
+      "tags": [
+        "partygame",
+        "4-10players",
+        "casual",
+        "quick"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Multi",
+      "description": "Laser-cut birch with whimsy pieces shaped like boats and birds. Genuinely hard.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-005",
+      "material": "Birch ply",
+      "name": "Wooden Puzzle 500pc, Coastline",
+      "occasions": [
+        "christmas",
+        "birthday"
+      ],
+      "price_eur": 78.0,
+      "product_id": "GP-005",
+      "rating": 4.8,
+      "rating_score": 4.6419,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 163,
+      "shipping_days": 4,
+      "stock": 12,
+      "subcategory": "Puzzles",
+      "subcategory_slug": "puzzles",
+      "tags": [
+        "puzzle",
+        "wooden",
+        "500pc",
+        "lasercut"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Green",
+      "description": "Matte finish so no glare under a lamp. Poster included for reference.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-006",
+      "material": "Card",
+      "name": "Jigsaw 1000pc, Botanical",
+      "occasions": [
+        "christmas",
+        "thank-you"
+      ],
+      "price_eur": 32.0,
+      "product_id": "GP-006",
+      "rating": 4.4,
+      "rating_score": 4.3932,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 276,
+      "shipping_days": 2,
+      "stock": 49,
+      "subcategory": "Puzzles",
+      "subcategory_slug": "puzzles",
+      "tags": [
+        "puzzle",
+        "1000pc",
+        "botanical",
+        "cardboard"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Grey",
+      "description": "A lot of very similar grey pieces. For someone who finds the botanical one too easy.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-007",
+      "material": "Card",
+      "name": "Jigsaw 1000pc, City Map",
+      "occasions": [
+        "christmas"
+      ],
+      "price_eur": 32.0,
+      "product_id": "GP-007",
+      "rating": 4.2,
+      "rating_score": 4.2574,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 194,
+      "shipping_days": 2,
+      "stock": 0,
+      "subcategory": "Puzzles",
+      "subcategory_slug": "puzzles",
+      "tags": [
+        "puzzle",
+        "1000pc",
+        "map",
+        "cardboard"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Silver",
+      "description": "Disentanglement puzzles, graded easy to infuriating. Solutions in a sealed envelope.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-008",
+      "material": "Steel",
+      "name": "Metal Puzzle Set, Six",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 38.0,
+      "product_id": "GP-008",
+      "rating": 4.0,
+      "rating_score": 4.1452,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 151,
+      "shipping_days": 2,
+      "stock": 37,
+      "subcategory": "Puzzles",
+      "subcategory_slug": "puzzles",
+      "tags": [
+        "puzzle",
+        "metal",
+        "logic",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Walnut",
+      "description": "Tournament-size board, weighted felted pieces. Folds to store the pieces inside.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-009",
+      "material": "Walnut, maple",
+      "name": "Chess Set, Weighted",
+      "occasions": [
+        "anniversary",
+        "graduation"
+      ],
+      "price_eur": 145.0,
+      "product_id": "GP-009",
+      "rating": 4.7,
+      "rating_score": 4.5575,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 124,
+      "shipping_days": 5,
+      "stock": 8,
+      "subcategory": "Classic Games",
+      "subcategory_slug": "classic-games",
+      "tags": [
+        "chess",
+        "weighted",
+        "walnut",
+        "classic"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Tan",
+      "description": "Rolls into a tube with a strap. Pieces and dice live in a pocket.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-010",
+      "material": "Leather, wood",
+      "name": "Backgammon Roll-Up",
+      "occasions": [
+        "birthday",
+        "anniversary"
+      ],
+      "price_eur": 89.0,
+      "product_id": "GP-010",
+      "rating": 4.4,
+      "rating_score": 4.3845,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 68,
+      "shipping_days": 4,
+      "stock": 14,
+      "subcategory": "Classic Games",
+      "subcategory_slug": "classic-games",
+      "tags": [
+        "backgammon",
+        "travel",
+        "leather",
+        "classic"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Ivory",
+      "description": "Double-nine set with a satisfying clack. The box is the good part.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-011",
+      "material": "Resin, walnut box",
+      "name": "Dominoes, Boxed",
+      "occasions": [
+        "christmas",
+        "thank-you"
+      ],
+      "price_eur": 56.0,
+      "product_id": "GP-011",
+      "rating": 4.3,
+      "rating_score": 4.3477,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 52,
+      "shipping_days": 3,
+      "stock": 21,
+      "subcategory": "Classic Games",
+      "subcategory_slug": "classic-games",
+      "tags": [
+        "dominoes",
+        "boxed",
+        "classic",
+        "family"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Meridian",
+      "category": "Games & Puzzles",
+      "category_slug": "games-puzzles",
+      "color": "Black",
+      "description": "Ninety minutes, one use only, and it is worth it. Do not peek in the envelopes.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "GP-012",
+      "material": "Card, paper",
+      "name": "Escape Room in a Box",
+      "occasions": [
+        "birthday",
+        "anniversary"
+      ],
+      "price_eur": 44.0,
+      "product_id": "GP-012",
+      "rating": 4.1,
+      "rating_score": 4.1864,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 208,
+      "shipping_days": 2,
+      "stock": 33,
+      "subcategory": "Board Games",
+      "subcategory_slug": "board-games",
+      "tags": [
+        "escaperoom",
+        "1-6players",
+        "puzzle",
+        "90min"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Nordlys",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Warm White",
+      "description": "A dimmable oak lamp with a linen shade that throws a soft, low glow. Reads as expensive without shouting about it.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-001",
+      "material": "Oak, linen shade",
+      "name": "Aurora Table Lamp",
+      "occasions": [
+        "housewarming",
+        "christmas"
+      ],
+      "price_eur": 129.0,
+      "product_id": "HL-001",
+      "rating": 4.6,
+      "rating_score": 4.5294,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 212,
+      "shipping_days": 3,
+      "stock": 14,
+      "subcategory": "Lighting",
+      "subcategory_slug": "lighting",
+      "tags": [
+        "lamp",
+        "ambient",
+        "dimmable",
+        "scandinavian"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Nordlys",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Black",
+      "description": "An arc floor lamp that leans over an armchair. Sturdy base, no wobble.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-002",
+      "material": "Steel, oak",
+      "name": "Halden Floor Lamp",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 249.0,
+      "product_id": "HL-002",
+      "rating": 4.4,
+      "rating_score": 4.3862,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 88,
+      "shipping_days": 4,
+      "stock": 6,
+      "subcategory": "Lighting",
+      "subcategory_slug": "lighting",
+      "tags": [
+        "lamp",
+        "floor",
+        "reading",
+        "scandinavian"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Terracotta",
+      "description": "Cedar, black pepper and a little smoke. Burns for about fifty hours and the vessel is worth keeping.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-003",
+      "material": "Ceramic, soy wax",
+      "name": "Ember Ceramic Candle",
+      "occasions": [
+        "thank-you",
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 42.0,
+      "product_id": "HL-003",
+      "rating": 4.8,
+      "rating_score": 4.7223,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 431,
+      "shipping_days": 2,
+      "stock": 63,
+      "subcategory": "Candles",
+      "subcategory_slug": "candles",
+      "tags": [
+        "candle",
+        "scented",
+        "woody",
+        "refillable"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Off White",
+      "description": "Green fig and cut grass. Lighter than the Ember, better for a bedroom.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-004",
+      "material": "Ceramic, soy wax",
+      "name": "Linen Fig Candle",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 38.0,
+      "product_id": "HL-004",
+      "rating": 4.7,
+      "rating_score": 4.6186,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 289,
+      "shipping_days": 2,
+      "stock": 0,
+      "subcategory": "Candles",
+      "subcategory_slug": "candles",
+      "tags": [
+        "candle",
+        "scented",
+        "fresh",
+        "fig"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Mixed",
+      "description": "Three small scents in one box: fig, cedar, sea salt. The safe choice when you don't know what someone likes.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-005",
+      "material": "Glass, soy wax",
+      "name": "Trio Votive Set",
+      "occasions": [
+        "christmas",
+        "thank-you"
+      ],
+      "price_eur": 54.0,
+      "product_id": "HL-005",
+      "rating": 4.5,
+      "rating_score": 4.4371,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 97,
+      "shipping_days": 2,
+      "stock": 21,
+      "subcategory": "Candles",
+      "subcategory_slug": "candles",
+      "tags": [
+        "candle",
+        "set",
+        "scented",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Sand",
+      "description": "Hand-thrown, so no two are identical. Holds long stems without tipping.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-006",
+      "material": "Stoneware",
+      "name": "Stoneware Vase, Tall",
+      "occasions": [
+        "housewarming",
+        "anniversary"
+      ],
+      "price_eur": 68.0,
+      "product_id": "HL-006",
+      "rating": 4.3,
+      "rating_score": 4.3441,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 64,
+      "shipping_days": 4,
+      "stock": 18,
+      "subcategory": "Vases",
+      "subcategory_slug": "vases",
+      "tags": [
+        "vase",
+        "handmade",
+        "stoneware",
+        "tall"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Sand",
+      "description": "The shorter sibling. Good for supermarket flowers, which is what people actually buy.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-007",
+      "material": "Stoneware",
+      "name": "Stoneware Vase, Squat",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 49.0,
+      "product_id": "HL-007",
+      "rating": 4.3,
+      "rating_score": 4.348,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 51,
+      "shipping_days": 4,
+      "stock": 25,
+      "subcategory": "Vases",
+      "subcategory_slug": "vases",
+      "tags": [
+        "vase",
+        "handmade",
+        "stoneware",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Clear",
+      "description": "Five small glass vases that group together. One stem each.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": false,
+      "listing_group": "HL-008",
+      "material": "Glass",
+      "name": "Bud Vase Cluster",
+      "occasions": [
+        "housewarming",
+        "thank-you"
+      ],
+      "price_eur": 36.0,
+      "product_id": "HL-008",
+      "rating": null,
+      "rating_score": 4.3735,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": null,
+      "shipping_days": 3,
+      "stock": 31,
+      "subcategory": "Vases",
+      "subcategory_slug": "vases",
+      "tags": [
+        "vase",
+        "set",
+        "small",
+        "minimal"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Charcoal",
+      "description": "Genuinely soft, genuinely warm, and light enough to actually use. The kind of thing nobody buys for themselves.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-009",
+      "material": "Baby alpaca",
+      "name": "Alpaca Throw",
+      "occasions": [
+        "christmas",
+        "anniversary"
+      ],
+      "price_eur": 185.0,
+      "product_id": "HL-009",
+      "rating": 4.9,
+      "rating_score": 4.6994,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 156,
+      "shipping_days": 5,
+      "stock": 9,
+      "subcategory": "Textiles",
+      "subcategory_slug": "textiles",
+      "tags": [
+        "throw",
+        "blanket",
+        "luxury",
+        "warm"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Oatmeal",
+      "description": "Washable, unfussy, gets softer with use. The everyday version of the alpaca.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-010",
+      "material": "Organic cotton",
+      "name": "Waffle Cotton Throw",
+      "occasions": [
+        "housewarming",
+        "birthday"
+      ],
+      "price_eur": 78.0,
+      "product_id": "HL-010",
+      "rating": 4.4,
+      "rating_score": 4.3915,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 203,
+      "shipping_days": 3,
+      "stock": 22,
+      "subcategory": "Textiles",
+      "subcategory_slug": "textiles",
+      "tags": [
+        "throw",
+        "blanket",
+        "cotton",
+        "light"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Clay",
+      "description": "Two covers, inserts included. Stonewashed so they look lived-in from day one.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-011",
+      "material": "Washed linen",
+      "name": "Linen Cushion Pair",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 64.0,
+      "product_id": "HL-011",
+      "rating": 4.2,
+      "rating_score": 4.2997,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 71,
+      "shipping_days": 3,
+      "stock": 17,
+      "subcategory": "Textiles",
+      "subcategory_slug": "textiles",
+      "tags": [
+        "cushion",
+        "linen",
+        "pair",
+        "neutral"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Amber",
+      "description": "Three months of scent with no flame. Sensible for anyone with cats or small children.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-012",
+      "material": "Glass, rattan",
+      "name": "Reed Diffuser, Cedar",
+      "occasions": [
+        "housewarming",
+        "thank-you"
+      ],
+      "price_eur": 46.0,
+      "product_id": "HL-012",
+      "rating": 4.1,
+      "rating_score": 4.2227,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 118,
+      "shipping_days": 2,
+      "stock": 28,
+      "subcategory": "Fragrance",
+      "subcategory_slug": "fragrance",
+      "tags": [
+        "diffuser",
+        "scented",
+        "woody",
+        "no-flame"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Clear",
+      "description": "Great gift.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-013",
+      "material": "Glass",
+      "name": "Room Spray Duo",
+      "occasions": [],
+      "price_eur": 34.0,
+      "product_id": "HL-013",
+      "rating": 3.9,
+      "rating_score": 4.2224,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 45,
+      "shipping_days": 2,
+      "stock": 40,
+      "subcategory": "Fragrance",
+      "subcategory_slug": "fragrance",
+      "tags": [
+        "spray",
+        "scented",
+        "set",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Nordlys",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "White",
+      "description": "Silent sweep movement, no ticking. Reads clearly from across a room.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-014",
+      "material": "Beech, aluminium",
+      "name": "Nordic Wall Clock",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 89.0,
+      "product_id": "HL-014",
+      "rating": 4.5,
+      "rating_score": 4.4467,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 132,
+      "shipping_days": 4,
+      "stock": 11,
+      "subcategory": "Decor",
+      "subcategory_slug": "decor",
+      "tags": [
+        "clock",
+        "wall",
+        "silent",
+        "minimal"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Green",
+      "description": "Heavy enough to hold a shelf of hardbacks. Each pair has different veining.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-015",
+      "material": "Marble",
+      "name": "Marble Bookends",
+      "occasions": [
+        "graduation",
+        "housewarming"
+      ],
+      "price_eur": 95.0,
+      "product_id": "HL-015",
+      "rating": 4.6,
+      "rating_score": 4.4588,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 58,
+      "shipping_days": 5,
+      "stock": 7,
+      "subcategory": "Decor",
+      "subcategory_slug": "decor",
+      "tags": [
+        "bookends",
+        "marble",
+        "heavy",
+        "desk"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Brass",
+      "description": "Ages to a warm patina. Stands or hangs.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-016",
+      "material": "Brass, glass",
+      "name": "Brass Picture Frame 13x18",
+      "occasions": [
+        "anniversary",
+        "thank-you"
+      ],
+      "price_eur": 39.0,
+      "product_id": "HL-016",
+      "rating": 4.0,
+      "rating_score": 4.1938,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 89,
+      "shipping_days": 3,
+      "stock": 44,
+      "subcategory": "Decor",
+      "subcategory_slug": "decor",
+      "tags": [
+        "frame",
+        "brass",
+        "photo",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Natural",
+      "description": "Holds blankets, firewood or the toys nobody puts away.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-017",
+      "material": "Seagrass",
+      "name": "Woven Storage Basket",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 58.0,
+      "product_id": "HL-017",
+      "rating": 4.3,
+      "rating_score": 4.3408,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 77,
+      "shipping_days": 4,
+      "stock": 19,
+      "subcategory": "Storage",
+      "subcategory_slug": "storage",
+      "tags": [
+        "basket",
+        "storage",
+        "woven",
+        "natural"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Walnut",
+      "description": "Keys, wallet, watch. Solves a small daily annoyance.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-018",
+      "material": "Walnut",
+      "name": "Entry Tray, Walnut",
+      "occasions": [
+        "housewarming",
+        "thank-you"
+      ],
+      "price_eur": 44.0,
+      "product_id": "HL-018",
+      "rating": 4.4,
+      "rating_score": 4.384,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 63,
+      "shipping_days": 3,
+      "stock": 26,
+      "subcategory": "Storage",
+      "subcategory_slug": "storage",
+      "tags": [
+        "tray",
+        "wood",
+        "desk",
+        "entryway"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Chalk",
+      "description": "Drainage hole and matching saucer, which most planters at this price skip.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-019",
+      "material": "Ceramic",
+      "name": "Ceramic Planter, Medium",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 52.0,
+      "product_id": "HL-019",
+      "rating": 4.2,
+      "rating_score": 4.2876,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 94,
+      "shipping_days": 4,
+      "stock": 23,
+      "subcategory": "Garden",
+      "subcategory_slug": "garden",
+      "tags": [
+        "planter",
+        "ceramic",
+        "indoor",
+        "drainage"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Chalk",
+      "description": "Same glaze as the medium planter, on a cotton rope. Sold without the plant.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-020",
+      "material": "Ceramic, cotton rope",
+      "name": "Aurora Hanging Planter",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 47.0,
+      "product_id": "HL-020",
+      "rating": 4.0,
+      "rating_score": 4.2676,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 38,
+      "shipping_days": 4,
+      "stock": 15,
+      "subcategory": "Garden",
+      "subcategory_slug": "garden",
+      "tags": [
+        "planter",
+        "hanging",
+        "ceramic",
+        "indoor"
+      ]
+    },
+    {
+      "also_listed_in": [
+        {
+          "category_slug": "kitchen-dining",
+          "product_id": "KD-024"
+        }
+      ],
+      "availability": "in_stock",
+      "brand": "Seedhouse",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Green",
+      "description": "Basil, thyme and mint with soil discs and instructions that assume you know nothing.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-021",
+      "material": "Terracotta, seed",
+      "name": "Herb Garden Kit",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 42.0,
+      "product_id": "HL-021",
+      "rating": 4.1,
+      "rating_score": 4.1998,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 167,
+      "shipping_days": 3,
+      "stock": 34,
+      "subcategory": "Garden",
+      "subcategory_slug": "garden",
+      "tags": [
+        "kit",
+        "herbs",
+        "beginner",
+        "kitchen"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Grey",
+      "description": "Coarse wool that actually takes mud off boots. Not for outdoors in the rain.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-022",
+      "material": "Wool, jute",
+      "name": "Wool Door Mat",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 72.0,
+      "product_id": "HL-022",
+      "rating": 3.8,
+      "rating_score": 4.2404,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 29,
+      "shipping_days": 6,
+      "stock": 0,
+      "subcategory": "Textiles",
+      "subcategory_slug": "textiles",
+      "tags": [
+        "mat",
+        "wool",
+        "entryway",
+        "durable"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Multi",
+      "description": "Four coasters, cork-backed. Each one has a different chip pattern.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-023",
+      "material": "Terrazzo, cork",
+      "name": "Terrazzo Coaster Set",
+      "occasions": [
+        "housewarming",
+        "thank-you"
+      ],
+      "price_eur": 32.0,
+      "product_id": "HL-023",
+      "rating": 4.4,
+      "rating_score": 4.3877,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 111,
+      "shipping_days": 3,
+      "stock": 52,
+      "subcategory": "Decor",
+      "subcategory_slug": "decor",
+      "tags": [
+        "coasters",
+        "set",
+        "terrazzo",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [
+        {
+          "category_slug": "kitchen-dining",
+          "product_id": "KD-023"
+        }
+      ],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Amber",
+      "description": "Six tumblers in smoked amber. Dishwasher safe, which the fancier ones never are.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-024",
+      "material": "Glass",
+      "name": "Amber Glass Tumbler Set",
+      "occasions": [
+        "housewarming",
+        "anniversary"
+      ],
+      "price_eur": 56.0,
+      "product_id": "HL-024",
+      "rating": 4.5,
+      "rating_score": 4.4333,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 86,
+      "shipping_days": 4,
+      "stock": 20,
+      "subcategory": "Decor",
+      "subcategory_slug": "decor",
+      "tags": [
+        "glassware",
+        "set",
+        "amber",
+        "six"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Ivory",
+      "description": "Draped over a chair rather than on the floor, mostly. Ethically sourced, certificate in the box.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-025",
+      "material": "Sheepskin",
+      "name": "Sheepskin Rug, Small",
+      "occasions": [
+        "christmas"
+      ],
+      "price_eur": 120.0,
+      "product_id": "HL-025",
+      "rating": 4.6,
+      "rating_score": 4.4706,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 72,
+      "shipping_days": 5,
+      "stock": 8,
+      "subcategory": "Textiles",
+      "subcategory_slug": "textiles",
+      "tags": [
+        "rug",
+        "sheepskin",
+        "warm",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "low_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Oak",
+      "description": "A leaning ladder for towels or throws. Ships flat, assembles in ten minutes.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": false,
+      "listing_group": "HL-026",
+      "material": "Solid oak",
+      "name": "Oak Serving Ladder",
+      "occasions": [
+        "housewarming",
+        "anniversary"
+      ],
+      "price_eur": 110.0,
+      "product_id": "HL-026",
+      "rating": null,
+      "rating_score": 4.3735,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": null,
+      "shipping_days": 6,
+      "stock": 4,
+      "subcategory": "Storage",
+      "subcategory_slug": "storage",
+      "tags": [
+        "shelf",
+        "oak",
+        "bathroom",
+        "decor"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fold Studio",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Natural",
+      "description": "Three boxes, sandalwood to green tea, with a small ceramic holder.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-027",
+      "material": "Wood, resin",
+      "name": "Incense Set, Japanese",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 28.0,
+      "product_id": "HL-027",
+      "rating": 4.7,
+      "rating_score": 4.602,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 224,
+      "shipping_days": 2,
+      "stock": 47,
+      "subcategory": "Fragrance",
+      "subcategory_slug": "fragrance",
+      "tags": [
+        "incense",
+        "set",
+        "calm",
+        "japanese"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Casa Lenta",
+      "category": "Home & Living",
+      "category_slug": "home-living",
+      "color": "Sage",
+      "description": "Two metres. Creases immediately and is supposed to.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "HL-028",
+      "material": "Washed linen",
+      "name": "Linen Table Runner",
+      "occasions": [
+        "christmas",
+        "housewarming"
+      ],
+      "price_eur": 48.0,
+      "product_id": "HL-028",
+      "rating": 4.0,
+      "rating_score": 4.2617,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 41,
+      "shipping_days": 3,
+      "stock": 29,
+      "subcategory": "Textiles",
+      "subcategory_slug": "textiles",
+      "tags": [
+        "table",
+        "linen",
+        "dining",
+        "neutral"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Gold",
+      "description": "Forty-five centimetres, thick enough not to tangle. Vermeil, so it will not turn skin green.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-001",
+      "material": "Gold vermeil on silver",
+      "name": "Gold Vermeil Chain Necklace",
+      "occasions": [
+        "anniversary",
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 165.0,
+      "product_id": "JW-001",
+      "rating": 4.6,
+      "rating_score": 4.5435,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 289,
+      "shipping_days": 4,
+      "stock": 16,
+      "subcategory": "Necklaces",
+      "subcategory_slug": "necklaces",
+      "tags": [
+        "necklace",
+        "gold",
+        "vermeil",
+        "everyday"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Pearl",
+      "description": "A single baroque pearl, so each one is a slightly different shape.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-002",
+      "material": "Freshwater pearl, silver",
+      "name": "Pearl Pendant",
+      "occasions": [
+        "anniversary",
+        "graduation"
+      ],
+      "price_eur": 128.0,
+      "product_id": "JW-002",
+      "rating": 4.4,
+      "rating_score": 4.3889,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 134,
+      "shipping_days": 4,
+      "stock": 12,
+      "subcategory": "Necklaces",
+      "subcategory_slug": "necklaces",
+      "tags": [
+        "necklace",
+        "pearl",
+        "pendant",
+        "classic"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Gold",
+      "description": "Small enough to sleep in. Hinged clasp that does not come loose.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-003",
+      "material": "Gold vermeil",
+      "name": "Huggie Earrings, Pair",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 89.0,
+      "product_id": "JW-003",
+      "rating": 4.5,
+      "rating_score": 4.4612,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 217,
+      "shipping_days": 3,
+      "stock": 24,
+      "subcategory": "Earrings",
+      "subcategory_slug": "earrings",
+      "tags": [
+        "earrings",
+        "gold",
+        "huggie",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Gold",
+      "description": "Plain, pearl and stone. Covers most outfits and most moods.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-004",
+      "material": "Gold vermeil, zirconia",
+      "name": "Stud Set, Three Pairs",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 112.0,
+      "product_id": "JW-004",
+      "rating": 4.3,
+      "rating_score": 4.3367,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 96,
+      "shipping_days": 3,
+      "stock": 18,
+      "subcategory": "Earrings",
+      "subcategory_slug": "earrings",
+      "tags": [
+        "earrings",
+        "set",
+        "studs",
+        "gold"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Silver",
+      "description": "Hand-engraved with up to three initials. Add a week for the engraving.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-005",
+      "material": "Sterling silver",
+      "name": "Signet Ring, Engravable",
+      "occasions": [
+        "anniversary",
+        "graduation"
+      ],
+      "price_eur": 195.0,
+      "product_id": "JW-005",
+      "rating": 4.7,
+      "rating_score": 4.5296,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 88,
+      "shipping_days": 7,
+      "stock": 7,
+      "subcategory": "Rings",
+      "subcategory_slug": "rings",
+      "tags": [
+        "ring",
+        "signet",
+        "silver",
+        "engraving"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Gold",
+      "description": "Sized as a set. Worn together or spread across fingers.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-006",
+      "material": "Gold vermeil",
+      "name": "Stacking Rings, Set of Three",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 96.0,
+      "product_id": "JW-006",
+      "rating": 4.2,
+      "rating_score": 4.2697,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 143,
+      "shipping_days": 4,
+      "stock": 21,
+      "subcategory": "Rings",
+      "subcategory_slug": "rings",
+      "tags": [
+        "rings",
+        "set",
+        "stacking",
+        "thin"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Brown",
+      "description": "Quick-release pins, so it changes without tools. Check the lug width first.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-007",
+      "material": "Full-grain leather",
+      "name": "Leather Watch Strap 20mm",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 68.0,
+      "product_id": "JW-007",
+      "rating": 4.1,
+      "rating_score": 4.2262,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 112,
+      "shipping_days": 3,
+      "stock": 29,
+      "subcategory": "Watches",
+      "subcategory_slug": "watches",
+      "tags": [
+        "strap",
+        "watch",
+        "leather",
+        "20mm"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Lune",
+      "category": "Jewellery",
+      "category_slug": "jewellery",
+      "color": "Indigo",
+      "description": "Adjustable slide, unisex, survives showers.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "JW-008",
+      "material": "Cord, silver",
+      "name": "Bracelet, Woven Cord",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 54.0,
+      "product_id": "JW-008",
+      "rating": 3.8,
+      "rating_score": 4.1377,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 67,
+      "shipping_days": 3,
+      "stock": 0,
+      "subcategory": "Bracelets",
+      "subcategory_slug": "bracelets",
+      "tags": [
+        "bracelet",
+        "cord",
+        "adjustable",
+        "unisex"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kuro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Steel",
+      "description": "A proper Japanese gyuto. Holds an edge, feels balanced, and will outlive whoever you give it to.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-001",
+      "material": "VG-10 steel, pakkawood",
+      "name": "Chef's Knife 20cm",
+      "occasions": [
+        "birthday",
+        "christmas",
+        "housewarming"
+      ],
+      "price_eur": 149.0,
+      "product_id": "KD-001",
+      "rating": 4.8,
+      "rating_score": 4.7164,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 394,
+      "shipping_days": 3,
+      "stock": 16,
+      "subcategory": "Knives",
+      "subcategory_slug": "knives",
+      "tags": [
+        "knife",
+        "chef",
+        "japanese",
+        "steel"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kuro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Steel",
+      "description": "The knife people actually reach for most. Pairs with the gyuto.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-002",
+      "material": "VG-10 steel, pakkawood",
+      "name": "Paring Knife 9cm",
+      "occasions": [
+        "thank-you",
+        "housewarming"
+      ],
+      "price_eur": 69.0,
+      "product_id": "KD-002",
+      "rating": 4.6,
+      "rating_score": 4.5109,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 148,
+      "shipping_days": 3,
+      "stock": 24,
+      "subcategory": "Knives",
+      "subcategory_slug": "knives",
+      "tags": [
+        "knife",
+        "paring",
+        "small",
+        "japanese"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kuro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Grey",
+      "description": "1000/3000 grit combination stone with a non-slip base. Comes with a card explaining the angle.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-003",
+      "material": "Ceramic",
+      "name": "Knife Sharpening Stone",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 54.0,
+      "product_id": "KD-003",
+      "rating": 4.5,
+      "rating_score": 4.4367,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 96,
+      "shipping_days": 3,
+      "stock": 18,
+      "subcategory": "Knives",
+      "subcategory_slug": "knives",
+      "tags": [
+        "sharpening",
+        "stone",
+        "maintenance",
+        "accessory"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Silver",
+      "description": "The Italian classic in the size that fits two mugs. Induction-compatible base.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-004",
+      "material": "Aluminium",
+      "name": "Espresso Moka Pot 3-cup",
+      "occasions": [
+        "housewarming",
+        "thank-you"
+      ],
+      "price_eur": 46.0,
+      "product_id": "KD-004",
+      "rating": 4.4,
+      "rating_score": 4.3932,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 276,
+      "shipping_days": 2,
+      "stock": 38,
+      "subcategory": "Coffee",
+      "subcategory_slug": "coffee",
+      "tags": [
+        "coffee",
+        "moka",
+        "stovetop",
+        "classic"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Clear",
+      "description": "Carafe, dripper, wooden collar and fifty filters. For the person who has opinions about water temperature.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-005",
+      "material": "Borosilicate glass, wood",
+      "name": "Pour-Over Set",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 78.0,
+      "product_id": "KD-005",
+      "rating": 4.6,
+      "rating_score": 4.5221,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 183,
+      "shipping_days": 3,
+      "stock": 21,
+      "subcategory": "Coffee",
+      "subcategory_slug": "coffee",
+      "tags": [
+        "coffee",
+        "pourover",
+        "glass",
+        "filter"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Black",
+      "description": "Stepped adjustment from espresso to French press. Quiet, which the electric ones are not.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-006",
+      "material": "Stainless steel",
+      "name": "Burr Coffee Grinder, Manual",
+      "occasions": [
+        "christmas",
+        "birthday"
+      ],
+      "price_eur": 115.0,
+      "product_id": "KD-006",
+      "rating": 4.7,
+      "rating_score": 4.607,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 241,
+      "shipping_days": 3,
+      "stock": 12,
+      "subcategory": "Coffee",
+      "subcategory_slug": "coffee",
+      "tags": [
+        "coffee",
+        "grinder",
+        "manual",
+        "steel"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Clear",
+      "description": "One litre overnight in the fridge. Fine mesh, no grit.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-007",
+      "material": "Glass, steel mesh",
+      "name": "Cold Brew Carafe",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 52.0,
+      "product_id": "KD-007",
+      "rating": 4.1,
+      "rating_score": 4.2544,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 74,
+      "shipping_days": 3,
+      "stock": 0,
+      "subcategory": "Coffee",
+      "subcategory_slug": "coffee",
+      "tags": [
+        "coffee",
+        "coldbrew",
+        "summer",
+        "glass"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vesper & Co",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Gunmetal",
+      "description": "Shaker, jigger, strainer, muddler, spoon, tongs, three pourers and a stand. Recipe card for six classics.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-008",
+      "material": "Stainless steel",
+      "name": "Cocktail Kit, Ten-Piece",
+      "occasions": [
+        "birthday",
+        "christmas",
+        "anniversary"
+      ],
+      "price_eur": 129.0,
+      "product_id": "KD-008",
+      "rating": 4.5,
+      "rating_score": 4.4522,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 158,
+      "shipping_days": 4,
+      "stock": 13,
+      "subcategory": "Bar",
+      "subcategory_slug": "bar",
+      "tags": [
+        "cocktail",
+        "bar",
+        "set",
+        "gift"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vesper & Co",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Clear",
+      "description": "Heavy base, thin rim. Two, so they get used together.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-009",
+      "material": "Lead-free crystal",
+      "name": "Crystal Whisky Glasses, Pair",
+      "occasions": [
+        "anniversary",
+        "graduation"
+      ],
+      "price_eur": 89.0,
+      "product_id": "KD-009",
+      "rating": 4.7,
+      "rating_score": 4.5625,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 132,
+      "shipping_days": 4,
+      "stock": 17,
+      "subcategory": "Bar",
+      "subcategory_slug": "bar",
+      "tags": [
+        "glassware",
+        "whisky",
+        "pair",
+        "crystal"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vesper & Co",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Black",
+      "description": "Pumps the air out and keeps an open bottle drinkable for about a week.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-010",
+      "material": "ABS, steel",
+      "name": "Wine Preserver",
+      "occasions": [
+        "thank-you",
+        "housewarming"
+      ],
+      "price_eur": 64.0,
+      "product_id": "KD-010",
+      "rating": 3.9,
+      "rating_score": 4.1772,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 68,
+      "shipping_days": 3,
+      "stock": 26,
+      "subcategory": "Bar",
+      "subcategory_slug": "bar",
+      "tags": [
+        "wine",
+        "preserver",
+        "vacuum",
+        "accessory"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Natural",
+      "description": "Every board has a different grain. Big enough for a proper cheese course.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-011",
+      "material": "Olive wood",
+      "name": "Olive Wood Board, Large",
+      "occasions": [
+        "housewarming",
+        "christmas"
+      ],
+      "price_eur": 84.0,
+      "product_id": "KD-011",
+      "rating": 4.6,
+      "rating_score": 4.4939,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 109,
+      "shipping_days": 4,
+      "stock": 15,
+      "subcategory": "Serving",
+      "subcategory_slug": "serving",
+      "tags": [
+        "board",
+        "olivewood",
+        "serving",
+        "cheese"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Black",
+      "description": "Slate board, four markers and three knives. You write the cheese names on the slate.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-012",
+      "material": "Slate, steel",
+      "name": "Slate Cheese Board Set",
+      "occasions": [
+        "christmas",
+        "housewarming"
+      ],
+      "price_eur": 62.0,
+      "product_id": "KD-012",
+      "rating": 4.2,
+      "rating_score": 4.291,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 87,
+      "shipping_days": 3,
+      "stock": 22,
+      "subcategory": "Serving",
+      "subcategory_slug": "serving",
+      "tags": [
+        "board",
+        "slate",
+        "cheese",
+        "set"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Ferro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Burgundy",
+      "description": "Cast iron with an enamel coat, oven to table. Heavy, and that is the point.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-013",
+      "material": "Enamelled cast iron",
+      "name": "Enamel Casserole 24cm",
+      "occasions": [
+        "anniversary",
+        "christmas"
+      ],
+      "price_eur": 189.0,
+      "product_id": "KD-013",
+      "rating": 4.8,
+      "rating_score": 4.6996,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 312,
+      "shipping_days": 5,
+      "stock": 9,
+      "subcategory": "Cookware",
+      "subcategory_slug": "cookware",
+      "tags": [
+        "casserole",
+        "castiron",
+        "enamel",
+        "oven"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Ferro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Black",
+      "description": "Pre-seasoned, gets better every time you use it. Not dishwasher safe and never will be.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-014",
+      "material": "Carbon steel",
+      "name": "Carbon Steel Pan 26cm",
+      "occasions": [
+        "birthday",
+        "housewarming"
+      ],
+      "price_eur": 76.0,
+      "product_id": "KD-014",
+      "rating": 4.5,
+      "rating_score": 4.4538,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 167,
+      "shipping_days": 4,
+      "stock": 19,
+      "subcategory": "Cookware",
+      "subcategory_slug": "cookware",
+      "tags": [
+        "pan",
+        "carbonsteel",
+        "searing",
+        "seasoned"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Ferro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Steel",
+      "description": "Hand-crank roller, two cutters and a drying rack. A weekend project, not a weeknight one.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-015",
+      "material": "Steel, beech",
+      "name": "Pasta Making Kit",
+      "occasions": [
+        "birthday",
+        "anniversary"
+      ],
+      "price_eur": 98.0,
+      "product_id": "KD-015",
+      "rating": 4.3,
+      "rating_score": 4.3373,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 93,
+      "shipping_days": 4,
+      "stock": 11,
+      "subcategory": "Cookware",
+      "subcategory_slug": "cookware",
+      "tags": [
+        "pasta",
+        "kit",
+        "italian",
+        "manual"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Ferro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Natural",
+      "description": "Banneton, lame, scraper and a linen couche. Sourdough starter not included, deliberately.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-016",
+      "material": "Rattan, linen, steel",
+      "name": "Bread Baking Set",
+      "occasions": [
+        "christmas",
+        "housewarming"
+      ],
+      "price_eur": 72.0,
+      "product_id": "KD-016",
+      "rating": 4.4,
+      "rating_score": 4.3883,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 121,
+      "shipping_days": 4,
+      "stock": 14,
+      "subcategory": "Cookware",
+      "subcategory_slug": "cookware",
+      "tags": [
+        "bread",
+        "baking",
+        "banneton",
+        "starter"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Speckled Grey",
+      "description": "Sixteen pieces for four people. Chip-resistant and it stacks properly.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-017",
+      "material": "Stoneware",
+      "name": "Ceramic Dinner Set, Four",
+      "occasions": [
+        "anniversary",
+        "housewarming"
+      ],
+      "price_eur": 168.0,
+      "product_id": "KD-017",
+      "rating": 4.5,
+      "rating_score": 4.4241,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 64,
+      "shipping_days": 6,
+      "stock": 7,
+      "subcategory": "Tableware",
+      "subcategory_slug": "tableware",
+      "tags": [
+        "dinnerware",
+        "set",
+        "ceramic",
+        "four"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Cream",
+      "description": "Wide and shallow, the right shape for pasta and for everything else people put in bowls.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-018",
+      "material": "Stoneware",
+      "name": "Handmade Pasta Bowls, Pair",
+      "occasions": [
+        "anniversary",
+        "thank-you"
+      ],
+      "price_eur": 74.0,
+      "product_id": "KD-018",
+      "rating": 4.6,
+      "rating_score": 4.4588,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 58,
+      "shipping_days": 4,
+      "stock": 20,
+      "subcategory": "Tableware",
+      "subcategory_slug": "tableware",
+      "tags": [
+        "bowl",
+        "pair",
+        "handmade",
+        "pasta"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Ferro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Copper",
+      "description": "Four nested cups. Decorative enough to hang up, accurate enough to use.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-019",
+      "material": "Copper, steel",
+      "name": "Copper Measuring Cups",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 58.0,
+      "product_id": "KD-019",
+      "rating": 4.0,
+      "rating_score": 4.2598,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 42,
+      "shipping_days": 3,
+      "stock": 0,
+      "subcategory": "Tableware",
+      "subcategory_slug": "tableware",
+      "tags": [
+        "measuring",
+        "copper",
+        "baking",
+        "set"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Ferro",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Walnut",
+      "description": "Ceramic grinding mechanism, adjustable from coarse to fine. Lifetime guarantee on the mechanism.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-020",
+      "material": "Walnut, ceramic",
+      "name": "Salt & Pepper Mills, Pair",
+      "occasions": [
+        "housewarming",
+        "christmas"
+      ],
+      "price_eur": 92.0,
+      "product_id": "KD-020",
+      "rating": 4.7,
+      "rating_score": 4.5848,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 176,
+      "shipping_days": 4,
+      "stock": 23,
+      "subcategory": "Tableware",
+      "subcategory_slug": "tableware",
+      "tags": [
+        "mill",
+        "pair",
+        "walnut",
+        "grinder"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Clear",
+      "description": "Glass so you can watch the leaves open. Removable steel basket, 800ml.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-021",
+      "material": "Borosilicate glass",
+      "name": "Tea Infuser Pot",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 68.0,
+      "product_id": "KD-021",
+      "rating": 4.3,
+      "rating_score": 4.3356,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 102,
+      "shipping_days": 3,
+      "stock": 25,
+      "subcategory": "Tea",
+      "subcategory_slug": "tea",
+      "tags": [
+        "tea",
+        "pot",
+        "glass",
+        "infuser"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Fumo",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Mixed",
+      "description": "Six tins, six origins, tasting notes on each. Enough of each for about ten cups.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KD-022",
+      "material": "Tin, tea",
+      "name": "Loose Leaf Tea Flight",
+      "occasions": [
+        "thank-you",
+        "christmas"
+      ],
+      "price_eur": 44.0,
+      "product_id": "KD-022",
+      "rating": 4.2,
+      "rating_score": 4.2712,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 138,
+      "shipping_days": 2,
+      "stock": 36,
+      "subcategory": "Tea",
+      "subcategory_slug": "tea",
+      "tags": [
+        "tea",
+        "set",
+        "tasting",
+        "loose"
+      ]
+    },
+    {
+      "also_listed_in": [
+        {
+          "category_slug": "home-living",
+          "product_id": "HL-024"
+        }
+      ],
+      "availability": "in_stock",
+      "brand": "Terra Nine",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Amber",
+      "description": "Six tumblers in smoked amber. Dishwasher safe, which the fancier ones never are.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": false,
+      "is_rated": true,
+      "listing_group": "HL-024",
+      "material": "Glass",
+      "name": "Amber Glass Tumbler Set",
+      "occasions": [
+        "housewarming",
+        "anniversary"
+      ],
+      "price_eur": 56.0,
+      "product_id": "KD-023",
+      "rating": 4.5,
+      "rating_score": 4.4333,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 86,
+      "shipping_days": 4,
+      "stock": 20,
+      "subcategory": "Serving",
+      "subcategory_slug": "serving",
+      "tags": [
+        "glassware",
+        "set",
+        "amber",
+        "six"
+      ]
+    },
+    {
+      "also_listed_in": [
+        {
+          "category_slug": "home-living",
+          "product_id": "HL-021"
+        }
+      ],
+      "availability": "in_stock",
+      "brand": "Seedhouse",
+      "category": "Kitchen & Dining",
+      "category_slug": "kitchen-dining",
+      "color": "Green",
+      "description": "Basil, thyme and mint with soil discs and instructions that assume you know nothing.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": false,
+      "is_rated": true,
+      "listing_group": "HL-021",
+      "material": "Terracotta, seed",
+      "name": "Herb Garden Kit",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 42.0,
+      "product_id": "KD-024",
+      "rating": 4.1,
+      "rating_score": 4.1998,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 167,
+      "shipping_days": 3,
+      "stock": 34,
+      "subcategory": "Serving",
+      "subcategory_slug": "serving",
+      "tags": [
+        "kit",
+        "herbs",
+        "beginner",
+        "kitchen"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramblewood",
+      "category": "Kids",
+      "category_slug": "kids",
+      "color": "Multi",
+      "description": "Sixty pieces in a cotton bag. Ages three and up, though adults build with them too.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KI-001",
+      "material": "Beech, water-based paint",
+      "name": "Wooden Building Blocks, 60pc",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 78.0,
+      "product_id": "KI-001",
+      "rating": 4.7,
+      "rating_score": 4.6129,
+      "recipient": "kids",
+      "recipients_match": [
+        "kids"
+      ],
+      "reviews_count": 264,
+      "shipping_days": 3,
+      "stock": 22,
+      "subcategory": "Toys",
+      "subcategory_slug": "toys",
+      "tags": [
+        "blocks",
+        "wooden",
+        "toddler",
+        "building"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramblewood",
+      "category": "Kids",
+      "category_slug": "kids",
+      "color": "Natural",
+      "description": "Rocker, bridge, slide, den roof. The most-used toy in most houses that own one.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KI-002",
+      "material": "Birch ply, felt",
+      "name": "Balance Board",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 96.0,
+      "product_id": "KI-002",
+      "rating": 4.5,
+      "rating_score": 4.4571,
+      "recipient": "kids",
+      "recipients_match": [
+        "kids"
+      ],
+      "reviews_count": 187,
+      "shipping_days": 4,
+      "stock": 14,
+      "subcategory": "Toys",
+      "subcategory_slug": "toys",
+      "tags": [
+        "balance",
+        "wooden",
+        "active",
+        "montessori"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Vellum",
+      "category": "Kids",
+      "category_slug": "kids",
+      "color": "Multi",
+      "description": "Twelve stories, one per bedtime. Illustrated by hand, not generated.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KI-003",
+      "material": "Paper",
+      "name": "Illustrated Story Collection",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 34.0,
+      "product_id": "KI-003",
+      "rating": 4.6,
+      "rating_score": 4.5296,
+      "recipient": "kids",
+      "recipients_match": [
+        "kids"
+      ],
+      "reviews_count": 213,
+      "shipping_days": 2,
+      "stock": 38,
+      "subcategory": "Books",
+      "subcategory_slug": "books",
+      "tags": [
+        "book",
+        "stories",
+        "illustrated",
+        "bedtime"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramblewood",
+      "category": "Kids",
+      "category_slug": "kids",
+      "color": "Multi",
+      "description": "Twenty experiments with things you already have at home. Adult supervision for four of them.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KI-004",
+      "material": "Plastic, glass",
+      "name": "Junior Science Kit",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 62.0,
+      "product_id": "KI-004",
+      "rating": 4.2,
+      "rating_score": 4.2656,
+      "recipient": "kids",
+      "recipients_match": [
+        "kids"
+      ],
+      "reviews_count": 158,
+      "shipping_days": 3,
+      "stock": 19,
+      "subcategory": "Toys",
+      "subcategory_slug": "toys",
+      "tags": [
+        "science",
+        "kit",
+        "experiments",
+        "stem"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramblewood",
+      "category": "Kids",
+      "category_slug": "kids",
+      "color": "Multi",
+      "description": "Crayons, pencils, pastels and paper in a case that closes properly.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KI-005",
+      "material": "Wood, wax, paper",
+      "name": "Kids' Art Supply Case",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 48.0,
+      "product_id": "KI-005",
+      "rating": 4.4,
+      "rating_score": 4.3885,
+      "recipient": "kids",
+      "recipients_match": [
+        "kids"
+      ],
+      "reviews_count": 126,
+      "shipping_days": 3,
+      "stock": 31,
+      "subcategory": "Craft",
+      "subcategory_slug": "craft",
+      "tags": [
+        "art",
+        "kit",
+        "crayons",
+        "case"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Kids",
+      "category_slug": "kids",
+      "color": "White",
+      "description": "Silicone, warm and dimmable, safe to carry to the bathroom. Charges on a base.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "KI-006",
+      "material": "Silicone",
+      "name": "Night Light, Rechargeable",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 42.0,
+      "product_id": "KI-006",
+      "rating": 4.3,
+      "rating_score": 4.3209,
+      "recipient": "kids",
+      "recipients_match": [
+        "kids"
+      ],
+      "reviews_count": 241,
+      "shipping_days": 2,
+      "stock": 26,
+      "subcategory": "Toys",
+      "subcategory_slug": "toys",
+      "tags": [
+        "nightlight",
+        "portable",
+        "dimmable",
+        "soft"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Sage",
+      "description": "Twenty-four hours cold, twelve hot. The lid does not leak in a bag, which is not true of most.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-001",
+      "material": "Stainless steel",
+      "name": "Insulated Bottle 750ml",
+      "occasions": [
+        "thank-you",
+        "graduation"
+      ],
+      "price_eur": 42.0,
+      "product_id": "OT-001",
+      "rating": 4.6,
+      "rating_score": 4.5766,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 834,
+      "shipping_days": 2,
+      "stock": 72,
+      "subcategory": "Drinkware",
+      "subcategory_slug": "drinkware",
+      "tags": [
+        "bottle",
+        "insulated",
+        "steel",
+        "750ml"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Black",
+      "description": "One-handed open, fits under a coffee machine, survives being dropped.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-002",
+      "material": "Stainless steel",
+      "name": "Travel Mug, Leakproof",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 38.0,
+      "product_id": "OT-002",
+      "rating": 4.4,
+      "rating_score": 4.3958,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 512,
+      "shipping_days": 2,
+      "stock": 64,
+      "subcategory": "Drinkware",
+      "subcategory_slug": "drinkware",
+      "tags": [
+        "mug",
+        "travel",
+        "insulated",
+        "commute"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Slate",
+      "description": "Soup stays hot to lunchtime. Wide enough to eat from directly.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-003",
+      "material": "Stainless steel",
+      "name": "Vacuum Food Flask",
+      "occasions": [
+        "thank-you",
+        "christmas"
+      ],
+      "price_eur": 46.0,
+      "product_id": "OT-003",
+      "rating": 4.3,
+      "rating_score": 4.3241,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 197,
+      "shipping_days": 3,
+      "stock": 28,
+      "subcategory": "Drinkware",
+      "subcategory_slug": "drinkware",
+      "tags": [
+        "flask",
+        "food",
+        "insulated",
+        "lunch"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Brown",
+      "description": "Fits two days including shoes. Waxed canvas, so rain beads off and it ages well.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-004",
+      "material": "Waxed canvas, leather",
+      "name": "Weekender Bag",
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "graduation"
+      ],
+      "price_eur": 189.0,
+      "product_id": "OT-004",
+      "rating": 4.7,
+      "rating_score": 4.6075,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 243,
+      "shipping_days": 4,
+      "stock": 11,
+      "subcategory": "Bags",
+      "subcategory_slug": "bags",
+      "tags": [
+        "bag",
+        "weekender",
+        "leather",
+        "travel"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Navy",
+      "description": "Four sizes, mesh tops. Converts chaotic packers into slightly less chaotic ones.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-005",
+      "material": "Recycled nylon",
+      "name": "Packing Cube Set",
+      "occasions": [
+        "thank-you",
+        "graduation"
+      ],
+      "price_eur": 52.0,
+      "product_id": "OT-005",
+      "rating": 4.5,
+      "rating_score": 4.4738,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 368,
+      "shipping_days": 2,
+      "stock": 47,
+      "subcategory": "Bags",
+      "subcategory_slug": "bags",
+      "tags": [
+        "packing",
+        "cubes",
+        "travel",
+        "organiser"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Olive",
+      "description": "Padded laptop sleeve, waterproof fabric, no branding. Commutes and hikes equally.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-006",
+      "material": "Recycled nylon",
+      "name": "Daypack 20L, Roll-Top",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 119.0,
+      "product_id": "OT-006",
+      "rating": 4.4,
+      "rating_score": 4.3933,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 286,
+      "shipping_days": 3,
+      "stock": 19,
+      "subcategory": "Bags",
+      "subcategory_slug": "bags",
+      "tags": [
+        "backpack",
+        "rolltop",
+        "20l",
+        "commute"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Check",
+      "description": "Two metres square with a waterproof backing and a carry strap.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-007",
+      "material": "Wool blend, PU backing",
+      "name": "Picnic Blanket, Waterproof",
+      "occasions": [
+        "anniversary",
+        "thank-you"
+      ],
+      "price_eur": 74.0,
+      "product_id": "OT-007",
+      "rating": 4.2,
+      "rating_score": 4.2666,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 154,
+      "shipping_days": 3,
+      "stock": 23,
+      "subcategory": "Outdoor",
+      "subcategory_slug": "outdoor",
+      "tags": [
+        "blanket",
+        "picnic",
+        "waterproof",
+        "outdoor"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Teal",
+      "description": "Straps included, packs to the size of a grapefruit, holds 150kg.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-008",
+      "material": "Ripstop nylon",
+      "name": "Camping Hammock",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 68.0,
+      "product_id": "OT-008",
+      "rating": 4.5,
+      "rating_score": 4.4617,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 221,
+      "shipping_days": 3,
+      "stock": 0,
+      "subcategory": "Outdoor",
+      "subcategory_slug": "outdoor",
+      "tags": [
+        "hammock",
+        "camping",
+        "portable",
+        "outdoor"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Black",
+      "description": "400 lumens, red night mode, USB-C. The red mode is the bit people end up using.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-009",
+      "material": "Plastic, silicone",
+      "name": "Head Torch, Rechargeable",
+      "occasions": [
+        "thank-you",
+        "christmas"
+      ],
+      "price_eur": 54.0,
+      "product_id": "OT-009",
+      "rating": 4.3,
+      "rating_score": 4.3173,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 312,
+      "shipping_days": 2,
+      "stock": 41,
+      "subcategory": "Outdoor",
+      "subcategory_slug": "outdoor",
+      "tags": [
+        "torch",
+        "headlamp",
+        "rechargeable",
+        "outdoor"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Wayfare",
+      "category": "Outdoor & Travel",
+      "category_slug": "outdoor-travel",
+      "color": "Cream",
+      "description": "Two mugs that will chip and look better for it.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "OT-010",
+      "material": "Enamelled steel",
+      "name": "Enamel Camp Mug Pair",
+      "occasions": [
+        "thank-you",
+        "housewarming"
+      ],
+      "price_eur": 32.0,
+      "product_id": "OT-010",
+      "rating": 4.1,
+      "rating_score": 4.1958,
+      "recipient": "couple",
+      "recipients_match": [
+        "couple"
+      ],
+      "reviews_count": 178,
+      "shipping_days": 2,
+      "stock": 55,
+      "subcategory": "Drinkware",
+      "subcategory_slug": "drinkware",
+      "tags": [
+        "mug",
+        "enamel",
+        "camping",
+        "pair"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramblewood",
+      "category": "Pets",
+      "category_slug": "pets",
+      "color": "Grey",
+      "description": "Removable washable cover, memory foam base. Large size fits a labrador.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "PT-001",
+      "material": "Memory foam, canvas",
+      "name": "Dog Bed, Orthopaedic",
+      "occasions": [
+        "christmas",
+        "birthday"
+      ],
+      "price_eur": 149.0,
+      "product_id": "PT-001",
+      "rating": 4.5,
+      "rating_score": 4.4557,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 178,
+      "shipping_days": 5,
+      "stock": 11,
+      "subcategory": "Dogs",
+      "subcategory_slug": "dogs",
+      "tags": [
+        "dogbed",
+        "memoryfoam",
+        "washable",
+        "large"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Bramblewood",
+      "category": "Pets",
+      "category_slug": "pets",
+      "color": "Multi",
+      "description": "Four toys. Two will survive the month.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "PT-002",
+      "material": "Cotton rope",
+      "name": "Rope Toy Bundle",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 28.0,
+      "product_id": "PT-002",
+      "rating": 4.1,
+      "rating_score": 4.1729,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 264,
+      "shipping_days": 2,
+      "stock": 53,
+      "subcategory": "Dogs",
+      "subcategory_slug": "dogs",
+      "tags": [
+        "dogtoy",
+        "rope",
+        "durable",
+        "set"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Bramblewood",
+      "category": "Pets",
+      "category_slug": "pets",
+      "color": "Beige",
+      "description": "Fits a corner rather than dominating a room. Sisal posts, two platforms.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "PT-003",
+      "material": "Plywood, sisal, plush",
+      "name": "Cat Tree, Compact",
+      "occasions": [
+        "christmas"
+      ],
+      "price_eur": 119.0,
+      "product_id": "PT-003",
+      "rating": 4.0,
+      "rating_score": 4.1867,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 96,
+      "shipping_days": 6,
+      "stock": 0,
+      "subcategory": "Cats",
+      "subcategory_slug": "cats",
+      "tags": [
+        "cattree",
+        "scratching",
+        "compact",
+        "sisal"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Midnight",
+      "description": "Thirty hours with noise cancelling on. The case is slim enough for a laptop bag, which most cases are not.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-001",
+      "material": "Aluminium, protein leather",
+      "name": "Wireless Headphones ANC",
+      "occasions": [
+        "birthday",
+        "christmas",
+        "graduation"
+      ],
+      "price_eur": 279.0,
+      "product_id": "TG-001",
+      "rating": 4.7,
+      "rating_score": 4.6666,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 842,
+      "shipping_days": 2,
+      "stock": 18,
+      "subcategory": "Audio",
+      "subcategory_slug": "audio",
+      "tags": [
+        "headphones",
+        "anc",
+        "wireless",
+        "travel"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "White",
+      "description": "Four ear tip sizes in the box. Good ANC for the size, and they survive a run in the rain.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-002",
+      "material": "Plastic, silicone",
+      "name": "Wireless Earbuds Pro",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 189.0,
+      "product_id": "TG-002",
+      "rating": 4.5,
+      "rating_score": 4.4907,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 1204,
+      "shipping_days": 2,
+      "stock": 32,
+      "subcategory": "Audio",
+      "subcategory_slug": "audio",
+      "tags": [
+        "earbuds",
+        "anc",
+        "wireless",
+        "compact"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Slate",
+      "description": "They sit outside the ear canal so you still hear traffic. For running, not for flying.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-003",
+      "material": "Silicone, titanium",
+      "name": "Open-Ear Sport Buds",
+      "occasions": [
+        "birthday"
+      ],
+      "price_eur": 129.0,
+      "product_id": "TG-003",
+      "rating": 4.1,
+      "rating_score": 4.1636,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 317,
+      "shipping_days": 2,
+      "stock": 21,
+      "subcategory": "Audio",
+      "subcategory_slug": "audio",
+      "tags": [
+        "earbuds",
+        "sport",
+        "openear",
+        "running"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Forest",
+      "description": "IP67, floats, twelve hours. Loud enough for a kitchen or a small garden.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-004",
+      "material": "Recycled plastic, fabric",
+      "name": "Portable Speaker, Waterproof",
+      "occasions": [
+        "birthday",
+        "thank-you"
+      ],
+      "price_eur": 99.0,
+      "product_id": "TG-004",
+      "rating": 4.4,
+      "rating_score": 4.3967,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 676,
+      "shipping_days": 2,
+      "stock": 44,
+      "subcategory": "Audio",
+      "subcategory_slug": "audio",
+      "tags": [
+        "speaker",
+        "bluetooth",
+        "waterproof",
+        "portable"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Walnut",
+      "description": "Built-in preamp so it plugs into anything. Comes with a decent cartridge already fitted.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-005",
+      "material": "MDF, aluminium",
+      "name": "Turntable, Belt Drive",
+      "occasions": [
+        "anniversary",
+        "christmas"
+      ],
+      "price_eur": 349.0,
+      "product_id": "TG-005",
+      "rating": 4.6,
+      "rating_score": 4.526,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 198,
+      "shipping_days": 5,
+      "stock": 6,
+      "subcategory": "Audio",
+      "subcategory_slug": "audio",
+      "tags": [
+        "turntable",
+        "vinyl",
+        "audio",
+        "analogue"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Papyr",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Black",
+      "description": "Warm and cool front light, waterproof, weeks of battery. The screen genuinely reads like paper.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-006",
+      "material": "Plastic, glass",
+      "name": "E-Reader 7in Glare-Free",
+      "occasions": [
+        "birthday",
+        "christmas",
+        "graduation"
+      ],
+      "price_eur": 199.0,
+      "product_id": "TG-006",
+      "rating": 4.8,
+      "rating_score": 4.7598,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 923,
+      "shipping_days": 2,
+      "stock": 27,
+      "subcategory": "Reading",
+      "subcategory_slug": "reading",
+      "tags": [
+        "ereader",
+        "reading",
+        "waterproof",
+        "backlit"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Papyr",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Charcoal",
+      "description": "Magnetic, wakes and sleeps the device. Fits the 7in only.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-007",
+      "material": "Recycled fabric",
+      "name": "E-Reader Case, Fabric",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 39.0,
+      "product_id": "TG-007",
+      "rating": 4.2,
+      "rating_score": 4.2494,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 241,
+      "shipping_days": 2,
+      "stock": 58,
+      "subcategory": "Reading",
+      "subcategory_slug": "reading",
+      "tags": [
+        "case",
+        "ereader",
+        "accessory",
+        "fabric"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Oak",
+      "description": "Relatives send photos to it from their phones. Set-up takes five minutes, which matters for the recipient.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-008",
+      "material": "Wood, glass",
+      "name": "Digital Photo Frame 10in",
+      "occasions": [
+        "christmas",
+        "anniversary"
+      ],
+      "price_eur": 169.0,
+      "product_id": "TG-008",
+      "rating": 4.3,
+      "rating_score": 4.3147,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 384,
+      "shipping_days": 3,
+      "stock": 15,
+      "subcategory": "Home Tech",
+      "subcategory_slug": "home-tech",
+      "tags": [
+        "frame",
+        "photo",
+        "wifi",
+        "family"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "White",
+      "description": "Schedules and voice control. No hub needed, which is the whole reason to buy these.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-009",
+      "material": "Plastic",
+      "name": "Smart Plug, Pack of Four",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 54.0,
+      "product_id": "TG-009",
+      "rating": 4.1,
+      "rating_score": 4.1421,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 527,
+      "shipping_days": 2,
+      "stock": 63,
+      "subcategory": "Home Tech",
+      "subcategory_slug": "home-tech",
+      "tags": [
+        "smartplug",
+        "home",
+        "wifi",
+        "automation"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "White",
+      "description": "Brightens over thirty minutes before the alarm. Works properly in a room with blackout blinds.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-010",
+      "material": "Plastic, fabric",
+      "name": "Sunrise Alarm Clock",
+      "occasions": [
+        "birthday",
+        "christmas"
+      ],
+      "price_eur": 89.0,
+      "product_id": "TG-010",
+      "rating": 4.5,
+      "rating_score": 4.4761,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 412,
+      "shipping_days": 3,
+      "stock": 29,
+      "subcategory": "Home Tech",
+      "subcategory_slug": "home-tech",
+      "tags": [
+        "alarm",
+        "light",
+        "sleep",
+        "wakeup"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Grey",
+      "description": "CO2, particulates, humidity, temperature. Useful in a flat, revealing in an office.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-011",
+      "material": "Plastic, glass",
+      "name": "Air Quality Monitor",
+      "occasions": [
+        "housewarming"
+      ],
+      "price_eur": 139.0,
+      "product_id": "TG-011",
+      "rating": 4.0,
+      "rating_score": 4.1867,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 96,
+      "shipping_days": 3,
+      "stock": 12,
+      "subcategory": "Home Tech",
+      "subcategory_slug": "home-tech",
+      "tags": [
+        "sensor",
+        "air",
+        "health",
+        "home"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kaskade",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Grey",
+      "description": "Hot-swap sockets so switches change without soldering. Ships with tactile browns.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-012",
+      "material": "Aluminium, PBT",
+      "name": "Mechanical Keyboard, 65%",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 159.0,
+      "product_id": "TG-012",
+      "rating": 4.6,
+      "rating_score": 4.5607,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 458,
+      "shipping_days": 3,
+      "stock": 17,
+      "subcategory": "Desk",
+      "subcategory_slug": "desk",
+      "tags": [
+        "keyboard",
+        "mechanical",
+        "compact",
+        "hotswap"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kaskade",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Mixed",
+      "description": "Nine switches to try before committing to ninety. A good add-on, a thin gift on its own.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-013",
+      "material": "Plastic",
+      "name": "Switch Sampler Pack",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 24.0,
+      "product_id": "TG-013",
+      "rating": 4.3,
+      "rating_score": 4.3316,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 127,
+      "shipping_days": 2,
+      "stock": 71,
+      "subcategory": "Desk",
+      "subcategory_slug": "desk",
+      "tags": [
+        "keyboard",
+        "switches",
+        "accessory",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kaskade",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Black",
+      "description": "Holds the wrist at fifty-seven degrees. Takes about a week to stop feeling strange.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-014",
+      "material": "Plastic",
+      "name": "Vertical Mouse, Wireless",
+      "occasions": [
+        "thank-you",
+        "birthday"
+      ],
+      "price_eur": 79.0,
+      "product_id": "TG-014",
+      "rating": 4.2,
+      "rating_score": 4.2433,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 289,
+      "shipping_days": 2,
+      "stock": 33,
+      "subcategory": "Desk",
+      "subcategory_slug": "desk",
+      "tags": [
+        "mouse",
+        "ergonomic",
+        "wireless",
+        "desk"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Black",
+      "description": "Clips to the top of a screen and lights the desk, not the screen. No reflections.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-015",
+      "material": "Aluminium",
+      "name": "Monitor Light Bar",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 96.0,
+      "product_id": "TG-015",
+      "rating": 4.5,
+      "rating_score": 4.4716,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 331,
+      "shipping_days": 3,
+      "stock": 24,
+      "subcategory": "Desk",
+      "subcategory_slug": "desk",
+      "tags": [
+        "light",
+        "desk",
+        "monitor",
+        "glarefree"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kaskade",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Silver",
+      "description": "Folds flat to the size of a paperback. Six height positions.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-016",
+      "material": "Aluminium",
+      "name": "Laptop Stand, Folding",
+      "occasions": [
+        "graduation",
+        "thank-you"
+      ],
+      "price_eur": 64.0,
+      "product_id": "TG-016",
+      "rating": 4.4,
+      "rating_score": 4.3918,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 214,
+      "shipping_days": 2,
+      "stock": 41,
+      "subcategory": "Desk",
+      "subcategory_slug": "desk",
+      "tags": [
+        "stand",
+        "laptop",
+        "portable",
+        "aluminium"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Black",
+      "description": "100W out, so it charges a laptop, not just a phone. Airline-legal capacity.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-017",
+      "material": "Aluminium",
+      "name": "Power Bank 20000mAh",
+      "occasions": [
+        "thank-you",
+        "graduation"
+      ],
+      "price_eur": 69.0,
+      "product_id": "TG-017",
+      "rating": 4.3,
+      "rating_score": 4.3085,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 738,
+      "shipping_days": 2,
+      "stock": 55,
+      "subcategory": "Mobile",
+      "subcategory_slug": "mobile",
+      "tags": [
+        "powerbank",
+        "usbc",
+        "travel",
+        "fastcharge"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Tan",
+      "description": "Three cards, folds into a stand. Weak magnets on cases thicker than 2mm.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-018",
+      "material": "Leather",
+      "name": "Magnetic Wallet Stand",
+      "occasions": [
+        "thank-you"
+      ],
+      "price_eur": 45.0,
+      "product_id": "TG-018",
+      "rating": 3.8,
+      "rating_score": 4.0117,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 164,
+      "shipping_days": 2,
+      "stock": 48,
+      "subcategory": "Mobile",
+      "subcategory_slug": "mobile",
+      "tags": [
+        "wallet",
+        "magsafe",
+        "card",
+        "compact"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Mint",
+      "description": "Prints in ninety seconds. Ten shots of film in the box, then it gets expensive.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-019",
+      "material": "Plastic",
+      "name": "Instant Camera",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 119.0,
+      "product_id": "TG-019",
+      "rating": 4.4,
+      "rating_score": 4.3961,
+      "recipient": "her",
+      "recipients_match": [
+        "her"
+      ],
+      "reviews_count": 556,
+      "shipping_days": 3,
+      "stock": 26,
+      "subcategory": "Photo",
+      "subcategory_slug": "photo",
+      "tags": [
+        "camera",
+        "instant",
+        "film",
+        "fun"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "White",
+      "description": "Twenty shots for the instant camera.",
+      "gift_wrap": false,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-020",
+      "material": "Film",
+      "name": "Film Twin Pack",
+      "occasions": [],
+      "price_eur": 22.0,
+      "product_id": "TG-020",
+      "rating": 4.1,
+      "rating_score": 4.1878,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 203,
+      "shipping_days": 2,
+      "stock": 84,
+      "subcategory": "Photo",
+      "subcategory_slug": "photo",
+      "tags": [
+        "film",
+        "accessory",
+        "instant",
+        "refill"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Kaskade",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Black",
+      "description": "Battery-free pen, 8192 pressure levels. Works with the free software everyone actually uses.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-021",
+      "material": "Plastic",
+      "name": "Drawing Tablet, Small",
+      "occasions": [
+        "birthday",
+        "graduation"
+      ],
+      "price_eur": 149.0,
+      "product_id": "TG-021",
+      "rating": 4.5,
+      "rating_score": 4.4571,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 187,
+      "shipping_days": 3,
+      "stock": 10,
+      "subcategory": "Creative",
+      "subcategory_slug": "creative",
+      "tags": [
+        "tablet",
+        "drawing",
+        "stylus",
+        "creative"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "out_of_stock",
+      "brand": "Kaskade",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Grey",
+      "description": "Plays cartridges and emulates the rest. Excellent d-pad, which is the whole thing.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-022",
+      "material": "Plastic",
+      "name": "Handheld Game Console, Retro",
+      "occasions": [
+        "christmas",
+        "birthday"
+      ],
+      "price_eur": 189.0,
+      "product_id": "TG-022",
+      "rating": 4.6,
+      "rating_score": 4.5556,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 394,
+      "shipping_days": 4,
+      "stock": 0,
+      "subcategory": "Creative",
+      "subcategory_slug": "creative",
+      "tags": [
+        "console",
+        "retro",
+        "handheld",
+        "games"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Lumen",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Cream",
+      "description": "Real fan-based noise rather than a looped recording. No app, no lights, no subscription.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-023",
+      "material": "Fabric, plastic",
+      "name": "Noise Machine",
+      "occasions": [
+        "thank-you",
+        "housewarming"
+      ],
+      "price_eur": 58.0,
+      "product_id": "TG-023",
+      "rating": 4.2,
+      "rating_score": 4.2458,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 268,
+      "shipping_days": 2,
+      "stock": 37,
+      "subcategory": "Home Tech",
+      "subcategory_slug": "home-tech",
+      "tags": [
+        "sleep",
+        "sound",
+        "white-noise",
+        "small"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "in_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Silver",
+      "description": "Sizing kit ships first, then the ring. Subscription required after the first year - worth saying out loud.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-024",
+      "material": "Titanium",
+      "name": "Smart Ring, Sleep Tracking",
+      "occasions": [
+        "birthday",
+        "anniversary"
+      ],
+      "price_eur": 329.0,
+      "product_id": "TG-024",
+      "rating": 3.9,
+      "rating_score": 4.091,
+      "recipient": "anyone",
+      "recipients_match": [
+        "anyone",
+        "her",
+        "him",
+        "couple"
+      ],
+      "reviews_count": 142,
+      "shipping_days": 4,
+      "stock": 8,
+      "subcategory": "Wearable",
+      "subcategory_slug": "wearable",
+      "tags": [
+        "ring",
+        "sleep",
+        "health",
+        "wearable"
+      ]
+    },
+    {
+      "also_listed_in": [],
+      "availability": "low_stock",
+      "brand": "Sonder",
+      "category": "Tech & Gadgets",
+      "category_slug": "tech-gadgets",
+      "color": "Walnut",
+      "description": "Passive, so they need an amplifier the recipient may not own. The best-sounding thing in the catalogue and the easiest to get wrong as a gift.",
+      "gift_wrap": true,
+      "is_digital": false,
+      "is_primary_listing": true,
+      "is_rated": true,
+      "listing_group": "TG-025",
+      "material": "Walnut veneer, aluminium",
+      "name": "Bookshelf Speakers, Pair",
+      "occasions": [
+        "anniversary",
+        "christmas"
+      ],
+      "price_eur": 899.0,
+      "product_id": "TG-025",
+      "rating": 4.9,
+      "rating_score": 4.6061,
+      "recipient": "him",
+      "recipients_match": [
+        "him"
+      ],
+      "reviews_count": 76,
+      "shipping_days": 7,
+      "stock": 2,
+      "subcategory": "Audio",
+      "subcategory_slug": "audio",
+      "tags": [
+        "speakers",
+        "hifi",
+        "passive",
+        "pair"
+      ]
+    }
+  ],
+  "recipients": [
+    "her",
+    "him",
+    "couple",
+    "kids",
+    "anyone"
+  ],
+  "schema_version": 1
+}

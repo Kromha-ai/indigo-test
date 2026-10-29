@@ -1,0 +1,9 @@
+.venv
+.env
+.pytest_cache
+.ruff_cache
+**/__pycache__
+tests
+catalog_build
+data/catalog.normalized.csv
+data/BUILD_REPORT.md

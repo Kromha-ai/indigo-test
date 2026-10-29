@@ -2,7 +2,7 @@
 
 How to operate the system.
 
-> The commands below are the target set by `docs/specs/CATALOG_SPEC.md`. They become real in roadmap Phase 1; correct this file whenever they change.
+> Correct this file whenever a command changes.
 
 ---
 
@@ -25,7 +25,7 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
 
    ```bash
    cd catalog-service
-   uv run uvicorn app.main:app --reload
+   uv run uvicorn app.main:create_app --factory --env-file .env --reload
    curl -s localhost:8000/health
    curl -s -H "X-API-Key: $KEY" localhost:8000/categories
    curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"

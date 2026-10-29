@@ -1,0 +1,4 @@
+product_id,name,category,subcategory,brand,price_eur,stock,rating,reviews_count,recipient,occasion,tags,color,material,gift_wrap,shipping_days,description
+AA-001,Lamp,Home & Living,Lighting,Brand,10.00,3,4.5,100,anyone,birthday,lamp,White,Oak,yes,2,A lamp.
+AA-002,Mug,Kitchen & Dining,Tableware,Brand,12.00,0,,,kids,,mug|cup,,,no,0,A mug.
+AA-003,Vase,home and living,Vases,Brand,15.00,20,4.0,50,her,housewarming|birthday,vase,,,yes,3,A vase.

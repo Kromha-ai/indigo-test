@@ -210,6 +210,8 @@ This is how the agent learns that what the shopper asked for exists just over bu
 
 ### Description cap
 
+**Removed 2026-10-29.** Descriptions are kept whole at build time. If long copy ever becomes a problem, it will be handled with something better than truncation.
+
 | `description` | Trim. Capped at 300 characters, cut at the last sentence boundary before the cap; every cut is listed in `BUILD_REPORT.md` | Currently at most 142 characters, so nothing is cut. The cap is what keeps detail responses bounded if a future export has long copy |
 
 ### 4xx visibility: the accepted cost of D2

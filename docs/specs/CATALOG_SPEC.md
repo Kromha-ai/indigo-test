@@ -1,5 +1,5 @@
 ---
-Status: Draft
+Status: Approved
 Last updated: 2026-10-29
 ---
 
@@ -52,7 +52,7 @@ catalog-service/data/BUILD_REPORT.md           (every fix per row, constants, so
 |---|---|
 | `category` | Trim, lowercase, ` and ` → ` & `, map to one of 11 canonical names (17 raw spellings) |
 | `subcategory`, `brand`, `name`, `color`, `material` | Trim; empty → `null` |
-| `description` | Trim; capped at 300 characters at a sentence boundary, cuts listed in the report |
+| `description` | Trim |
 | `price_eur` | Decimal, 2 places |
 | `stock` | Int; internal only |
 | `rating`, `reviews_count` | Empty → `null`, never 0 |
@@ -162,7 +162,7 @@ They differ as follows:
 |---|---|---|
 | `get_categories` | about 1k tokens | grows with categories, not products |
 | List tools | 15 summaries, about 1.5k tokens | 25 summaries, about 2.5k tokens |
-| `get_product_details` | about 175 tokens | about 220 tokens |
+| `get_product_details` | about 175 tokens | grows with the description (not cut) |
 
 Descriptions never appear in lists. `total` and `next_offset` signal more results. The response shape does not depend on catalogue size.
 
@@ -295,7 +295,7 @@ indigo.ai ──HTTPS──▶ Caddy (:443, automatic Let's Encrypt) ──HTTP�
 - **Auth**:
   - No data endpoint works without a valid key, and a removed key gets `401` after restart.
   - The 121st request in a minute gets `429`.
-- **Budget**: `limit=25` serialises under 2.6k tokens (characters / 3.6), a detail response under 250. Summaries expose neither `stock` nor `rating_score`.
+- **Budget**: `limit=25` serialises under 2.6k tokens (characters / 3.6), and summaries expose neither `stock` nor `rating_score`.
 - **OpenAPI**:
   - Every operation, parameter and field has a description, and there are no header parameters (enforced by tests).
   - On the deployed service, `/openapi.json`, `/docs` and `/redoc` return `200` without a key, and `servers[0].url` is the public URL.
