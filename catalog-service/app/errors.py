@@ -89,11 +89,13 @@ def _describe(error: dict) -> str:
 
 def install_handlers(app: FastAPI) -> None:
     @app.exception_handler(CatalogError)
-    async def _catalog_error(_: Request, exc: CatalogError) -> JSONResponse:
+    async def _catalog_error(request: Request, exc: CatalogError) -> JSONResponse:
+        request.state.error_code = exc.body.code
         return exc.response()
 
     @app.exception_handler(RequestValidationError)
-    async def _validation_error(_: Request, exc: RequestValidationError) -> JSONResponse:
+    async def _validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
+        request.state.error_code = "invalid_parameter"
         message = "; ".join(_describe(error) for error in exc.errors())
         return CatalogError(
             "invalid_parameter",
@@ -103,7 +105,8 @@ def install_handlers(app: FastAPI) -> None:
         ).response()
 
     @app.exception_handler(Exception)
-    async def _unexpected(_: Request, exc: Exception) -> JSONResponse:
+    async def _unexpected(request: Request, exc: Exception) -> JSONResponse:
+        request.state.error_code = "internal_error"
         logger.exception("unhandled error", exc_info=exc)
         return CatalogError(
             "internal_error",

@@ -10,6 +10,8 @@ from app.auth import require_api_key
 from app.catalog import Catalog
 from app.errors import ErrorResponse, install_handlers
 from app.loader import load_catalog
+from app.observability import install_request_logging
+from app.ratelimit import RateLimiter
 from app.routes import categories, health
 from app.settings import Settings
 
@@ -22,7 +24,8 @@ deadline.
 - **get_product_details**: for the 2–3 products about to be recommended.
 - **get_categories**: what the shop sells, and valid categories and subcategories.
 
-Prices are in EUR. Every data endpoint requires the `X-API-Key` header.
+Prices are in EUR. Every data endpoint requires the `X-API-Key` header and is rate-limited \
+per key (HTTP 429 with `Retry-After` when exceeded).
 """
 
 
@@ -39,11 +42,19 @@ def create_app(settings: Settings | None = None, catalog: Catalog | None = None)
     )
     app.state.settings = settings
     app.state.catalog = catalog
+    app.state.rate_limiter = RateLimiter(settings.rate_limit_per_minute)
     install_handlers(app)
+    install_request_logging(app)
 
     data = APIRouter(
         dependencies=[Depends(require_api_key)],
-        responses={401: {"model": ErrorResponse, "description": "Missing or invalid API key."}},
+        responses={
+            401: {"model": ErrorResponse, "description": "Missing or invalid API key."},
+            429: {
+                "model": ErrorResponse,
+                "description": "Rate limit for this API key exceeded; retry after `Retry-After`.",
+            },
+        },
     )
     data.include_router(categories.router)
     app.include_router(data)

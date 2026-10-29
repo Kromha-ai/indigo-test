@@ -82,9 +82,9 @@ Goal: `search_products` (filters only) working, every response within its budget
 - [ ] Write the final operation, parameter and field descriptions (start from the spec drafts)
 - [x] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description (`tests/test_openapi.py`, Phase 1; covers new operations automatically)
 - [ ] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` suggests `tech-gadgets`; Knives under €100 reports the €149 knife in `outside_price_range`)
-- [ ] Structured request logging with key fingerprint
+- [x] Structured request logging with key fingerprint (brought forward, done 2026-10-29)
 - [ ] Redeploy, re-import the tool collection, check every operation in the test agent
-- [ ] Per-key rate limit (`429 rate_limited`)
+- [x] Per-key rate limit (`429 rate_limited`) (brought forward, done 2026-10-29)
 
 ## Phase 4: The assistant
 

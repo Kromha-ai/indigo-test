@@ -24,6 +24,8 @@ class Settings:
     def __post_init__(self) -> None:
         if not self.api_keys:
             raise ConfigError("CATALOG_API_KEYS is empty: refusing to start without an API key")
+        if self.rate_limit_per_minute < 1:
+            raise ConfigError("RATE_LIMIT_PER_MINUTE must be at least 1")
 
     @classmethod
     def from_env(cls, env: dict[str, str] | None = None) -> Settings:

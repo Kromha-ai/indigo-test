@@ -17,5 +17,6 @@ USER catalog
 
 EXPOSE 8000
 # One worker: the rate limiter is in memory. --proxy-headers: Caddy terminates TLS.
+# --no-access-log: the service writes its own JSON line per request.
 CMD ["uvicorn", "app.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000", \
-     "--workers", "1", "--proxy-headers", "--forwarded-allow-ips", "*"]
+     "--workers", "1", "--proxy-headers", "--forwarded-allow-ips", "*", "--no-access-log"]

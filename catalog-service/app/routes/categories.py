@@ -18,4 +18,6 @@ router = APIRouter(tags=["catalogue"])
     response_model=CategoriesResponse,
 )
 def get_categories(request: Request) -> CategoriesResponse:
-    return CategoriesResponse(categories=request.app.state.catalog.category_overview())
+    categories = request.app.state.catalog.category_overview()
+    request.state.result_count = len(categories)
+    return CategoriesResponse(categories=categories)
