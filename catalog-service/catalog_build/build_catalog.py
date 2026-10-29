@@ -178,7 +178,6 @@ def _parse_row(row: dict) -> ParsedRow:
         "category": canonical,
         "category_slug": slugify(canonical),
         "subcategory": subcategory,
-        "subcategory_slug": slugify(subcategory),
         "brand": row["brand"].strip(),
         "price_eur": float(price),
         "stock": stock,
@@ -281,8 +280,6 @@ def build(source: Path = DEFAULT_SOURCE, synonyms: Path = DEFAULT_SYNONYMS) -> B
             "low_stock_max": LOW_STOCK_MAX,
         },
         "categories": [{"slug": slugify(name), "name": name} for name in CATEGORIES],
-        "recipients": RECIPIENTS,
-        "occasions": OCCASIONS,
         "category_synonyms": dict(sorted(synonym_table.items())),
         "products": products,
     }
@@ -294,7 +291,7 @@ def catalog_json(result: BuildResult) -> str:
 
 
 CSV_COLUMNS = [
-    "product_id", "name", "category", "category_slug", "subcategory", "subcategory_slug", "brand",
+    "product_id", "name", "category", "category_slug", "subcategory", "brand",
     "price_eur", "stock", "availability", "rating", "reviews_count", "rating_score", "recipient",
     "occasions", "tags", "color", "material", "gift_wrap", "shipping_days", "is_digital",
     "listing_group", "description",

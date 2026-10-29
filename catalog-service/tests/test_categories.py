@@ -4,6 +4,20 @@ def test_eleven_categories_counting_every_product(client, auth):
     assert sum(c["product_count"] for c in categories) == 152
 
 
+def test_overview_carries_no_product_level_detail(client, auth):
+    # Occasions and prices per product belong to search and browse, not to the category map.
+    categories = client.get("/categories", headers=auth).json()["categories"]
+    expected = {
+        "slug",
+        "name",
+        "product_count",
+        "in_stock_count",
+        "price_range_eur",
+        "subcategories",
+    }
+    assert all(set(c) == expected for c in categories)
+
+
 def test_home_living_overview(client, auth):
     categories = client.get("/categories", headers=auth).json()["categories"]
     home = next(c for c in categories if c["slug"] == "home-living")
@@ -23,14 +37,6 @@ def test_home_living_overview(client, auth):
             "Textiles",
             "Vases",
         ],  # fmt: skip
-        "in_stock_by_occasion": {
-            "housewarming": 18,
-            "thank-you": 9,
-            "christmas": 6,
-            "anniversary": 5,
-            "birthday": 4,
-            "graduation": 1,
-        },  # fmt: skip
     }
 
 

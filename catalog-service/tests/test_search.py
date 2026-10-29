@@ -38,17 +38,19 @@ def test_kids_returns_only_kids_products(search):
     assert ids(body) and all(pid.startswith("KI-") for pid in ids(body))
 
 
-def test_category_narrows_and_resolves_names(search):
-    body = search(category="Home and Living", occasion="housewarming").json()
-    assert all(i["category"] == "home-living" for i in body["items"])
-    assert body["applied_filters"]["category"] == "home-living"
+def test_search_spans_categories(search):
+    body = search(occasion="housewarming", min_price=40, max_price=60).json()
+    assert {i["category"] for i in body["items"]} >= {
+        "home-living",
+        "kitchen-dining",
+        "experiences",
+    }
 
 
-def test_unknown_category_is_recoverable(search):
-    response = search(category="electronics", max_price=50)
-    assert response.status_code == 200
-    error = response.json()["error"]
-    assert (error["code"], error["did_you_mean"]) == ("category_not_found", ["tech-gadgets"])
+def test_search_has_no_category_parameter(client):
+    spec = client.get("/openapi.json").json()
+    names = [p["name"] for p in spec["paths"]["/products/search"]["get"]["parameters"]]
+    assert "category" not in names and "subcategory" not in names
 
 
 def test_no_filters_returns_the_best_rated_products(search):
@@ -56,7 +58,7 @@ def test_no_filters_returns_the_best_rated_products(search):
     assert response.status_code == 200
     body = response.json()
     assert body["applied_filters"] == {}
-    assert (body["total"], body["returned"], body["next_offset"]) == (139, 15, 15)
+    assert (body["total"], body["returned"], body["next_offset"]) == (139, 10, 10)
     assert ids(body)[0] == "TG-006"  # top rating_score in the shop
     assert all(i["availability"] != "out_of_stock" for i in body["items"])
 
@@ -88,4 +90,4 @@ def test_default_page_and_budget(search):
     response = search(max_price=1000, limit=25)
     assert response.json()["returned"] == 25
     assert len(response.text) / 3.6 < 2600
-    assert search(max_price=1000).json()["returned"] == 15
+    assert search(max_price=1000).json()["returned"] == 10

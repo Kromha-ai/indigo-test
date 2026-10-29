@@ -20,7 +20,7 @@ from app.models import (
 )
 
 MAX_LIMIT = 25
-DEFAULT_LIMIT = 15
+DEFAULT_LIMIT = 10
 
 
 def require_category(catalog: Catalog, raw: str) -> str:
@@ -61,8 +61,8 @@ def list_query(
         le=14,
         description="Delivery deadline in working days. `0` keeps only instant digital products.",
     ),
-    gift_wrap: bool | None = Query(
-        None, description="`true` keeps only products that can be gift-wrapped."
+    gift_wrap: bool = Query(
+        False, description="`true` keeps only products that can be gift-wrapped."
     ),
     include_out_of_stock: bool = Query(
         False,

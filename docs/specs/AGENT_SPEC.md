@@ -149,7 +149,7 @@ Why:
 | "a chef's knife", "headphones" | The category plus the `subcategory` (Knives, Audio), so `outside_price_range` is specific to that product type |
 | "something cosy", "elegant", "fun", "a pamper gift" | `search_products` with recipient and budget (or browse the obvious category), then choose from names and tags by judgement (cosy → throws, candles, slippers; pamper → bath, skincare, candles) |
 | `outside_price_range` in a response | Matching products exist outside the budget. Mention the nearest one when it is what the shopper asked for (*"the chef's knife is €149"*) |
-| "the best one", "something people love" | `sort=best_rated` |
+| "your best gifts", "something people love" | `search_products` with no filters (or only the budget): best rated first |
 
 ### Recommendation message format
 

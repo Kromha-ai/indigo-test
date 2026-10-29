@@ -1,10 +1,10 @@
 from dataclasses import replace
 
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Depends, Request
 
-from app.catalog import RELAXABLE, Catalog
+from app.catalog import Catalog
 from app.models import ListResponse
-from app.routes.listing import ListQuery, list_query, list_response, require_category
+from app.routes.listing import ListQuery, list_query, list_response
 
 router = APIRouter(tags=["catalogue"])
 
@@ -19,7 +19,8 @@ router = APIRouter(tags=["catalogue"])
         "(max_shipping_days), gift wrap. This is the default tool for gift requests ('something "
         "for my sister's new flat, about €50'). There is no free-text search: moods and tastes "
         "('cosy', 'she loves music') are for you to judge from the returned names, tags and "
-        "subcategories. Returns up to 15 compact summaries, best rated first, one per product; "
+        "subcategories. Searches every category; to stay inside one, use get_products_by_category. "
+        "Returns up to 10 compact summaries, best rated first, one per product; "
         "narrow the filters rather than paging. 'outside_price_range' tells you when matching "
         "products exist just outside the budget. If nothing matches, 'suggestions' says which "
         "constraint to relax. Call get_product_details on the 2–3 you intend to recommend. "
@@ -28,21 +29,9 @@ router = APIRouter(tags=["catalogue"])
     response_model=ListResponse,
     response_model_exclude_unset=True,
 )
-def search_products(
-    request: Request,
-    category: str | None = Query(
-        None,
-        description="Optional: limit the search to one category (slug or display name). Leave "
-        "it out to search the whole shop, which is usually what you want.",
-        examples=["home-living"],
-    ),
-    query: ListQuery = Depends(list_query),
-) -> ListResponse:
+def search_products(request: Request, query: ListQuery = Depends(list_query)) -> ListResponse:
     catalog: Catalog = request.app.state.catalog
-    slug = require_category(catalog, category) if category is not None else None
-    product_filter = replace(query.filter, category=slug, primary_only=True)
-    result = catalog.query(
-        product_filter, query.sort, query.limit, query.offset, relaxable=(*RELAXABLE, "category")
-    )
+    product_filter = replace(query.filter, primary_only=True)
+    result = catalog.query(product_filter, query.sort, query.limit, query.offset)
     request.state.result_count = result.total
     return list_response(result, query, product_filter)

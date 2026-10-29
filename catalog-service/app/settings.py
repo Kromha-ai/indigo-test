@@ -19,7 +19,7 @@ class Settings:
     api_keys: tuple[str, ...]
     data_path: Path = SERVICE_ROOT / "data" / "catalog.json"
     public_base_url: str = "http://localhost:8000"
-    rate_limit_per_minute: int = 120
+    rate_limit_per_minute: int = 600
     log_level: str = "INFO"
 
     def __post_init__(self) -> None:

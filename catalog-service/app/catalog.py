@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import difflib
 import re
-from collections import Counter
 from collections.abc import Callable
 from dataclasses import dataclass, field, fields, replace
 from datetime import UTC, datetime
@@ -44,7 +43,7 @@ class ProductFilter:
     recipient: Recipient | None = None
     occasion: Occasion | None = None
     max_shipping_days: int | None = None
-    gift_wrap: bool | None = None
+    gift_wrap: bool = False
     include_out_of_stock: bool = False
     # Search shows each cross-listed product once, through its primary listing. Internal:
     # not a caller-facing filter, so never echoed in `applied`.
@@ -141,7 +140,6 @@ class Catalog:
         for category in self.data.categories:
             products = [p for p in self.products if p.category_slug == category.slug]
             in_stock = [p for p in products if p.availability != Availability.out_of_stock]
-            occasions = Counter(o for p in in_stock for o in p.occasions)
             prices = [p.price_eur for p in products]
             overview.append(
                 {
@@ -151,7 +149,6 @@ class Catalog:
                     "in_stock_count": len(in_stock),
                     "price_range_eur": {"min": min(prices), "max": max(prices)},
                     "subcategories": self.subcategories[category.slug],
-                    "in_stock_by_occasion": dict(occasions.most_common()),
                 }
             )
         return overview
@@ -213,16 +210,7 @@ class Catalog:
     def count(self, f: ProductFilter) -> int:
         return sum(1 for p in self._select(f) if f.in_price_band(p))
 
-    def query(
-        self,
-        f: ProductFilter,
-        sort: SortOrder,
-        limit: int,
-        offset: int,
-        relaxable: tuple[str, ...] = tuple(RELAXABLE),
-    ) -> QueryResult:
-        """`relaxable`: the filters an empty result may suggest dropping. A browse cannot drop
-        its category (it is the path); a search can."""
+    def query(self, f: ProductFilter, sort: SortOrder, limit: int, offset: int) -> QueryResult:
         candidates = self._select(f)
         matching = sorted(filter(f.in_price_band, candidates), key=SORT_KEYS[sort])
         result = QueryResult(items=matching[offset : offset + limit], total=len(matching))
@@ -231,19 +219,18 @@ class Catalog:
         if f.min_price is not None:
             result.prices_below_min = [p.price_eur for p in candidates if p.price_eur < f.min_price]
         if not matching:
-            result.suggestions = self._relaxations(f, candidates, relaxable)
+            result.suggestions = self._relaxations(f, candidates)
         return result
 
     def _relaxations(
-        self, f: ProductFilter, candidates: list[ProductRecord], relaxable: tuple[str, ...]
+        self, f: ProductFilter, candidates: list[ProductRecord]
     ) -> list[tuple[str, int]]:
         """One relaxation at a time, kept only if it would return something."""
+        defaults = {field_.name: field_.default for field_ in fields(f)}
         options: list[tuple[str, int]] = []
-        for name in relaxable:
-            if getattr(f, name) is None:
-                continue
-            wording = RELAXABLE.get(name, f"remove the {name} filter")
-            options.append((wording, self.count(replace(f, **{name: None}))))
+        for name, wording in RELAXABLE.items():
+            if getattr(f, name) != defaults[name]:
+                options.append((wording, self.count(replace(f, **{name: defaults[name]}))))
         if f.max_price is not None:
             above = [p.price_eur for p in candidates if p.price_eur > f.max_price]
             if above:

@@ -34,7 +34,7 @@ HTTP/1.1 401 Unauthorized
             "hint": "Send a valid key in the X-API-Key header."}}
 ```
 
-More than 120 requests in a minute on one key:
+More than 600 requests in a minute on one key:
 
 ```http
 HTTP/1.1 429 Too Many Requests

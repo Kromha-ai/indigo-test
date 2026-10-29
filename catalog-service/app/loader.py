@@ -27,7 +27,6 @@ class ProductRecord(_Strict):
     category: str
     category_slug: str
     subcategory: str
-    subcategory_slug: str
     brand: str
     price_eur: float
     stock: int
@@ -66,8 +65,6 @@ class CatalogFile(_Strict):
     schema_version: int
     constants: Constants
     categories: list[CategoryRecord]
-    recipients: list[str]
-    occasions: list[str]
     category_synonyms: dict[str, str]
     products: list[ProductRecord]
 

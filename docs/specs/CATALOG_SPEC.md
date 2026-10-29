@@ -66,7 +66,7 @@ catalog-service/data/BUILD_REPORT.md           (every fix per row, constants, so
 | Field | Notes |
 |---|---|
 | `product_id`, `name`, `brand`, `description`, `price_eur`, `color`, `material`, `gift_wrap`, `shipping_days`, `recipient`, `occasions`, `tags`, `rating`, `reviews_count` | As normalised |
-| `category`, `category_slug`, `subcategory`, `subcategory_slug` | Slugs are the API identifiers (`home-living`) |
+| `category`, `category_slug`, `subcategory` | Categories are addressed by slug (`home-living`); subcategories by name (`Knives`) |
 | `availability` | `in_stock`, `low_stock` (1–5), `out_of_stock`. Replaces the raw count |
 | `is_rated`, `is_digital` | Derived booleans |
 | `also_listed_in` | Other listings of the same product: `[{product_id, category_slug}]` |
@@ -92,13 +92,12 @@ All responses are JSON. Each tool's `operationId` is its tool name.
 
 ### `get_categories`
 
-No parameters. All 11 categories, each with `slug`, `name`, `product_count`, `in_stock_count`, `price_range_eur`, `subcategories` and `in_stock_by_occasion`:
+No parameters. All 11 categories, each with `slug`, `name`, `product_count`, `in_stock_count`, `price_range_eur` and `subcategories`:
 
 ```json
 {"slug": "home-living", "name": "Home & Living", "product_count": 28, "in_stock_count": 26,
  "price_range_eur": {"min": 28.00, "max": 249.00},
- "subcategories": ["Candles", "Decor", "Fragrance", "Garden", "Lighting", "Storage", "Textiles", "Vases"],
- "in_stock_by_occasion": {"housewarming": 18, "thank-you": 9, "christmas": 6, "anniversary": 5, "birthday": 4, "graduation": 1}}
+ "subcategories": ["Candles", "Decor", "Fragrance", "Garden", "Lighting", "Storage", "Textiles", "Vases"]}
 ```
 
 ### `get_products_by_category` and `search_products`
@@ -111,16 +110,16 @@ Both return a `ListResponse` of `ProductSummary` items and share these parameter
 | `recipient` | enum | — | See *Filters* |
 | `occasion` | enum | — | `birthday`, `thank-you`, `christmas`, `housewarming`, `anniversary`, `graduation` |
 | `max_shipping_days` | int | — | 0–14 |
-| `gift_wrap` | bool | — | `true` = wrappable only |
+| `gift_wrap` | bool | `false` | `true` = wrappable only; `false` does not filter |
 | `include_out_of_stock` | bool | `false` | |
 | `sort` | enum | `best_rated` | `best_rated` (by `rating_score`), `price_asc`, `price_desc` |
-| `limit` | int | `15` | 1–25 |
+| `limit` | int | `10` | 1–25 |
 | `offset` | int | `0` | ≥ 0 |
 
 They differ as follows:
 
 - **`get_products_by_category`**: `category` (path, slug or display name, case-insensitive) is required; `subcategory` (case-insensitive; singular or plural, so `candle` finds `Candles`) is optional. For a shopper who names a kind of product.
-- **`search_products`**: an optional `category` narrows the search. With no filters it returns the shop's best-rated in-stock products, within the usual page size. It returns one listing per product. For gift requests defined by constraints.
+- **`search_products`**: always spans every category (to stay inside one, browse it). With no filters it returns the shop's best-rated in-stock products, within the usual page size. It returns one listing per product. For gift requests defined by constraints.
 
 ### `get_product_details`
 
@@ -151,7 +150,7 @@ They differ as follows:
  "suggestions": []}
 ```
 
-- `found: true` and `category` are on browse responses only. An unknown `category` on either list tool returns the recoverable `category_not_found` (`found: false`).
+- `found: true` and `category` are on browse responses only. An unknown category returns the recoverable `category_not_found` (`found: false`).
 - `applied_filters` echoes the normalised input.
 - `outside_price_range` (present when a price filter is set) counts the products that match every other filter but fall outside the band: `above_max: {count, min_price_eur}` and/or `below_min: {count, max_price_eur}`, each carrying the nearest price.
 - `suggestions`: see *Empty results*.
@@ -161,7 +160,7 @@ They differ as follows:
 | Tool | Default | Maximum |
 |---|---|---|
 | `get_categories` | about 1k tokens | grows with categories, not products |
-| List tools | 15 summaries, about 1.5k tokens | 25 summaries, about 2.5k tokens |
+| List tools | 10 summaries, about 1k tokens | 25 summaries, about 2.5k tokens |
 | `get_product_details` | about 175 tokens | grows with the description (not cut) |
 
 Descriptions never appear in lists. `total` and `next_offset` signal more results. The response shape does not depend on catalogue size.
@@ -182,7 +181,7 @@ Descriptions never appear in lists. `total` and `next_offset` signal more result
 {"items": [], "total": 0, "suggestions": [{"change": "raise max_price to 25", "would_match": 4}]}
 ```
 
-Relaxations tried: drop `occasion`, `recipient`, `subcategory`, `max_shipping_days` or `gift_wrap`; widen the price band to the nearest match; include out of stock.
+Relaxations tried: drop `occasion`, `recipient`, `subcategory` (browse), `max_shipping_days` or `gift_wrap`; widen the price band to the nearest match; include out of stock.
 
 ### Errors
 
@@ -210,7 +209,7 @@ Details in `AUTHENTICATION.md`.
 
 - Static API key in `X-API-Key`, HTTPS only. Keys come from `CATALOG_API_KEYS` (comma-separated, one per consumer and environment) and are compared in constant time.
 - The service refuses to start without keys.
-- Rate limit: 120 requests per minute per key, returning `429`.
+- Rate limit: 600 requests per minute per key, returning `429`. The platform uses one key for every shopper, so the limit caps the whole assistant: it is sized for real traffic and still stops a leaked key from scraping.
 - Only `/health` and the documentation routes are open.
 
 ### OpenAPI document
@@ -219,9 +218,9 @@ Details in `AUTHENTICATION.md`.
 - **Auth** is a dependency on the data routers, not middleware, so the documentation routes stay open. Declared as an `apiKey` scheme. **Never** a header parameter.
 - `servers[0].url` = `PUBLIC_BASE_URL`. OpenAPI 3.1.
 - **Descriptions**: every operation has `summary` and `description`, every parameter and response field a description. These are written for the LLM and edited only in code. The tool descriptions:
-  - **`search_products`**: *"Find gift ideas across the whole shop by the shopper's constraints: who it is for (recipient), the occasion, a budget (min_price / max_price), a delivery deadline (max_shipping_days), gift wrap. This is the default tool for gift requests ('something for my sister's new flat, about €50'). There is no free-text search: moods and tastes ('cosy', 'she loves music') are for you to judge from the returned names, tags and subcategories. Returns up to 15 compact summaries, best rated first; narrow the filters rather than paging. 'outside_price_range' tells you when matching products exist just outside the budget. If nothing matches, 'suggestions' says which constraint to relax. Call get_product_details on the 2–3 you intend to recommend. With no filters at all it returns the shop's best-rated products."*
+  - **`search_products`**: *"Find gift ideas across the whole shop by the shopper's constraints: who it is for (recipient), the occasion, a budget (min_price / max_price), a delivery deadline (max_shipping_days), gift wrap. This is the default tool for gift requests ('something for my sister's new flat, about €50'). There is no free-text search: moods and tastes ('cosy', 'she loves music') are for you to judge from the returned names, tags and subcategories. Searches every category; to stay inside one, use get_products_by_category. Returns up to 10 compact summaries, best rated first, one per product; narrow the filters rather than paging. 'outside_price_range' tells you when matching products exist just outside the budget. If nothing matches, 'suggestions' says which constraint to relax. Call get_product_details on the 2–3 you intend to recommend. With no filters at all it returns the shop's best-rated products."*
   - **`get_products_by_category`**: *"List the products in one category, optionally narrowed by subcategory, price, recipient, occasion, delivery deadline or gift wrap. Use it when the shopper names a kind of product: 'a chef's knife' (subcategory Knives), 'something for the kitchen', 'your candles'. For gift requests defined by recipient, occasion or budget, use search_products instead. Use subcategory for a specific product type, so 'outside_price_range' tells you about that type only. Products with 'also_listed_in' appear in two categories: never recommend both listings."*
-  - **`get_categories`**: *"List the shop's 11 categories with product counts, price ranges, subcategories and how many in-stock products suit each occasion. Use it when the shopper asks what the shop sells, or to pick a valid category and subcategory before get_products_by_category. Not needed before search_products. Call it at most once per conversation."*
+  - **`get_categories`**: *"List the shop's 11 categories with product counts, price ranges and subcategories. Use it when the shopper asks what the shop sells, or to pick a valid category and subcategory before get_products_by_category. Not needed before search_products. Call it at most once per conversation."*
   - **`get_product_details`**: *"Get the full record for one product: description, materials, colour, gift wrap, shipping time and availability. Call it for each of the 2–3 products before recommending them (in parallel), and whenever the shopper asks about a specific item. The description is what makes a good reason."*
 
 ### Observability
@@ -249,7 +248,7 @@ Details in `AUTHENTICATION.md`.
 | `CATALOG_API_KEYS` | required | Valid keys, comma-separated |
 | `CATALOG_DATA_PATH` | `data/catalog.json` | Normalised catalogue |
 | `PUBLIC_BASE_URL` | `http://localhost:8000` (required in prod) | `servers[0].url` |
-| `RATE_LIMIT_PER_MINUTE` | `120` | Per key |
+| `RATE_LIMIT_PER_MINUTE` | `600` | Per key (one key serves every shopper) |
 | `LOG_LEVEL` | `INFO` | |
 
 ## Deployment
@@ -277,9 +276,9 @@ indigo.ai ──HTTPS──▶ system Caddy (:443, automatic Let's Encrypt) ─�
 - **Build**:
   - 152 rows become 152 records, and two runs give identical output.
   - The report lists 6 category fixes, 2 cross-listed pairs, and `C` and `m`.
-- **Categories**: `get_categories` returns 11 categories whose counts sum to 152. Home & Living has `in_stock_by_occasion.housewarming = 18`.
+- **Categories**: `get_categories` returns 11 categories whose counts sum to 152, each with exactly `slug`, `name`, `product_count`, `in_stock_count`, `price_range_eur` and `subcategories`.
 - **Browse**:
-  - `"Home and Living"` resolves to `home-living` and includes `HL-013`. The default page returns 15 of `total: 26` with `next_offset: 15`.
+  - `"Home and Living"` resolves to `home-living` and includes `HL-013`. The default page returns 10 of `total: 26` with `next_offset: 10`.
   - `home-living` with `occasion=housewarming`, €40–60 includes `HL-024` with `also_listed_in` pointing to `KD-023`.
   - `kitchen-dining` with `subcategory=Knives`, `max_price=100` returns `KD-002` and `KD-003`, with `outside_price_range.above_max = {count: 1, min_price_eur: 149}`.
   - `best_rated` puts `TG-006` first in Tech & Gadgets.
@@ -287,13 +286,15 @@ indigo.ai ──HTTPS──▶ system Caddy (:443, automatic Let's Encrypt) ─�
   - `occasion=housewarming`, €40–60 returns 13 products, without the duplicate tumbler set.
   - `recipient=kids` returns only `KI-*` products.
   - No filters returns the best-rated in-stock products: `TG-006` first, `total: 139`.
+  - There is no `category` parameter: search always spans the shop.
+  - `gift_wrap=false` filters nothing and is not echoed in `applied_filters`.
 - **Errors**:
   - `electronics` returns `found: false`, `category_not_found` and `did_you_mean: ["tech-gadgets"]`.
   - `XX-999` returns `found: false` and `product_not_found`.
   - An empty result returns at least one suggestion.
 - **Auth**:
   - No data endpoint works without a valid key, and a removed key gets `401` after restart.
-  - The 121st request in a minute gets `429`.
+  - Over the per-minute limit (600 by default) a request gets `429` with `Retry-After`.
 - **Budget**: `limit=25` serialises under 2.6k tokens (characters / 3.6), and summaries expose neither `stock` nor `rating_score`.
 - **OpenAPI**:
   - Every operation, parameter and field has a description, and there are no header parameters (enforced by tests).

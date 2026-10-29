@@ -173,6 +173,15 @@ D6 answered both by relying on the catalogue being small: the page limit of 30 w
 - **Tool choice is carried by the descriptions**: `search_products` for gift requests defined by constraints, `get_products_by_category` when the shopper names a kind of product. The evals check that the agent picks correctly (E1, E3, E8).
 - **Larger categories need two pages** (Home & Living: 26 in stock, limit 25). This is intended: the agent narrows with filters instead.
 
+**Refinements once search was built (2026-10-29)**:
+
+- **No constraint required.** The response budget already bounds an unconstrained search, which returns the best-rated products and answers "what are your best gifts?". The 400 it replaced was an error the platform might hide. Asking before searching on a vague request is a prompt rule.
+- **Search has no `category` parameter.** Search plus a category duplicated browsing and brought back the "which tool?" ambiguity this decision set out to remove.
+- **`in_stock_by_occasion` removed** from `get_categories`. It was the agent's map for choosing categories when there was no search; search filters by occasion across the shop in one call.
+- **`gift_wrap` is a plain boolean**: `false` used to be echoed as an applied filter while filtering nothing.
+- **Default page of 10**, not 15: the agent recommends 3, and 10 summaries are about 1k tokens.
+- **Rate limit 600 a minute by default**, not 120: the platform sends one key for every shopper, so the limit caps the whole assistant.
+
 **Revisit if** the evals show the agent consistently needs free-text lookup that browsing by subcategory cannot give. The candidate then is D5's narrow `query`, added to `search_products` as an optional parameter (an additive change under D3).
 
 ---

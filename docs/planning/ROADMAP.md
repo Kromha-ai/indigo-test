@@ -35,7 +35,7 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] `app/loader.py`: load and validate `catalog.json` at startup, refuse to start on a malformed file
 - [x] Sign off the authentication decision in `AUTHENTICATION.md` (Accepted 2026-10-29)
 - [x] `X-API-Key` auth dependency with multiple keys; refuse to start without keys; tests for missing, wrong and valid key
-- [x] `GET /categories` (with subcategories, price ranges, `in_stock_by_occasion`) and `GET /health`
+- [x] `GET /categories` (with subcategories and price ranges) and `GET /health`
 - [x] `servers` populated from `PUBLIC_BASE_URL`
 - [x] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
 - [x] Dockerfile (ships `data/catalog.json`), `.env.example`
@@ -60,7 +60,7 @@ Prerequisite: Phase 1.
 
 - [x] `ProductSummary` (with `tags`, `shipping_days`, `also_listed_in` on cross-listed products) and `ProductDetail` response models with field descriptions
 - [x] Category resolution: slug, display name, case and whitespace insensitive, `and`/`&`
-- [x] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, `sort=best_rated` by `rating_score`, pagination (`limit` default 15, max 25), `ListResponse`
+- [x] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, `sort=best_rated` by `rating_score`, pagination (`limit` default 10, max 25), `ListResponse`
 - [x] Recipient semantics: `her`/`him`/`couple` include `anyone`; `kids` exact
 - [x] `GET /products/{product_id}`: case-insensitive ID, `also_listed_in`
 - [x] Error envelope plus exception handlers; replace the default 422 body with plain-language `invalid_parameter` (built in Phase 1)
@@ -73,7 +73,7 @@ Prerequisite: Phase 1.
 
 Goal: `search_products` (filters only) working, every response within its budget and giving the agent what it needs to decide and recover, and OpenAPI descriptions good enough to steer tool choice (decision D7).
 
-- [x] `GET /products/search`, declared before `/products/{product_id}`: category, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; no filters returns the best-rated products
+- [x] `GET /products/search`, declared before `/products/{product_id}`: price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; no filters returns the best-rated products
 - [x] Deduplicate cross-listed products in search results (primary listing only)
 - [x] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec); done for browsing in Phase 2, add for search
 - [x] Empty-result `suggestions` on both list tools (one relaxation at a time, at most 3, only ones that match)

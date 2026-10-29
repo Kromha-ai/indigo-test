@@ -30,11 +30,13 @@ def test_category_resolves_by_slug_or_name(browse, name):
 def test_default_page_and_pagination(browse):
     first = browse("home-living")
     assert (first["total"], first["returned"], first["offset"], first["next_offset"]) == (
-        26, 15, 0, 15,
+        26, 10, 0, 10,
     )  # fmt: skip
-    second = browse("home-living", offset=15)
-    assert (second["returned"], second["next_offset"]) == (11, None)
-    all_ids = ids(first) + ids(second)
+    second = browse("home-living", offset=10)
+    assert (second["returned"], second["next_offset"]) == (10, 20)
+    third = browse("home-living", offset=20)
+    assert (third["returned"], third["next_offset"]) == (6, None)
+    all_ids = ids(first) + ids(second) + ids(third)
     assert len(set(all_ids)) == 26
     assert "HL-013" in all_ids  # drifted 'Home and Living' row lands in its category
 
@@ -104,6 +106,12 @@ def test_kids_category_and_kids_recipient(browse):
 def test_her_includes_anyone(browse):
     recipients = {i["recipient"] for i in browse("home-living", recipient="her", limit=25)["items"]}
     assert recipients == {"her", "anyone"}
+
+
+def test_gift_wrap_false_is_not_a_filter(browse):
+    body = browse("experiences", gift_wrap=False)
+    assert body["total"] == 2 and "gift_wrap" not in body["applied_filters"]
+    assert browse("experiences", gift_wrap=True)["applied_filters"]["gift_wrap"] is True
 
 
 def test_shipping_and_gift_wrap_filters(browse):

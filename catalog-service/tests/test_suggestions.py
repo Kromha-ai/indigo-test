@@ -32,14 +32,14 @@ def test_raising_min_price_floor(client, auth):
     assert suggestions[0]["change"] == "lower min_price to 96"
 
 
+def test_gift_wrap_relaxation(client, auth):
+    suggestions = get(client, auth, "/categories/experiences/products?gift_wrap=true")
+    assert suggestions == [{"change": "remove the gift_wrap filter", "would_match": 2}]
+
+
 def test_browse_never_suggests_dropping_its_category(client, auth):
     suggestions = get(client, auth, "/categories/pets/products?occasion=graduation")
     assert all("category" not in s["change"] for s in suggestions)
-
-
-def test_search_may_suggest_dropping_the_category(client, auth):
-    suggestions = get(client, auth, "/products/search?category=pets&occasion=graduation")
-    assert {"change": "remove the category filter", "would_match": 27} in suggestions
 
 
 def test_no_useful_relaxation_gives_no_suggestions(client, auth):
