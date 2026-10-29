@@ -33,7 +33,7 @@ app/
   settings.py    env-driven settings
   auth.py        X-API-Key dependency
   loader.py      reads and validates data/catalog.json (pure, no FastAPI imports)
-  catalog.py     in-memory index, filtering, outside_price_range, relaxation suggestions
+  catalog.py     in-memory index, filtering, search dedup, outside_price_range, relaxation suggestions
   models.py      Pydantic response models with field descriptions
   errors.py      error envelope and codes
   routes/        one module per tool

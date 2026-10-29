@@ -42,7 +42,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | When to use it |
 |---|---|
-| `docs/specs/CATALOG_SPEC.md` | Catalog Service contract: build step and normalisation rules, the three tools, parameters, response shapes, size bounds, error envelope, auth, OpenAPI requirements, acceptance criteria. |
+| `docs/specs/CATALOG_SPEC.md` | Catalog Service contract (the reasoning lives in `archive/catalog-spec-decisions.md`): build step and normalisation rules, the four tools, parameters, response shapes, the response budget, error envelope, auth, OpenAPI requirements, acceptance criteria. |
 | `docs/specs/AGENT_SPEC.md` | Gift assistant: persona, conversation flow, mapping shopper language to tool parameters, hard rules, platform unknowns, the question rule, message format, hard-case handling, evaluation scenarios E1–E17. |
 
 ### guides
@@ -56,7 +56,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | When to use it |
 |---|---|
-| `docs/reference/scenario.md` | The client's problem, the brief for the service and the assistant, and what gets handed over. Start here. |
+| `docs/reference/scenario.md` | The client's problem, what the service and the assistant must do, and what gets handed over. Start here. |
 | `docs/reference/catalog-data-profile.md` | What the CSV actually contains: columns, defects, cross-listings, out-of-stock items, reference queries. Every normalisation rule traces back here. |
 
 ### Archive
@@ -65,6 +65,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | Notes |
 |---|---|
+| `archive/catalog-spec-decisions.md` | Reasoning behind the Catalog spec (D2–D7, including superseded D5 and D6), moved out of the spec on 2026-10-29. The spec is the source of truth |
 
 ---
 
@@ -77,7 +78,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 - **Occasion**: `birthday`, `thank-you`, `christmas`, `housewarming`, `anniversary`, `graduation`.
 - **Availability**: `in_stock`, `low_stock` (1–5 units), `out_of_stock`. Derived from stock; raw counts are not exposed.
 - **Normalised catalogue**: `catalog-service/data/catalog.json`, built from the raw CSV by `build_catalog`. Committed, deterministic, and the only file the service reads. `BUILD_REPORT.md` beside it lists every fix applied.
-- **Browse-first**: the agent's catalogue access pattern (decision D6): `get_categories` → `get_products_by_category` for one to three categories in parallel → `get_product_details` for the shortlist. There is no search tool.
+- **Tool choice** (decision D7): `search_products` (filters only, across categories) for gift requests defined by recipient, occasion, budget or deadline; `get_products_by_category` when the shopper names a kind of product; `get_product_details` for the 2–3 products about to be recommended; `get_categories` for "what do you sell?". There is no free-text search.
 - **`rating_score`**: rating weighted by review count (Bayesian average), used only for ranking (`sort=best_rated`), never shown.
 - **Digital product**: `shipping_days = 0`. Currently only the gift cards (`EX-001`, `EX-002`).
 - **Tool collection / operation**: on the indigo.ai platform, a tool collection is imported from the service's public `/openapi.json`. Each API operation becomes an action the agent can call, named by its `operationId`.
@@ -100,9 +101,9 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 1. The raw CSV is never modified. A row that cannot be normalised fails the build; an invalid `catalog.json` fails startup. The committed `catalog.json` must match a fresh build.
 2. The assistant never states a product, price, rating or availability that did not come from a tool response in that conversation.
 3. Out-of-stock products are never recommended, and lists exclude them by default.
-4. A product is never recommended twice. Cross-listed products carry `also_listed_in` wherever they appear.
+4. A product is never recommended twice. `search_products` returns one listing per product, and cross-listed products carry `also_listed_in` wherever they appear.
 5. `recipient=kids` never matches `anyone` products (the `anyone` bucket includes knives).
 6. Unrated means `null`, never `0`.
-7. Every list response is bounded (`limit` ≤ 30, about 3k tokens) and every error carries a `hint` the agent can act on.
+7. Every response stays within the spec's response budget (lists: 15 by default, at most 25 summaries, about 2.5k tokens; descriptions never in lists, capped at 300 characters) and every error carries a `hint` the agent can act on.
 8. Every data endpoint requires `X-API-Key` (`AUTHENTICATION.md`, decision D1). One key per consumer and environment. Keys never appear in the repo, logs or prompts; on the platform they live only in the `CATALOG_API_KEY` workspace secret.
 9. Tool and parameter descriptions are part of the contract. They are edited in code, never in the platform form. Changing one means redeploying, re-importing the tool collection, re-running the evals and publishing.

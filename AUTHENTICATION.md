@@ -12,12 +12,12 @@ Every data endpoint requires an API key, sent in the `X-API-Key` request header 
 
 ```bash
 curl -s -H "X-API-Key: $CATALOG_API_KEY" \
-  "https://catalog.builtbykromha.com/categories/home-living/products?occasion=housewarming&max_price=60"
+  "https://catalog.builtbykromha.com/products/search?occasion=housewarming&max_price=60"
 ```
 
 | Route | Key required |
 |---|---|
-| `GET /categories`, `GET /categories/{category}/products`, `GET /products/{product_id}` | Yes |
+| `GET /categories`, `GET /categories/{category}/products`, `GET /products/search`, `GET /products/{product_id}` | Yes |
 | `GET /health`, `GET /openapi.json`, `GET /docs`, `GET /redoc` | No. They contain no catalogue data; the OpenAPI document is published publicly on purpose |
 
 There are no sessions, tokens to exchange or expiries: the key itself is sent on every request.
@@ -99,7 +99,7 @@ Full procedure: `docs/guides/secrets-management.md`. Rotate straight away if a k
 - The only caller is the indigo.ai platform. Its tools authenticate **only through configured HTTP headers**. Values come from workspace secrets referenced as `[[NAME]]`, which must be the entire header value. `securitySchemes` in the OpenAPI document are ignored, and there is no native OAuth 2.0.
 - Secrets have separate Test and Production values, are resolved server-side, and never reach the LLM, the logs or the user.
 - The data is low-sensitivity: it is the shop's public catalogue, and raw stock counts are never exposed. The realistic threat is a leaked key being used to scrape or overload the service, not data theft.
-- The brief requires the endpoints to be protected, and how a caller authenticates to be documented.
+- The client requires the endpoints to be protected, and how a caller authenticates to be documented.
 
 ### Options considered
 

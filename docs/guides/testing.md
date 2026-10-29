@@ -40,7 +40,7 @@ Tests need no network, no database and no secrets. The test settings inject a fi
 - **Edge cases use small fixture CSVs** fed to the build (bad price, unknown category, unknown recipient), so each test shows its own input.
 - **Assert the shape the agent reads**: `found`, `error.code`, `hint` and `did_you_mean`, not only the status code. Recoverable cases are `200` (decision D2), so a status-only assertion would pass on a broken response.
 - **The OpenAPI document is under contract.** `test_openapi.py` fails if any operation lacks `operationId`, `summary` or `description`, or if any parameter or response field lacks a description. Tool descriptions drive the agent, so a missing one is a bug.
-- **Size bound.** At least one test requests the largest category with `limit=30` and asserts the serialised response stays under the documented budget.
+- **Response budget.** Tests request `limit=25` on both list tools and a product detail, and assert the serialised size stays under the budget in the spec's *Response budget* table (characters / 3.6 as the token estimate).
 - **Bug fixes ship with a failing test first** (see `WORKFLOW.md`, Step 4).
 
 ## Gift Assistant

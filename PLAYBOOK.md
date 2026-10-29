@@ -28,7 +28,8 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
    uv run uvicorn app.main:app --reload
    curl -s localhost:8000/health
    curl -s -H "X-API-Key: $KEY" localhost:8000/categories
-   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/home-living/products?occasion=housewarming&min_price=40&max_price=60"
+   curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"
+   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/kitchen-dining/products?subcategory=Knives&max_price=100"
    ```
 
    Interactive docs: <http://localhost:8000/docs>. The OpenAPI document is at <http://localhost:8000/openapi.json>; once deployed, the platform imports it from the public URL.
