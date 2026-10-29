@@ -10,12 +10,12 @@ Why the service uses static API keys in `X-API-Key`: `AUTHENTICATION.md` (repo r
 
 | Secret | Value | Used by | Stored in | Never in |
 |---|---|---|---|---|
-| `CATALOG_API_KEYS` | Comma-separated list of every currently valid key | Catalog Service (validates `X-API-Key`) | `deploy/.env` on the droplet (`chmod 600`, git-ignored); local `catalog-service/.env` | Git, logs, prompts, screenshots |
+| `CATALOG_API_KEYS` | Comma-separated list of every currently valid key | Catalog Service (validates `X-API-Key`) | `deploy/.env` on the droplet (`chmod 600`, git-ignored); local `catalog-service/.local.env` | Git, logs, prompts, screenshots |
 | `platform-test` key | One key | indigo.ai **Test** environment | Workspace secret `CATALOG_API_KEY`, **Test** value | Tool definitions, conversations |
 | `platform-prod` key | One key | indigo.ai **Production** environment | Workspace secret `CATALOG_API_KEY`, **Production** value | Tool definitions, conversations |
-| `local-dev` key | One key | Local development, curl, tests against a deployed instance | Your `.env` / password manager | Anything shared |
+| `local-dev` key | One key | Local development, curl, tests against a deployed instance | Your `catalog-service/.local.env` / password manager | Anything shared |
 
-`catalog-service/.env` is git-ignored. `catalog-service/.env.example` is committed with placeholder values only.
+`catalog-service/.local.env` (local) and `deploy/.env` (production) are git-ignored. Their templates, `catalog-service/.local.env.example` and `deploy/.env.example`, are committed with placeholder values only.
 
 ## Generating a key
 

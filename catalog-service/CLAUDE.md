@@ -10,9 +10,9 @@ Python 3.12 · FastAPI · Pydantic v2 · Uvicorn · uv · pytest · ruff
 
 ```bash
 uv sync                                    # install
-cp .env.example .env                       # then set CATALOG_API_KEYS
+cp .local.env.example .local.env           # local only; then set CATALOG_API_KEYS
 uv run python -m catalog_build.build_catalog       # regenerate data/ from ../raw_data/ after any export or mapping change
-uv run uvicorn app.main:create_app --factory --env-file .env --reload   # http://localhost:8000/docs
+uv run uvicorn app.main:create_app --factory --env-file .local.env --reload   # http://localhost:8000/docs
 uv run pytest                              # tests
 uv run ruff check . && uv run ruff format .
 docker build -t catalog-service .           # the image ships data/catalog.json, not the raw CSV

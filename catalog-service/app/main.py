@@ -1,4 +1,7 @@
-"""App factory. Run with: uv run uvicorn app.main:create_app --factory --env-file .env"""
+"""App factory.
+
+Run locally with: uv run uvicorn app.main:create_app --factory --env-file .local.env
+"""
 
 from __future__ import annotations
 

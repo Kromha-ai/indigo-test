@@ -38,7 +38,7 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] `GET /categories` (with subcategories and price ranges) and `GET /health`
 - [x] `servers` populated from `PUBLIC_BASE_URL`
 - [x] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
-- [x] Dockerfile (ships `data/catalog.json`), `.env.example`
+- [x] Dockerfile (ships `data/catalog.json`), `.local.env.example`
 - [x] `deploy/`: `docker-compose.yml` (service only, bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`), `catalog.caddy` (site block imported by the droplet's system Caddy), `.env.example`
 - [x] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), Docker, clone to `/var/www/indigo-test`, `deploy/.env`, `docker compose up`, `import` the site block in `/etc/caddy/Caddyfile` and reload Caddy; smoke-test `https://catalog.builtbykromha.com/health`
 - [x] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`

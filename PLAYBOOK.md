@@ -13,8 +13,8 @@ Prerequisites: Python 3.12, [uv](https://docs.astral.sh/uv/), Docker (optional, 
 ```bash
 cd catalog-service
 uv sync
-cp .env.example .env
-python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CATALOG_API_KEYS in .env
+cp .local.env.example .local.env
+python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CATALOG_API_KEYS in .local.env
 ```
 
 ## Daily workflow
@@ -25,7 +25,7 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
 
    ```bash
    cd catalog-service
-   uv run uvicorn app.main:create_app --factory --env-file .env --reload
+   uv run uvicorn app.main:create_app --factory --env-file .local.env --reload
    curl -s localhost:8000/health
    curl -s -H "X-API-Key: $KEY" localhost:8000/categories
    curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/kitchen-dining/products?subcategory=Knives&max_price=100"
