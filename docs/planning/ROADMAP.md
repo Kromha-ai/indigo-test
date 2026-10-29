@@ -3,7 +3,7 @@
 **Started**: 2026-10-29
 **Specs**: `docs/specs/CATALOG_SPEC.md` · `docs/specs/AGENT_SPEC.md`
 
-Five phases, each a shippable slice. Every phase ends with the service deployable and tests green.
+Five phases, each a shippable slice, plus an optional sixth. Every phase ends with the service deployable and tests green.
 
 The order is deliberate. Phase 1 puts a thin service on the real platform first, because the platform unknowns (error visibility, OpenAPI version, auth configuration) change the API design. Finding them after the API is built would mean reworking it.
 
@@ -18,6 +18,7 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 | 3 | Search, recovery, and LLM-ready OpenAPI | Not started |
 | 4 | The assistant | Not started |
 | 5 | Hardening and handover | Not started |
+| 6 (bonus) | Site widget | Not started |
 
 ---
 
@@ -26,35 +27,35 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 Goal: a deployed, authenticated service with `get_categories` bound as a tool on the indigo.ai platform, and the remaining platform unknowns answered.
 
 - [ ] Scaffold `catalog-service/`: `pyproject.toml` (uv), FastAPI app factory, settings from env, `ruff`, `pytest`
-- [ ] Build step `catalog_build/build_catalog.py`: every normalisation rule, derived fields (`availability`, `rating_score`, `review_volume`, `recipients_match`, `interests`, `listing_group`, `search_weights`), and fail-fast on bad rows
-- [ ] `catalog_catalog_build/interests.toml` (from the spec's draft mapping, checked against the full tag list) and `catalog_catalog_build/synonyms.toml`
+- [ ] Build step `catalog_build/build_catalog.py`: every normalisation rule, derived fields (`availability`, `rating_score`, `recipients_match`, `interests`, `listing_group`, `search_weights`), and fail-fast on bad rows
+- [ ] `catalog_build/interests.toml` (from the spec's draft mapping, checked against the full tag list) and `catalog_build/synonyms.toml`
 - [ ] Generate and commit `data/catalog.json`, `data/catalog.normalized.csv` and `data/BUILD_REPORT.md`; review the report
 - [ ] Build tests against the real CSV: 152 records, 11 categories, the 6 drifted rows land in the right category, the 2 cross-listed pairs share a `listing_group`, 5 unrated products stay `null`, `kids` never in an `anyone` product's `recipients_match`, every subcategory but Gift Cards has an interest
 - [ ] Build tests against small fixture CSVs: unknown category, bad price and unmapped subcategory abort the build; two runs give byte-identical output; committed `catalog.json` is not stale
 - [ ] `app/loader.py`: load and validate `catalog.json` at startup, refuse to start on a malformed file
-- [ ] Sign off the authentication decision in `AUTHENTICATION.md` (Proposed → Accepted, in the header and the *Decision record*; update the D1 row in `CATALOG_SPEC.md`)
+- [x] Sign off the authentication decision in `AUTHENTICATION.md` (Accepted 2026-10-29)
 - [ ] `X-API-Key` auth dependency with multiple keys; refuse to start without keys; tests for missing, wrong and valid key
 - [ ] `GET /categories` and `GET /health`
 - [ ] `servers` populated from `PUBLIC_BASE_URL`
 - [ ] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
 - [ ] Dockerfile (ships `data/catalog.json`), `.env.example`
-- [ ] Choose a host (see spec *Deployment*), deploy, set secrets, smoke-test over HTTPS
+- [ ] `deploy/`: `docker-compose.yml` (service bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`; Caddy), `Caddyfile`, `.env.example`
+- [ ] Droplet: DNS record, firewall (22/80/443), Docker; first deploy per `PLAYBOOK.md`; smoke-test over HTTPS
 - [ ] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
-- [ ] Generate the three keys; set `CATALOG_API_KEYS` on the host and the `CATALOG_API_KEY` workspace secret (Test and Production values) per `docs/guides/secrets-management.md`
+- [ ] Generate the three keys; set `CATALOG_API_KEYS` in `deploy/.env` on the droplet and the `CATALOG_API_KEY` workspace secret (Test and Production values) per `docs/guides/secrets-management.md`
 - [ ] Create the agent from zero in the sandbox workspace
 - [ ] Create the tool collection by importing from the public `/openapi.json` (`AGENT_SPEC.md`, *Tool binding procedure*), assign it to the agent, configure the API key, and call `get_categories` from a test agent
-- [ ] Spike: return a deliberate 404 with the error envelope and check what the model sees
-- [ ] Spike: confirm the URL importer accepts OpenAPI 3.1, how a re-import is triggered after a deploy, the tool timeout, whether a secret change needs a Publish, and how the public link works (and which environment it serves)
-- [ ] Spike: send a test message with Markdown (bold, line breaks) and check whether the widget renders it and supports quick-reply buttons; this fixes the recommendation message format
-- [ ] Record the spike answers in `AGENT_SPEC.md` (*Still to verify in Phase 1*) and adjust `CATALOG_SPEC.md` (error transport, OpenAPI version)
+- [ ] Spike: check what the model sees on a 4xx (for the README; not blocking, see decision D2)
+- [ ] Spike: the tool-call timeout (measure with a deliberately slow test endpoint if undocumented; for the README, since the VPS has no cold starts), whether a secret change needs a Publish, and how the public link works (which environment it serves)
+- [ ] Record the spike answers in `AGENT_SPEC.md` (*Still to verify in Phase 1*), and in `AUTHENTICATION.md` / the secrets guide if a secret change needs a Publish
 - [ ] Mark `CATALOG_SPEC.md` **Approved**
 
 ## Phase 2: Browse and detail tools
 
 Goal: `get_products_by_category` and `get_product_details` complete, with the full error envelope.
 
-Prerequisite: Phase 1 (error transport decided).
+Prerequisite: Phase 1.
 
 - [ ] `ProductSummary` and `ProductDetail` response models with field descriptions
 - [ ] Category resolution: slug, display name, case and whitespace insensitive, `and`/`&`
@@ -62,7 +63,7 @@ Prerequisite: Phase 1 (error transport decided).
 - [ ] Recipient semantics: `her`/`him`/`couple` include `anyone`; `kids` exact
 - [ ] `GET /products/{product_id}`: case-insensitive ID, `also_listed_in`
 - [ ] Error envelope plus exception handlers; replace the default 422 body with plain-language `invalid_parameter`
-- [ ] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions
+- [ ] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
 - [ ] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25), and the size bound
 - [ ] Redeploy, re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
 
@@ -91,7 +92,7 @@ Goal: the gift assistant live on the platform, passing the evaluation scenarios.
 - [ ] Write `agent/system-prompt.md` from the agent spec (persona, question rule, flow, parameter mapping, message format, hard-case handling, hard rules, gift card policy)
 - [ ] `agent/greeting.md` with 2–3 suggested starters
 - [ ] Configure the agent on the platform with the four tools; record every binding step in `agent/tools.md` so it can be reproduced
-- [ ] Format check on a phone-width widget: each recommendation fits one screen
+- [ ] Format check on the shareable link at phone width: each recommendation fits one screen
 - [ ] Write `agent/evals.md` (E1–E14) and run the first pass
 - [ ] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
 - [ ] Re-run E1–E14 and record the dated results
@@ -103,7 +104,7 @@ Goal: the gift assistant live on the platform, passing the evaluation scenarios.
 Goal: the client can open the link, read the repo, and follow every decision.
 
 - [ ] Final full eval run, recorded in `agent/evals.md`
-- [ ] Check cold start against the tool timeout; mitigate if needed
+- [ ] Droplet hygiene: unattended security upgrades on, Docker restart policy verified after a reboot, certificate renewal working
 - [ ] `AUTHENTICATION.md` examples use the real host
 - [ ] Final check that the public spec URL, `/docs` and `/redoc` work from a logged-out browser, and that the platform's Production collection was imported from the current version
 - [ ] `README.md`: what it is, the live link, the API base URL, how to authenticate (link to `AUTHENTICATION.md`), how to run locally, where decisions are recorded
@@ -112,3 +113,15 @@ Goal: the client can open the link, read the repo, and follow every decision.
 - [ ] Decision summary for the walkthrough: data cleaning, why `search_products`, response size bound, error design, `near_misses`, recipient semantics, cross-listing, question rule, message format, what was left out
 - [ ] Open client questions listed in one place (cross-listings, product URLs)
 - [ ] Mark both specs **Implemented**; move this roadmap to `archive/`
+
+## Phase 6 (bonus): Site widget
+
+Goal: the assistant embedded in a web widget, as it would sit on the client's site, with formatting tuned for it.
+
+Prerequisite: Phase 5. Not needed for the handover; the shareable link is the deliverable.
+
+- [ ] Read *Configure & Install the Web Chat*: whether it adds quick-reply buttons, cards or carousels on top of Markdown, and its settings. It is embedded with `<script defer src="https://platform.indigo.ai/widget.js?token=<TOKEN>&v=3"></script>`; leave `uid` unset (anonymous shoppers)
+- [ ] Decide the widget message format: quick replies for the next-step line, and cards only if they stay within one phone screen. Update `AGENT_SPEC.md` first
+- [ ] Embed the widget in a minimal demo page and test it at phone width
+- [ ] Re-run E1–E14 in the widget; record the results
+- [ ] README: link to the demo page

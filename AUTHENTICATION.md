@@ -2,7 +2,7 @@
 
 How callers authenticate to the Catalog Service, and why the scheme was chosen.
 
-**Decision status**: Proposed · 2026-10-29 (see *Decision record*)
+**Decision status**: Accepted · 2026-10-29 (see *Decision record*)
 
 ---
 
@@ -75,10 +75,10 @@ The platform resolves the secret server-side; it never reaches the LLM, the conv
 
 Rotation needs no downtime, because the service accepts several keys at once:
 
-1. Add the new key to `CATALOG_API_KEYS` next to the old one, and redeploy.
+1. Add the new key to `CATALOG_API_KEYS` next to the old one, and restart the service.
 2. Update the consumer (for the platform, the secret's Test or Production value).
 3. Confirm calls succeed and the logs show the new fingerprint.
-4. Remove the old key and redeploy. Confirm the old key now gets `401`.
+4. Remove the old key and restart. Confirm the old key now gets `401`.
 
 Full procedure: `docs/guides/secrets-management.md`. Rotate straight away if a key appears in a commit, log, transcript or screenshot.
 
@@ -92,7 +92,7 @@ Full procedure: `docs/guides/secrets-management.md`. Rotate straight away if a k
 
 ## Decision record
 
-**Status**: Proposed · 2026-10-29
+**Status**: Accepted · 2026-10-29
 
 ### Context
 

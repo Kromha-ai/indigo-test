@@ -18,6 +18,7 @@ uv run uvicorn app.main:app --reload       # http://localhost:8000/docs
 uv run pytest                              # tests
 uv run ruff check . && uv run ruff format .
 docker build -t catalog-service .           # the image ships data/catalog.json, not the raw CSV
+# deployment (DigitalOcean droplet, Caddy in front): ../deploy/, see ../PLAYBOOK.md
 ```
 
 ## Layout (target)

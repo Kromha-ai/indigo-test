@@ -50,7 +50,7 @@ There is no database. The service loads `catalog-service/data/catalog.json` at s
 
 ## Rebuilding the catalogue
 
-Run this after a new client export, or after changing `catalog_catalog_build/interests.toml`, `catalog_catalog_build/synonyms.toml` or the build script:
+Run this after a new client export, or after changing `catalog_build/interests.toml`, `catalog_build/synonyms.toml` or the build script:
 
 ```bash
 cd catalog-service
@@ -62,9 +62,21 @@ Read `data/BUILD_REPORT.md`: any new fixes, unmapped subcategories or cross-list
 
 ## Deploying
 
-1. Build the image: `cd catalog-service && docker build -t catalog-service .`
-2. On the host, set `CATALOG_API_KEYS` and `PUBLIC_BASE_URL` (the public HTTPS URL) as environment variables.
-3. Deploy and check `GET <PUBLIC_BASE_URL>/health` reports `products_loaded: 152`.
+Target: the DigitalOcean droplet, Docker Compose behind Caddy (`docs/specs/CATALOG_SPEC.md`, *Deployment*, decision D4).
+
+### First time on the droplet
+
+1. DNS: create an A record for the service subdomain pointing at the droplet's IP.
+2. Firewall: allow only 22, 80 and 443 (DigitalOcean Cloud Firewall or `ufw allow OpenSSH && ufw allow 80,443/tcp && ufw enable`).
+3. Install Docker Engine and the Compose plugin; clone the repo as the deploy user.
+4. `cp deploy/.env.example deploy/.env && chmod 600 deploy/.env`. Set `CATALOG_API_KEYS` and `PUBLIC_BASE_URL=https://<subdomain>`. Set the domain in `deploy/Caddyfile`.
+5. `docker compose -f deploy/docker-compose.yml up -d --build`. Caddy fetches the certificate on first start.
+
+### Every deploy
+
+1. On the droplet: `git pull && docker compose -f deploy/docker-compose.yml up -d --build`.
+2. Check `GET $PUBLIC_BASE_URL/health` reports `products_loaded: 152`.
+3. If something is wrong: `docker compose -f deploy/docker-compose.yml logs --tail=100 catalog-service`. To roll back, `git checkout <previous-sha>` and run step 1 again.
 4. Check that the OpenAPI spec is published and correct:
 
    ```bash

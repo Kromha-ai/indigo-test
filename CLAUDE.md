@@ -6,6 +6,7 @@ A product discovery assistant for an online gift shop. The client's CSV catalogu
 
 - `catalog-service/`: FastAPI service exposing the catalogue as agent tools (Python 3.12, uv, pytest).
 - `agent/`: version-controlled record of the indigo.ai agent configuration (system prompt, greeting, tool setup, eval results). Created in roadmap Phase 4.
+- `deploy/`: Docker Compose and Caddy configuration for the DigitalOcean droplet (decision D4). Created in roadmap Phase 1.
 - `raw_data/`: the client's export, as received. **Never edit it.** All cleaning and enrichment happens in the build step (`catalog-service/catalog_build/`), which writes the normalised catalogue to `catalog-service/data/`.
 
 Each project has its own `CLAUDE.md` with stack-specific commands and conventions.
@@ -35,7 +36,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | When to use it |
 |---|---|
-| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover. Open it to see what is next and tick tasks off. |
+| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover, plus a bonus widget phase. Open it to see what is next and tick tasks off. |
 
 ### specs
 
@@ -76,7 +77,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 - **Occasion**: `birthday`, `thank-you`, `christmas`, `housewarming`, `anniversary`, `graduation`.
 - **Availability**: `in_stock`, `low_stock` (1–5 units), `out_of_stock`. Derived from stock; raw counts are not exposed.
 - **Normalised catalogue**: `catalog-service/data/catalog.json`, built from the raw CSV by `build_catalog`. Committed, deterministic, and the only file the service reads. `BUILD_REPORT.md` beside it lists every fix applied.
-- **Interest**: a controlled vocabulary of 19 values (`cooking`, `coffee-tea`, `music-audio`...) derived from subcategory and tags, so the agent can filter on what the recipient is into.
+- **Interest**: a controlled vocabulary of 10 values (`home`, `food-drink`, `reading-writing`...) derived from subcategory and tags, so the agent can filter on what the recipient is into.
 - **`rating_score`**: rating weighted by review count (Bayesian average), used only for ranking (`sort=best_rated`), never shown.
 - **Digital product**: `shipping_days = 0`. Currently only the gift cards (`EX-001`, `EX-002`).
 - **Tool collection / operation**: on the indigo.ai platform, a tool collection is imported from the service's public `/openapi.json`. Each API operation becomes an action the agent can call, named by its `operationId`.

@@ -96,7 +96,6 @@ One record per raw row. Columns marked *derived* do not exist in the export.
 | `rating`, `reviews_count` | number / int, nullable | | As published. Null means unrated |
 | `is_rated` | bool | yes | |
 | `rating_score` | number | yes | Weighted rating for ranking (below) |
-| `review_volume` | enum | yes | `none`, `few` (<50), `some` (50–199), `many` (200+). Lets the agent say "loved by hundreds of reviewers" without quoting a number |
 | `recipient` | enum | | As published |
 | `recipients_match` | list | yes | Every recipient filter value this product satisfies (below) |
 | `occasions`, `tags` | list | | |
@@ -125,7 +124,7 @@ rating_score = (v / (v + m)) · R  +  (m / (v + m)) · C
 
 - `C` and `m` are computed at build time from the export and recorded in `BUILD_REPORT.md`, so they follow the data rather than being hard-coded.
 - **Unrated products** get `rating_score = C`, so they are neither rewarded nor punished in ranking. Their `rating` stays `null` and the agent never presents them as rated.
-- `rating_score` is a ranking key only. It is **not exposed** in the API: an opaque 4.61 is a number the agent would be tempted to quote. Responses show `rating`, `reviews_count` and `review_volume`.
+- `rating_score` is a ranking key only. It is **not exposed** in the API: an opaque 4.61 is a number the agent would be tempted to quote. Responses show `rating` and `reviews_count`.
 - With the current data, the top of the ranking is the E-Reader (4.8 from 923 reviews), the Ember Candle (4.8 from 431) and the Chef's Knife (4.8 from 394), which matches intuition.
 
 #### `recipients_match`: recipient wildcard, resolved once
@@ -144,31 +143,24 @@ The recipient rule (see *Filter semantics*) is applied at build time, so the run
 
 Shoppers describe people by interests (*"she loves cooking"*, *"he's into music"*), while the export describes products by subcategory and free tags (380 tags, mostly used once). `interests` bridges the two with a small controlled vocabulary. It is exposed as an enum filter, so the agent picks from a list instead of guessing keywords.
 
-Vocabulary (19): `home-decor`, `cooking`, `entertaining`, `coffee-tea`, `drinks`, `tech`, `music-audio`, `reading`, `writing-stationery`, `art-craft`, `games-puzzles`, `wellness`, `fitness`, `outdoors-travel`, `plants-gardening`, `jewellery-style`, `pets`, `photography`, `kids-play`.
+Vocabulary (10, chosen 2026-10-29 over a 19-value draft, which was more precise but harder for the model to choose from): `home`, `food-drink`, `tech-music`, `reading-writing`, `games-play`, `wellness-fitness`, `outdoors-travel`, `jewellery-style`, `pets`, `arts-crafts`.
 
-The mapping lives in `catalog_catalog_build/interests.toml`. Every subcategory must map to at least one interest; Gift Cards is the one explicit exception (it maps to none). Tag rules can add interests on top of the subcategory, e.g. tag `travel` adds `outdoors-travel`, `retro` or `gaming` add `games-puzzles`, `drawing` adds `art-craft`, `plant` adds `plants-gardening`. The draft subcategory mapping:
+The mapping lives in `catalog_build/interests.toml`. Every subcategory must map to at least one interest; Gift Cards is the one explicit exception (it maps to none). Tag rules add interests on top of the subcategory, which is what makes the filter cross categories: tag `travel` adds `outdoors-travel` (10 products), `retro` adds `games-play`, `drawing` adds `arts-crafts`, `coffee` and `tea` add `food-drink`, `fitness` adds `wellness-fitness`. The final tag rules are checked against all 380 tags when the file is written.
 
-| Interest | Subcategories |
-|---|---|
-| `home-decor` | Candles, Decor, Lighting, Storage, Textiles, Vases, Fragrance (Home & Living) |
-| `cooking` | Cookware, Knives, Serving, Tableware |
-| `entertaining` | Bar, Serving, Tableware |
-| `coffee-tea` | Coffee, Tea |
-| `drinks` | Bar |
-| `tech` | Audio, Creative, Desk, Home Tech, Mobile, Photo, Reading, Wearable |
-| `music-audio` | Audio |
-| `reading` | Books, Reading |
-| `writing-stationery` | Paper, Pens |
-| `art-craft` | Craft |
-| `games-puzzles` | Board Games, Classic Games, Puzzles |
-| `wellness` | Bath, Fragrance (Beauty & Wellness), Grooming, Recovery, Skincare, Sleep |
-| `fitness` | Fitness, Recovery |
-| `outdoors-travel` | Bags, Drinkware, Outdoor |
-| `plants-gardening` | Garden |
-| `jewellery-style` | Bracelets, Earrings, Necklaces, Rings, Watches |
-| `pets` | Cats, Dogs |
-| `photography` | Photo |
-| `kids-play` | Toys, plus every product in Kids |
+| Interest | Subcategories | Products (in stock) |
+|---|---|---|
+| `home` | Candles, Decor, Fragrance (Home & Living), Garden, Lighting, Storage, Textiles, Vases | 28 (26) |
+| `food-drink` | Bar, Coffee, Cookware, Knives, Serving, Tableware, Tea | 24 (22) |
+| `tech-music` | Audio, Creative, Desk, Home Tech, Mobile, Photo, Reading, Wearable | 25 (24) |
+| `reading-writing` | Books (both categories), Paper, Pens, Reading | 17 (16) |
+| `games-play` | Board Games, Classic Games, Puzzles, Toys | 17 (15) |
+| `wellness-fitness` | Bath, Fitness, Fragrance (Beauty & Wellness), Grooming, Recovery, Skincare, Sleep | 18 (17) |
+| `outdoors-travel` | Bags, Drinkware, Outdoor, plus tag `travel` | 17 (16) |
+| `jewellery-style` | Bracelets, Earrings, Necklaces, Rings, Watches | 8 (7) |
+| `pets` | Cats, Dogs | 3 (2) |
+| `arts-crafts` | Craft (both categories), plus tag `drawing` | 4 (4) |
+
+Several values nearly mirror a category (`home`, `food-drink`, `tech-music`). The filter earns its place where interests cross categories: `reading-writing` (books, the e-reader, kids' books), `games-play` (games and kids' toys) and `outdoors-travel` (travel-tagged products anywhere).
 
 `BUILD_REPORT.md` lists the product count per interest, so a thin or overloaded interest is visible at review time.
 
@@ -178,7 +170,7 @@ Each record carries a map from normalised token to weight, so a query is scored 
 
 - **Normalisation**: lowercase, strip accents, split on non-alphanumerics, drop a short stopword list, light plural strip (`candles` → `candle`, `knives` → `knife`).
 - **Field weights**: name ×3, tags ×3, interests ×2, subcategory ×2, brand ×2, category ×1, description ×1. A token in several fields gets the highest weight, not the sum, so long descriptions cannot outscore names.
-- **Query side**: `catalog_catalog_build/synonyms.toml` expands query tokens before scoring (`kitchen` → `cooking`, `tea` → `coffee-tea`, `music` → `music-audio`, `jewelry` → `jewellery`...). The same file holds the category synonyms used for `did_you_mean`.
+- **Query side**: `catalog_build/synonyms.toml` expands query tokens before scoring (`kitchen`/`cooking` → `food-drink`, `music` → `tech-music`, `books` → `reading-writing`, `jewelry` → `jewellery`...). The same file holds the category synonyms used for `did_you_mean`.
 
 #### Cross-listed products
 
@@ -202,7 +194,6 @@ Two products appear twice under different IDs (`HL-021`/`KD-024`, `HL-024`/`KD-0
   "price_eur": 42.00,
   "rating": 4.8,
   "reviews_count": 431,
-  "review_volume": "many",
   "availability": "in_stock",
   "recipient": "anyone",
   "occasions": ["thank-you", "birthday", "christmas"],
@@ -287,7 +278,7 @@ Search across all categories by constraints and free text.
 | `min_price`, `max_price` | number | none | As above |
 | `recipient` | enum | none | |
 | `occasion` | enum | none | |
-| `interest` | enum | none | What the recipient is into. Prefer this to `query` when one of the 19 values fits |
+| `interest` | enum | none | What the recipient is into. Prefer this to `query` when one of the 10 values fits |
 | `max_shipping_days` | int | none | 0–14. Use when the shopper has a deadline |
 | `gift_wrap` | bool | none | `true` keeps only wrappable products |
 | `include_out_of_stock` | bool | `false` | |
@@ -362,10 +353,14 @@ Relaxations tried: drop `occasion`, drop `recipient`, drop `interest`, drop `sub
 
 ### Errors
 
-Every non-2xx response uses one envelope:
+Errors come in two kinds, and both use the same `error` envelope (decision D2):
+
+- **Recoverable**: the agent asked for something that does not exist (unknown category, subcategory or product). These return **`200`** with `"found": false` and the envelope, so the model sees the recovery hints whatever the platform does with 4xx bodies.
+- **Failures**: bad key, invalid parameters, rate limit, server error. These keep their real HTTP status with the envelope as the body.
 
 ```json
 {
+  "found": false,
   "error": {
     "code": "category_not_found",
     "message": "No category matches 'electronics'.",
@@ -379,15 +374,17 @@ Every non-2xx response uses one envelope:
 | Code | HTTP | When | Recovery content |
 |---|---|---|---|
 | `unauthorized` | 401 | Missing or wrong API key | `hint` names the header |
-| `category_not_found` | 404 | Unknown category | `did_you_mean` (fuzzy match on slug and name, plus a synonym table: *electronics* and *gadgets* map to `tech-gadgets`, *beauty* and *skincare* to `beauty-wellness`, *toys* to `kids`, *travel* to `outdoor-travel`...), plus `valid_values` |
-| `subcategory_not_found` | 404 | Subcategory not in that category | `valid_values` = that category's subcategories, `did_you_mean` if another category has it |
-| `product_not_found` | 404 | Unknown product ID | `hint` to use `search_products`; `did_you_mean` for IDs one edit away |
+| `category_not_found` | 200, `found: false` | Unknown category | `did_you_mean` (fuzzy match on slug and name, plus a synonym table: *electronics* and *gadgets* map to `tech-gadgets`, *beauty* and *skincare* to `beauty-wellness`, *toys* to `kids`, *travel* to `outdoor-travel`...), plus `valid_values` |
+| `subcategory_not_found` | 200, `found: false` | Subcategory not in that category | `valid_values` = that category's subcategories, `did_you_mean` if another category has it |
+| `product_not_found` | 200, `found: false` | Unknown product ID | `hint` to use `search_products`; `did_you_mean` for IDs one edit away |
 | `invalid_parameter` | 422 | Validation failure | Plain-language message per field ("max_price (20) must be greater than or equal to min_price (50)"), replacing FastAPI's default validation body |
 | `search_too_broad` | 400 | `search_products` with no constraint | `hint` to add a query or filter |
 | `rate_limited` | 429 | Over the per-key rate limit | `hint` to retry after `Retry-After` seconds |
 | `internal_error` | 500 | Unexpected | Generic message, no stack trace |
 
-**Risk, verify in Phase 1**: it is not yet confirmed whether the indigo.ai platform passes 4xx response bodies to the model or replaces them with a generic tool failure. If it hides them, the not-found cases switch to `200` with `{"found": false, "error": {...}}`, keeping the same envelope. Because the envelope is the same either way, the switch is a single response-builder change.
+**Success responses carry `"found": true`** on `get_products_by_category` (as part of `ListResponse`) and `get_product_details` (`{"found": true, "product": {...}}`), so the agent always checks one field. `search_products` and `get_categories` cannot hit a not-found case and do not carry it. An empty result is still `found: true` with `items: []` and `suggestions`: the category exists, nothing in it matches.
+
+**Accepted cost**: if the platform hides 4xx bodies, the model gets a generic failure for `invalid_parameter` and `search_too_broad`. These are agent mistakes, not shopper situations; tool descriptions, enums and evals are what prevent them. The Phase 1 spike still records what the platform does with 4xx, for the README.
 
 ### Authentication
 
@@ -415,7 +412,7 @@ The OpenAPI document is the product. Requirements:
 - **Self-contained.** The document must not depend on anything external; FastAPI's `#/components` `$ref`s are internal and fine.
 - **`servers`** is set from `PUBLIC_BASE_URL` for the published document and `/docs`. The platform ignores it and uses the collection's **Endpoint** fields instead.
 - **Form editing.** Operations using `$ref` or `anyOf` show as read-only in the platform's form but work as defined. That is intended: descriptions are edited in code, never in the platform.
-- **Risk, verify in Phase 1**: FastAPI emits OpenAPI 3.1. If the platform's importer requires 3.0, generate a 3.0-compatible document (in particular, render `Optional` fields as `nullable: true` instead of `anyOf: [..., null]`).
+- **OpenAPI 3.1**, as FastAPI emits it. The platform's importer accepts 3.1 (confirmed 2026-10-29), so no 3.0 conversion is needed.
 
 Draft tool descriptions (to be refined against real agent transcripts):
 
@@ -454,9 +451,20 @@ Draft tool descriptions (to be refined against real agent transcripts):
 
 ## Deployment
 
-The service needs to be on public HTTPS so the platform can call it. Any container host will do.
+On the developer's DigitalOcean VPS (decision D4), behind a reverse proxy that terminates HTTPS.
 
-**Recommendation**: Render or Railway web service from the Dockerfile, single instance, environment variables set in the host's dashboard. Cold-start latency on a free tier must be checked against the platform's tool timeout. If it is a problem, use the smallest paid instance or an uptime ping. **Decision needed by Phase 4** (non-blocking before then).
+```
+indigo.ai ──HTTPS──▶ Caddy (:443, automatic Let's Encrypt) ──HTTP──▶ catalog-service container (127.0.0.1:8000)
+```
+
+- **Files**: `deploy/` at the repo root holds `docker-compose.yml` (service + Caddy), `Caddyfile`, and `.env.example`. The compose file builds the image from `catalog-service/`.
+- **TLS**: Caddy obtains and renews the Let's Encrypt certificate automatically. This needs a DNS name (a subdomain such as `catalog.<domain>`) with an A record pointing at the droplet.
+- **Container**: Uvicorn, one worker (the in-memory rate limiter assumes a single process), `restart: unless-stopped`, port bound to `127.0.0.1` only, so the service is reachable only through Caddy. Uvicorn runs with `--proxy-headers` so redirects and `/docs` see the HTTPS scheme.
+- **Secrets**: `deploy/.env` on the droplet only (`chmod 600`, owned by the deploy user, git-ignored). Holds `CATALOG_API_KEYS` and `PUBLIC_BASE_URL`.
+- **Firewall**: DigitalOcean Cloud Firewall or `ufw` allows only 22 (SSH, key-only), 80 (ACME challenge and redirect to HTTPS) and 443.
+- **Deploy**: on the droplet, `git pull` then `docker compose -f deploy/docker-compose.yml up -d --build`. The catalogue is baked into the image, so a data rebuild is deployed the same way.
+- **Logs**: `docker compose logs`. JSON lines from the service, Caddy access logs. Request headers are not logged, so keys never reach the logs (only fingerprints, from the service).
+- **Health**: `GET /health` through the public URL after every deploy (`PLAYBOOK.md`, *Deploying*).
 
 ## Inter-service dependencies
 
@@ -475,10 +483,11 @@ The service needs to be on public HTTPS so the platform can call it. Any contain
 - `get_products_by_category("Home and Living")` resolves to `home-living` and includes `HL-013`.
 - `search_products(occasion=housewarming, min_price=40, max_price=60)` returns 13 products, with no duplicate tumbler set.
 - `search_products(recipient=kids)` returns only `KI-*` products.
-- `search_products(interest=coffee-tea)` returns the in-stock Coffee and Tea products.
+- `search_products(interest=reading-writing)` spans categories: it includes `TG-006` (e-reader) and `KI-003` (kids' story collection).
 - `sort=best_rated` ranks the E-Reader (`TG-006`) first.
 - `search_products(query="chef's knife", max_price=100)` returns in-budget knife products, and `near_misses` contains `KD-001` (€149).
-- Unknown category `electronics` returns `category_not_found` with `did_you_mean: ["tech-gadgets"]`.
+- Unknown category `electronics` returns `200` with `found: false`, `category_not_found` and `did_you_mean: ["tech-gadgets"]`.
+- Unknown product `XX-999` returns `200` with `found: false` and `product_not_found`; a known ID returns `found: true` and `product`.
 - An empty filter result returns `200` with at least one actionable suggestion.
 - No request without a valid key reaches a data endpoint; a key removed from `CATALOG_API_KEYS` gets `401` straight after restart.
 - The 121st request within a minute on one key gets `429 rate_limited`.
@@ -492,4 +501,57 @@ Decisions that are not obvious from the contract above, kept short enough to exp
 
 | # | Decision | Status | Record |
 |---|---|---|---|
-| D1 | Authentication scheme | Proposed | `AUTHENTICATION.md` |
+| D1 | Authentication scheme | Accepted | `AUTHENTICATION.md` |
+| D2 | Recoverable errors return `200` + `found: false` | Accepted | Below |
+| D3 | One deployment for both platform environments | Accepted | Below |
+| D4 | Hosting on a DigitalOcean VPS | Accepted | Below |
+
+### D2: Recoverable errors return `200` with `found: false`
+
+**Status**: Accepted · 2026-10-29
+
+**Context**: the agent can only recover from an unknown category or product ID if it reads `did_you_mean` and `hint`. It is not known whether indigo.ai passes 4xx response bodies to the model or replaces them with a generic tool failure.
+
+**Options**: (a) HTTP-correct `404` with the envelope, and verify the platform behaviour first; (b) `200` with `found: false` and the same envelope.
+
+**Decision**: (b) for the recoverable not-found cases. Real failures (`401`, `422`, `400`, `429`, `500`) keep their HTTP status.
+
+**Consequences**: recovery works whatever the platform does with 4xx, and Phase 1 no longer depends on that spike. The API is less REST-pure: monitoring must count `found: false` responses as a metric, since they are not errors at the HTTP level. They are logged with their `error.code`.
+
+**Revisit if**: a consumer other than an LLM agent appears, or the platform is confirmed to pass 4xx bodies and REST semantics start to matter.
+
+### D3: One deployment serves both platform environments
+
+**Status**: Accepted · 2026-10-29
+
+**Context**: indigo.ai tool collections have a Test and a Production endpoint. The catalogue is read-only and identical in both environments.
+
+**Options**: (a) one deployment, both endpoints pointing at it, separated by keys (`platform-test`, `platform-prod`); (b) separate staging and production deployments.
+
+**Decision**: (a). A second deployment would cost a host and a second set of secrets without protecting any data.
+
+**Consequences**: a deploy changes the API under the Production agent *before* its tool collection is re-imported and published. Therefore:
+
+- Changes are **additive only**: new optional parameters, new fields, new operations.
+- Never rename or remove a parameter, field or operation, and never tighten a constraint, in a single deploy.
+- A breaking change takes two deploys, the first adding the new form alongside the old one, with a Publish in between.
+
+Revisit if a breaking change is unavoidable, or if a consumer other than the platform appears.
+
+### D4: Hosting on a DigitalOcean VPS
+
+**Status**: Accepted · 2026-10-29
+
+**Context**: the service must be on public HTTPS, and it is called during live conversations, so a slow first response hurts the shopper. Managed hosts considered: Render, Railway, Fly.io, Cloud Run. Their free tiers sleep or scale to zero, and the first request after idling can take 30–60 s, which may exceed the platform's tool-call timeout.
+
+**Decision**: the developer's existing DigitalOcean VPS (droplet), running the container with Docker Compose behind Caddy for automatic HTTPS.
+
+**Consequences**:
+
+- Always on: no cold starts, so the tool-call timeout no longer constrains hosting (it is still measured, for the README).
+- No extra hosting cost.
+- We own TLS, the firewall, OS updates and restarts. Caddy and `restart: unless-stopped` cover most of it; the rest is in `PLAYBOOK.md`.
+- A DNS name is required for the certificate.
+- Single instance: if the droplet is down, the assistant cannot recommend anything. Acceptable for this scope.
+
+**Revisit if** traffic needs more than one instance (the in-memory rate limiter would then need a shared store), or if the droplet's other workloads start competing for resources.

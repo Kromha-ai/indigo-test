@@ -10,7 +10,7 @@ Why the service uses static API keys in `X-API-Key`: `AUTHENTICATION.md` (repo r
 
 | Secret | Value | Used by | Stored in | Never in |
 |---|---|---|---|---|
-| `CATALOG_API_KEYS` | Comma-separated list of every currently valid key | Catalog Service (validates `X-API-Key`) | Hosting provider's environment variables; local `catalog-service/.env` | Git, logs, prompts, screenshots |
+| `CATALOG_API_KEYS` | Comma-separated list of every currently valid key | Catalog Service (validates `X-API-Key`) | `deploy/.env` on the droplet (`chmod 600`, git-ignored); local `catalog-service/.env` | Git, logs, prompts, screenshots |
 | `platform-test` key | One key | indigo.ai **Test** environment | Workspace secret `CATALOG_API_KEY`, **Test** value | Tool definitions, conversations |
 | `platform-prod` key | One key | indigo.ai **Production** environment | Workspace secret `CATALOG_API_KEY`, **Production** value | Tool definitions, conversations |
 | `local-dev` key | One key | Local development, curl, tests against a deployed instance | Your `.env` / password manager | Anything shared |
@@ -49,9 +49,9 @@ python3 -c "import hashlib,sys; print(hashlib.sha256(sys.argv[1].encode()).hexdi
 Example for `platform-prod`; the same steps apply to any key.
 
 1. Generate a new key.
-2. Add it to `CATALOG_API_KEYS` on the host alongside the old one (`old,new`) and redeploy.
+2. Add it to `CATALOG_API_KEYS` in `deploy/.env` on the droplet alongside the old one (`old,new`), then `docker compose -f deploy/docker-compose.yml up -d` to restart with the new environment.
 3. Update the **Production** value of the `CATALOG_API_KEY` workspace secret. *To verify in Phase 1: whether a secret change takes effect immediately or needs a Publish.* Confirm that a production tool call succeeds and the logs show the new fingerprint.
-4. Remove the old key from `CATALOG_API_KEYS` and redeploy.
+4. Remove the old key from `CATALOG_API_KEYS` and restart the same way.
 5. Confirm a request with the old key returns `401`.
 
 Rotate straight away if a key appears in a commit, log, transcript or screenshot. Because each environment has its own key, a leaked test key never requires touching production.
