@@ -114,7 +114,7 @@ Implementation follows the spec. If you discover the spec is wrong or incomplete
 
 Every new endpoint or business-rule change ships with tests. The spec gives you the acceptance criteria; the test proves the code meets them.
 
-For new services, integration tests that hit the real database are preferred over unit tests with mocks — the spec contract is at the HTTP boundary, so test at the HTTP boundary.
+For new services, integration tests against the real data (here, the client's CSV) are preferred over unit tests with mocks — the spec contract is at the HTTP boundary, so test at the HTTP boundary.
 
 **A bug fix ships with a test too**, and that test must fail without the fix. A fix nobody can
 reproduce is a fix nobody can keep: the next refactor reintroduces it silently. Write the test
@@ -140,8 +140,8 @@ made and verify it is gone; a stray fixture becomes someone else's confusing bug
 When a roadmap is fully complete:
 1. Move it to `archive/` with a note of the completion date.
 2. Update `docs/planning/ROADMAP.md` (or the relevant active roadmap) to point to the archive and mark the phase complete.
-3. Update `docs/reference/Project_definition_v1_0.md` if the shipped work changes any business rules, entities, or workflows.
-4. Update `docs/reference/schema.mermaid` if new tables or columns were added.
+3. Update `CLAUDE.md` (glossary, critical business rules) if the shipped work changes any business rules, entities, or workflows.
+4. Update `docs/reference/catalog-data-profile.md` if a new catalogue export was received.
 
 ---
 
@@ -151,12 +151,14 @@ When a roadmap is fully complete:
 |---|---|
 | Working on a new service | `docs/specs/` — write the spec first |
 | Continuing an in-progress phase | `docs/planning/` — open the active roadmap |
-| Understanding a business rule or domain term | `docs/reference/Project_definition_v1_0.md` or `docs/reference/glossary.md` |
-| Writing or reviewing a migration | `docs/reference/schema.mermaid` |
-| Writing tests | `docs/guides/testing.md` · `docs/guides/e2e-testing.md` |
-| Fixing a bug | Write the failing test first, then Step 4 above · `docs/planning/TESTING_IMPROVEMENTS.md` for what is already known to be untested |
+| Understanding the client's problem | `docs/reference/scenario.md` |
+| Understanding a business rule or domain term | `CLAUDE.md` (glossary, critical business rules) |
+| Understanding the raw data | `docs/reference/catalog-data-profile.md` |
+| Changing agent behaviour | `docs/specs/AGENT_SPEC.md` · `agent/evals.md` |
+| Writing tests | `docs/guides/testing.md` |
+| Fixing a bug | Write the failing test first, then Step 4 above |
 | Setting up the local environment | `PLAYBOOK.md` |
-| Understanding infrastructure or service topology | `docs/reference/architecture.md` |
+| Deploying or rotating secrets | `PLAYBOOK.md` · `docs/guides/secrets-management.md` |
 
 ---
 
