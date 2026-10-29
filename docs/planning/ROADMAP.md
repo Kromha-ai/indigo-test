@@ -110,7 +110,6 @@ Goal: the client can open the link, read the repo, and follow every decision.
 - [ ] `README.md` agent sections (`AGENT_SPEC.md`, *README requirements*): the prompt, how the tools were bound, and the conversation design decisions, leading with how many questions are asked before recommending and why
 - [ ] `PLAYBOOK.md` and `docs/guides/testing.md` reflect the real commands
 - [ ] Decision summary for the walkthrough: data cleaning, why `search_products`, response size bound, error design, `near_misses`, recipient semantics, cross-listing, question rule, message format, what was left out
-- [ ] Open client questions listed in one place (cross-listings, product URLs)
 - [ ] Mark both specs **Implemented**; move this roadmap to `archive/`
 
 ## Phase 6 (bonus): Site widget

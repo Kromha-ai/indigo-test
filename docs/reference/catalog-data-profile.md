@@ -61,7 +61,7 @@ Two products appear twice, under different IDs and categories, with identical br
 | `HL-021` (Home & Living / Garden) | `KD-024` (Kitchen & Dining / Serving) | Herb Garden Kit |
 | `HL-024` (Home & Living / Decor) | `KD-023` (Kitchen & Dining / Serving) | Amber Glass Tumbler Set |
 
-The identical stock figures suggest a single physical SKU listed twice, not two items. Without handling, a cross-category search for *"housewarming, around €50"* returns the Amber Glass Tumbler Set twice. **Open with client**: are these intentional cross-listings? (Non-blocking: the spec treats them as one product with two listings.)
+The identical stock figures suggest a single physical SKU listed twice, not two items. Without handling, a cross-category search for *"housewarming, around €50"* returns the Amber Glass Tumbler Set twice. The spec treats them as one product with two listings.
 
 ### Out of stock
 

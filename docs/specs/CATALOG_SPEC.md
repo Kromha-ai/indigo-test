@@ -24,7 +24,7 @@ Context: `docs/reference/scenario.md`. Data findings: `docs/reference/catalog-da
 - Writing back to the catalogue (orders, carts, stock reservations). The service is read-only.
 - A database. 152 rows load into memory at startup in milliseconds; a database would add operational cost with no benefit at this size.
 - Semantic or embedding search. Keyword scoring over name, tags, subcategory and description is enough for 152 short records. Revisit if the catalogue grows by an order of magnitude.
-- Product images and storefront URLs: the export has neither. **Open with client**: whether a product URL pattern exists (non-blocking).
+- Product images and storefront URLs: the export has neither.
 - Multi-language catalogue content. Data stays in English; the agent handles the shopper's language.
 - Admin UI and hot-reloading. A new export means rebuild (`build_catalog`), review the diff and report, then redeploy.
 
