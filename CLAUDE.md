@@ -6,7 +6,7 @@ A product discovery assistant for an online gift shop. The client's CSV catalogu
 
 - `catalog-service/`: FastAPI service exposing the catalogue as agent tools (Python 3.12, uv, pytest).
 - `agent/`: version-controlled record of the indigo.ai agent configuration (system prompt, greeting, tool setup, eval results). Created in roadmap Phase 4.
-- `deploy/`: Docker Compose and Caddy configuration for the DigitalOcean droplet (decision D4). Created in roadmap Phase 1.
+- `deploy/`: Docker Compose for the service and the Caddy site block (`catalog.caddy`) imported by the droplet's system Caddy (decision D4).
 - `raw_data/`: the client's export, as received. **Never edit it.** All cleaning and enrichment happens in the build step (`catalog-service/catalog_build/`), which writes the normalised catalogue to `catalog-service/data/`.
 
 Each project has its own `CLAUDE.md` with stack-specific commands and conventions.

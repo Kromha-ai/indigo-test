@@ -1,5 +1,0 @@
-# Automatic HTTPS (Let's Encrypt) for the Catalog Service.
-catalog.builtbykromha.com {
-	encode gzip
-	reverse_proxy catalog-service:8000
-}

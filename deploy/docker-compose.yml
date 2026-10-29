@@ -1,25 +1,10 @@
+# Catalog Service on the DigitalOcean droplet. The droplet's system Caddy terminates HTTPS
+# and proxies catalog.builtbykromha.com to 127.0.0.1:8000 (see catalog.caddy).
+# From the repo root: docker compose -f deploy/docker-compose.yml up -d --build
 services:
   catalog-service:
     build: ../catalog-service
     env_file: .env
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8000:8000"   # reachable from the droplet only; the public path is Caddy
-
-  caddy:
-    image: caddy:2.8.4
-    restart: unless-stopped
-    depends_on:
-      - catalog-service
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-
-volumes:
-  caddy_data:
-  caddy_config:
+      - "127.0.0.1:8000:8000"   # loopback only: reachable by the system Caddy, not the internet

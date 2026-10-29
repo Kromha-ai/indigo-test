@@ -62,11 +62,10 @@ Revisit if a breaking change is unavoidable, or if a consumer other than the pla
 
 - Always on: no cold starts, so the tool-call timeout no longer constrains hosting (it is still measured, for the README).
 - No extra hosting cost.
-- We own TLS, the firewall, OS updates and restarts. Caddy and `restart: unless-stopped` cover most of it; the rest is in `PLAYBOOK.md`.
-- A DNS name is required for the certificate.
+- We own TLS, OS updates and restarts. Caddy and `restart: unless-stopped` cover most of it; the rest is in `PLAYBOOK.md`.
 - Single instance: if the droplet is down, the assistant cannot recommend anything. Acceptable for this scope.
 
-**Revisit if** traffic needs more than one instance (the in-memory rate limiter would then need a shared store), or if the droplet's other workloads start competing for resources.
+**Revisit if** traffic needs more than one instance (the in-memory rate limiter would then need a shared store), or other workloads on the droplet start competing for resources.
 
 ### D5: Narrow keyword `query` with no dead end
 

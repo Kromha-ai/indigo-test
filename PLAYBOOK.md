@@ -63,21 +63,14 @@ Read `data/BUILD_REPORT.md`: any new fixes or cross-listings need a decision bef
 
 ## Deploying
 
-Target: the DigitalOcean droplet, Docker Compose behind Caddy (`docs/specs/CATALOG_SPEC.md`, *Deployment*, decision D4).
+Target: the DigitalOcean droplet. The service runs with Docker Compose on `127.0.0.1:8000`; the droplet's system Caddy proxies `catalog.builtbykromha.com` to it (`docs/specs/CATALOG_SPEC.md`, *Deployment*).
 
-### First time on the droplet
-
-1. DNS: create an A record for `catalog.builtbykromha.com` pointing at the droplet's IP. Check with `dig +short catalog.builtbykromha.com` before starting Caddy; otherwise the certificate request fails and Let's Encrypt rate-limits retries.
-2. Firewall: allow only 22, 80 and 443 (DigitalOcean Cloud Firewall or `ufw allow OpenSSH && ufw allow 80,443/tcp && ufw enable`).
-3. Install Docker Engine and the Compose plugin; clone the repo as the deploy user.
-4. `cp deploy/.env.example deploy/.env && chmod 600 deploy/.env`. Set `CATALOG_API_KEYS` and `PUBLIC_BASE_URL=https://catalog.builtbykromha.com`. The domain is already in `deploy/Caddyfile`.
-5. `docker compose -f deploy/docker-compose.yml up -d --build`. Caddy fetches the certificate on first start.
 
 ### Every deploy
 
 1. On the droplet: `git pull && docker compose -f deploy/docker-compose.yml up -d --build`.
 2. Check `GET $PUBLIC_BASE_URL/health` reports `products_loaded: 152`.
-3. If something is wrong: `docker compose -f deploy/docker-compose.yml logs --tail=100 catalog-service`. To roll back, `git checkout <previous-sha>` and run step 1 again.
+3. If something is wrong: `docker compose -f deploy/docker-compose.yml logs --tail=100 catalog-service`. If `deploy/catalog.caddy` changed, also `sudo systemctl reload caddy`. To roll back, `git checkout <previous-sha>` and run step 1 again.
 4. Check that the OpenAPI spec is published and correct:
 
    ```bash

@@ -255,16 +255,16 @@ Details in `AUTHENTICATION.md`.
 
 ## Deployment
 
-The DigitalOcean droplet (D4) at `https://catalog.builtbykromha.com`, dedicated to this service. Steps are in `PLAYBOOK.md`.
+The DigitalOcean droplet (D4) at `https://catalog.builtbykromha.com`. Steps are in `PLAYBOOK.md`.
 
 ```
-indigo.ai ──HTTPS──▶ Caddy (:443, automatic Let's Encrypt) ──HTTP──▶ catalog-service (127.0.0.1:8000)
+indigo.ai ──HTTPS──▶ system Caddy (:443, automatic Let's Encrypt) ──HTTP──▶ catalog-service container (127.0.0.1:8000)
 ```
 
-- **Files**: `deploy/` holds `docker-compose.yml` (service + Caddy), `Caddyfile` and `.env.example`.
+- **Files**: `deploy/` holds `docker-compose.yml` (the service only), `catalog.caddy` (the site block, imported by the system Caddyfile) and `.env.example`.
 - **Container**: Uvicorn, one worker (the rate limiter is in memory), `--proxy-headers`, `restart: unless-stopped`.
 - **Secrets**: `deploy/.env` on the droplet (`chmod 600`, git-ignored).
-- **Firewall**: ports 22 (key-only), 80 and 443.
+- **Firewall**: ports 22 (key-only), 80 and 443. Port 8000 is bound to loopback, never public.
 - **Environments**: one deployment serves both the platform's Test and Production environments, separated by key (D3).
 
 ## Dependencies

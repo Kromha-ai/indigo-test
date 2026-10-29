@@ -39,8 +39,8 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] `servers` populated from `PUBLIC_BASE_URL`
 - [x] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
 - [x] Dockerfile (ships `data/catalog.json`), `.env.example`
-- [x] `deploy/`: `docker-compose.yml` (service bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`; Caddy), `Caddyfile` (`catalog.builtbykromha.com`), `.env.example`
-- [ ] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), firewall (22/80/443), Docker; first deploy per `PLAYBOOK.md`; smoke-test `https://catalog.builtbykromha.com/health`
+- [x] `deploy/`: `docker-compose.yml` (service only, bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`), `catalog.caddy` (site block imported by the droplet's system Caddy), `.env.example`
+- [ ] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), Docker, clone to `/opt/indigo-test`, `deploy/.env`, `docker compose up`, `import` the site block in `/etc/caddy/Caddyfile` and reload Caddy (`PLAYBOOK.md`); smoke-test `https://catalog.builtbykromha.com/health`
 - [ ] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
 - [ ] Generate the three keys; set `CATALOG_API_KEYS` in `deploy/.env` on the droplet and the `CATALOG_API_KEY` workspace secret (Test and Production values) per `docs/guides/secrets-management.md`
