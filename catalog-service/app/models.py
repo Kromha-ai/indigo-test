@@ -145,8 +145,9 @@ class Suggestion(BaseModel):
 class ListResponse(BaseModel):
     found: bool | None = Field(
         default=None,
-        description="Browse only: `true` when the category exists. If it does not, the response "
-        "is `{found: false, error: {...}}` with `did_you_mean`.",
+        description="Browse responses: `true` (the category exists). Whenever a category given to "
+        "either list tool does not exist, the response is `{found: false, error: {...}}` instead, "
+        "with `did_you_mean`.",
     )
     category: CategoryRef | None = Field(default=None, description="Browse only: the category.")
     items: list[ProductSummary] = Field(description="This page of products, best match first.")

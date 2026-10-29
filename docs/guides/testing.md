@@ -26,8 +26,10 @@ Tests need no network, no database and no secrets. The test settings inject a fi
 | `tests/test_build.py` | The build step: normalisation, derived fields, cross-listings, report, determinism, and the staleness check on the committed `data/catalog.json` |
 | `tests/test_loader.py` | Startup validation of `catalog.json` (a truncated or malformed file refuses to load) |
 | `tests/test_auth.py` | Missing, wrong and valid keys; unauthenticated routes stay open |
-| `tests/test_categories.py` (then one file per tool) | Each tool through `TestClient`, plus `/health` |
-| `tests/test_errors.py` (Phase 2) | Every error code in the spec and its recovery content |
+| `tests/test_categories.py`, `test_browse.py`, `test_search.py`, `test_products.py` | Each tool through `TestClient` against the real catalogue, plus `/health` |
+| `tests/test_suggestions.py` | Empty results: which relaxations are offered, their counts, order and cap |
+| `tests/test_rate_limit.py`, `test_logging.py` | Per-key limit with a fake clock; one JSON log line per request, key never logged |
+| `tests/test_errors.py` | Every error code in the spec and its recovery content |
 | `tests/test_openapi.py` | Contract of the OpenAPI document (below) |
 | `tests/fixtures/*.csv` | Tiny hand-written CSVs for edge cases (bad price, unknown category, empty fields) |
 

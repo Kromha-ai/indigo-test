@@ -6,7 +6,7 @@ import difflib
 import re
 from collections import Counter
 from collections.abc import Callable
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, field, fields, replace
 from datetime import UTC, datetime
 
 from app.domain import Availability, Occasion, Recipient, SortOrder
@@ -46,6 +46,9 @@ class ProductFilter:
     max_shipping_days: int | None = None
     gift_wrap: bool | None = None
     include_out_of_stock: bool = False
+    # Search shows each cross-listed product once, through its primary listing. Internal:
+    # not a caller-facing filter, so never echoed in `applied`.
+    primary_only: bool = field(default=False, metadata={"internal": True})
 
     def checks(self) -> list[Callable[[ProductRecord], bool]]:
         """One predicate per filter that is set, price excluded (see `in_price_band`)."""
@@ -64,6 +67,8 @@ class ProductFilter:
             checks.append(lambda p: p.shipping_days <= self.max_shipping_days)
         if self.gift_wrap:
             checks.append(lambda p: p.gift_wrap)
+        if self.primary_only:
+            checks.append(lambda p: p.is_primary_listing)
         return checks
 
     @property
@@ -79,6 +84,8 @@ class ProductFilter:
         """The filters that are set, as echoed back to the caller."""
         applied: dict[str, object] = {}
         for f in fields(self):
+            if f.metadata.get("internal"):
+                continue
             value = getattr(self, f.name)
             if value is not None and value != f.default:
                 applied[f.name] = value
@@ -93,6 +100,19 @@ class QueryResult:
     # corresponding bound is not set.
     prices_above_max: list[float] | None = None
     prices_below_min: list[float] | None = None
+    # When nothing matches: (change in plain words, products it would match), best first.
+    suggestions: list[tuple[str, int]] = field(default_factory=list)
+
+
+# Filters an empty result may suggest dropping, with the wording used for the agent.
+RELAXABLE = {
+    "occasion": "remove the occasion filter",
+    "recipient": "remove the recipient filter",
+    "subcategory": "remove the subcategory filter",
+    "max_shipping_days": "remove the delivery deadline (max_shipping_days)",
+    "gift_wrap": "remove the gift_wrap filter",
+}
+MAX_SUGGESTIONS = 3
 
 
 SORT_KEYS = {
@@ -190,7 +210,19 @@ class Catalog:
         checks = f.checks()
         return [p for p in self.products if all(check(p) for check in checks)]
 
-    def query(self, f: ProductFilter, sort: SortOrder, limit: int, offset: int) -> QueryResult:
+    def count(self, f: ProductFilter) -> int:
+        return sum(1 for p in self._select(f) if f.in_price_band(p))
+
+    def query(
+        self,
+        f: ProductFilter,
+        sort: SortOrder,
+        limit: int,
+        offset: int,
+        relaxable: tuple[str, ...] = tuple(RELAXABLE),
+    ) -> QueryResult:
+        """`relaxable`: the filters an empty result may suggest dropping. A browse cannot drop
+        its category (it is the path); a search can."""
         candidates = self._select(f)
         matching = sorted(filter(f.in_price_band, candidates), key=SORT_KEYS[sort])
         result = QueryResult(items=matching[offset : offset + limit], total=len(matching))
@@ -198,4 +230,39 @@ class Catalog:
             result.prices_above_max = [p.price_eur for p in candidates if p.price_eur > f.max_price]
         if f.min_price is not None:
             result.prices_below_min = [p.price_eur for p in candidates if p.price_eur < f.min_price]
+        if not matching:
+            result.suggestions = self._relaxations(f, candidates, relaxable)
         return result
+
+    def _relaxations(
+        self, f: ProductFilter, candidates: list[ProductRecord], relaxable: tuple[str, ...]
+    ) -> list[tuple[str, int]]:
+        """One relaxation at a time, kept only if it would return something."""
+        options: list[tuple[str, int]] = []
+        for name in relaxable:
+            if getattr(f, name) is None:
+                continue
+            wording = RELAXABLE.get(name, f"remove the {name} filter")
+            options.append((wording, self.count(replace(f, **{name: None}))))
+        if f.max_price is not None:
+            above = [p.price_eur for p in candidates if p.price_eur > f.max_price]
+            if above:
+                nearest = min(above)
+                options.append(
+                    (f"raise max_price to {nearest:g}", self.count(replace(f, max_price=nearest)))
+                )
+        if f.min_price is not None:
+            below = [p.price_eur for p in candidates if p.price_eur < f.min_price]
+            if below:
+                nearest = max(below)
+                options.append(
+                    (f"lower min_price to {nearest:g}", self.count(replace(f, min_price=nearest)))
+                )
+        if not f.include_out_of_stock:
+            in_or_out = self.count(replace(f, include_out_of_stock=True))
+            options.append(
+                ("set include_out_of_stock=true (those cannot be bought now)", in_or_out)
+            )
+        useful = [option for option in options if option[1] > 0]
+        useful.sort(key=lambda option: -option[1])
+        return useful[:MAX_SUGGESTIONS]

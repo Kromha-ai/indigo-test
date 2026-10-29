@@ -120,7 +120,7 @@ Both return a `ListResponse` of `ProductSummary` items and share these parameter
 They differ as follows:
 
 - **`get_products_by_category`**: `category` (path, slug or display name, case-insensitive) is required; `subcategory` (case-insensitive; singular or plural, so `candle` finds `Candles`) is optional. For a shopper who names a kind of product.
-- **`search_products`**: an optional `category` narrows the search. At least one of `category`, a price bound, `recipient`, `occasion`, `max_shipping_days` or `gift_wrap` is required (otherwise `400 search_too_broad`). It returns one listing per product. There is no free-text parameter. For gift requests defined by constraints.
+- **`search_products`**: an optional `category` narrows the search. With no filters it returns the shop's best-rated in-stock products, within the usual page size. It returns one listing per product. For gift requests defined by constraints.
 
 ### `get_product_details`
 
@@ -151,7 +151,7 @@ They differ as follows:
  "suggestions": []}
 ```
 
-- `found` and `category` are on browse responses only.
+- `found: true` and `category` are on browse responses only. An unknown `category` on either list tool returns the recoverable `category_not_found` (`found: false`).
 - `applied_filters` echoes the normalised input.
 - `outside_price_range` (present when a price filter is set) counts the products that match every other filter but fall outside the band: `above_max: {count, min_price_eur}` and/or `below_min: {count, max_price_eur}`, each carrying the nearest price.
 - `suggestions`: see *Empty results*.
@@ -200,7 +200,6 @@ All errors use one envelope. **Recoverable** cases return `200` with `found: fal
 | `subcategory_not_found` | 200, `found: false` | That category's subcategories; `did_you_mean` if another category has it |
 | `product_not_found` | 200, `found: false` | `hint` to search or browse; `did_you_mean` for IDs one edit away |
 | `unauthorized` | 401 | `hint` names the header |
-| `search_too_broad` | 400 | `hint` lists the constraints |
 | `invalid_parameter` | 422 | Plain-language message per field |
 | `rate_limited` | 429 | `Retry-After` |
 | `internal_error` | 500 | Generic message, no stack trace |
@@ -220,7 +219,7 @@ Details in `AUTHENTICATION.md`.
 - **Auth** is a dependency on the data routers, not middleware, so the documentation routes stay open. Declared as an `apiKey` scheme. **Never** a header parameter.
 - `servers[0].url` = `PUBLIC_BASE_URL`. OpenAPI 3.1.
 - **Descriptions**: every operation has `summary` and `description`, every parameter and response field a description. These are written for the LLM and edited only in code. The tool descriptions:
-  - **`search_products`**: *"Find gift ideas across the whole shop by the shopper's constraints: who it is for (recipient), the occasion, a budget (min_price / max_price), a delivery deadline (max_shipping_days), gift wrap. This is the default tool for gift requests ('something for my sister's new flat, about €50'). There is no free-text search: moods and tastes ('cosy', 'she loves music') are for you to judge from the returned names, tags and subcategories. Returns up to 15 compact summaries, best rated first; narrow the filters rather than paging. 'outside_price_range' tells you when matching products exist just outside the budget. If nothing matches, 'suggestions' says which constraint to relax. Call get_product_details on the 2–3 you intend to recommend."*
+  - **`search_products`**: *"Find gift ideas across the whole shop by the shopper's constraints: who it is for (recipient), the occasion, a budget (min_price / max_price), a delivery deadline (max_shipping_days), gift wrap. This is the default tool for gift requests ('something for my sister's new flat, about €50'). There is no free-text search: moods and tastes ('cosy', 'she loves music') are for you to judge from the returned names, tags and subcategories. Returns up to 15 compact summaries, best rated first; narrow the filters rather than paging. 'outside_price_range' tells you when matching products exist just outside the budget. If nothing matches, 'suggestions' says which constraint to relax. Call get_product_details on the 2–3 you intend to recommend. With no filters at all it returns the shop's best-rated products."*
   - **`get_products_by_category`**: *"List the products in one category, optionally narrowed by subcategory, price, recipient, occasion, delivery deadline or gift wrap. Use it when the shopper names a kind of product: 'a chef's knife' (subcategory Knives), 'something for the kitchen', 'your candles'. For gift requests defined by recipient, occasion or budget, use search_products instead. Use subcategory for a specific product type, so 'outside_price_range' tells you about that type only. Products with 'also_listed_in' appear in two categories: never recommend both listings."*
   - **`get_categories`**: *"List the shop's 11 categories with product counts, price ranges, subcategories and how many in-stock products suit each occasion. Use it when the shopper asks what the shop sells, or to pick a valid category and subcategory before get_products_by_category. Not needed before search_products. Call it at most once per conversation."*
   - **`get_product_details`**: *"Get the full record for one product: description, materials, colour, gift wrap, shipping time and availability. Call it for each of the 2–3 products before recommending them (in parallel), and whenever the shopper asks about a specific item. The description is what makes a good reason."*
@@ -287,7 +286,7 @@ indigo.ai ──HTTPS──▶ system Caddy (:443, automatic Let's Encrypt) ─�
 - **Search**:
   - `occasion=housewarming`, €40–60 returns 13 products, without the duplicate tumbler set.
   - `recipient=kids` returns only `KI-*` products.
-  - No constraint returns `400 search_too_broad`.
+  - No filters returns the best-rated in-stock products: `TG-006` first, `total: 139`.
 - **Errors**:
   - `electronics` returns `found: false`, `category_not_found` and `did_you_mean: ["tech-gadgets"]`.
   - `XX-999` returns `found: false` and `product_not_found`.

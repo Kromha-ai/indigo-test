@@ -37,7 +37,7 @@ app/
   catalog.py     in-memory catalogue: resolution (category, subcategory, product ID) with suggestions, filtering, sorting, outside_price_range
   models.py      response models; ProductSummary/ProductDetail.from_record build them from a record
   errors.py      error envelope, one factory per error code, exception handlers
-  routes/        categories.py (get_categories, get_products_by_category), products.py (get_product_details), listing.py (list parameters and ListResponse shared with search), health.py
+  routes/        categories.py (get_categories, get_products_by_category), search.py (search_products, registered before products.py), products.py (get_product_details), listing.py (list parameters, category lookup and ListResponse shared by both list tools), health.py
 tests/
   conftest.py    shared settings, catalogue and TestClient (keys: test-key, second-key)
   fixtures/      small edge-case CSVs

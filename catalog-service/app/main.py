@@ -12,7 +12,7 @@ from app.errors import ErrorResponse, install_handlers
 from app.loader import load_catalog
 from app.observability import install_request_logging
 from app.ratelimit import RateLimiter
-from app.routes import categories, health, products
+from app.routes import categories, health, products, search
 from app.settings import Settings
 
 DESCRIPTION = """\
@@ -52,6 +52,10 @@ def create_app(settings: Settings | None = None, catalog: Catalog | None = None)
         dependencies=[Depends(require_api_key), Depends(enforce_rate_limit)],
         responses={
             401: {"model": ErrorResponse, "description": "Missing or invalid API key."},
+            422: {
+                "model": ErrorResponse,
+                "description": "Invalid parameters; `error.message` names each one.",
+            },
             429: {
                 "model": ErrorResponse,
                 "description": "Rate limit for this API key exceeded; retry after `Retry-After`.",
@@ -59,6 +63,7 @@ def create_app(settings: Settings | None = None, catalog: Catalog | None = None)
         },
     )
     data.include_router(categories.router)
+    data.include_router(search.router)
     data.include_router(products.router)
     app.include_router(data)
     app.include_router(health.router)

@@ -6,9 +6,9 @@ from dataclasses import dataclass
 
 from fastapi import Query
 
-from app.catalog import ProductFilter, QueryResult
+from app.catalog import Catalog, ProductFilter, QueryResult
 from app.domain import Occasion, Recipient, SortOrder
-from app.errors import invalid_parameter
+from app.errors import category_not_found, invalid_parameter
 from app.models import (
     AboveMax,
     BelowMin,
@@ -16,10 +16,19 @@ from app.models import (
     ListResponse,
     OutsidePriceRange,
     ProductSummary,
+    Suggestion,
 )
 
 MAX_LIMIT = 25
 DEFAULT_LIMIT = 15
+
+
+def require_category(catalog: Catalog, raw: str) -> str:
+    """Category slug, or a recoverable `category_not_found` with suggestions."""
+    slug = catalog.resolve_category(raw)
+    if slug is None:
+        raise category_not_found(raw, catalog.suggest_categories(raw), list(catalog.categories))
+    return slug
 
 
 @dataclass(frozen=True)
@@ -122,7 +131,7 @@ def list_response(
         offset=query.offset,
         next_offset=end if end < result.total else None,
         applied_filters=product_filter.applied(),
-        suggestions=[],
+        suggestions=[Suggestion(change=c, would_match=n) for c, n in result.suggestions],
     )
     if category is not None:
         response.found = True

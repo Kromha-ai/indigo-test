@@ -3,9 +3,9 @@ from dataclasses import replace
 from fastapi import APIRouter, Depends, Path, Query, Request
 
 from app.catalog import Catalog
-from app.errors import category_not_found, subcategory_not_found
+from app.errors import subcategory_not_found
 from app.models import CategoriesResponse, CategoryRef, ListResponse
-from app.routes.listing import ListQuery, list_query, list_response
+from app.routes.listing import ListQuery, list_query, list_response, require_category
 
 router = APIRouter(tags=["catalogue"])
 
@@ -30,11 +30,7 @@ def get_categories(request: Request) -> CategoriesResponse:
 
 def _resolve(catalog: Catalog, category: str, subcategory: str | None) -> tuple[str, str | None]:
     """Category slug and canonical subcategory, or a recoverable error with suggestions."""
-    slug = catalog.resolve_category(category)
-    if slug is None:
-        raise category_not_found(
-            category, catalog.suggest_categories(category), list(catalog.categories)
-        )
+    slug = require_category(catalog, category)
     if subcategory is None:
         return slug, None
     sub = catalog.resolve_subcategory(slug, subcategory)

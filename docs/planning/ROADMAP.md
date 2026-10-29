@@ -15,7 +15,7 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 |---|---|---|
 | 1 | Walking skeleton on the platform | In progress: service live at catalog.builtbykromha.com (2026-10-29); platform tasks next |
 | 2 | Browse and detail tools | Built and tested 2026-10-29; redeploy and re-import pending |
-| 3 | Search, recovery, and LLM-ready OpenAPI | Not started |
+| 3 | Search, recovery, and LLM-ready OpenAPI | Built and tested 2026-10-29; redeploy and re-import pending |
 | 4 | The assistant | Not started |
 | 5 | Hardening and handover | Not started |
 | 6 (bonus) | Site widget | Not started |
@@ -73,15 +73,15 @@ Prerequisite: Phase 1.
 
 Goal: `search_products` (filters only) working, every response within its budget and giving the agent what it needs to decide and recover, and OpenAPI descriptions good enough to steer tool choice (decision D7).
 
-- [ ] `GET /products/search`, declared before `/products/{product_id}`: category, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; `400 search_too_broad` without a constraint
-- [ ] Deduplicate cross-listed products in search results (primary listing only)
-- [ ] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec); done for browsing in Phase 2, add for search
-- [ ] Empty-result `suggestions` on both list tools (one relaxation at a time, at most 3, only ones that match)
-- [ ] `outside_price_range` on `search_products` (done for browsing in Phase 2: `above_max` / `below_min`, count and nearest price, over every other filter)
+- [x] `GET /products/search`, declared before `/products/{product_id}`: category, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; no filters returns the best-rated products
+- [x] Deduplicate cross-listed products in search results (primary listing only)
+- [x] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec); done for browsing in Phase 2, add for search
+- [x] Empty-result `suggestions` on both list tools (one relaxation at a time, at most 3, only ones that match)
+- [x] `outside_price_range` on `search_products` (done for browsing in Phase 2: `above_max` / `below_min`, count and nearest price, over every other filter)
 - [x] `applied_filters` echo (Phase 2, shared by both list tools)
-- [ ] Write the final operation, parameter and field descriptions (start from the spec drafts)
+- [x] Write the final operation, parameter and field descriptions (start from the spec drafts)
 - [x] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description (`tests/test_openapi.py`, Phase 1; covers new operations automatically)
-- [ ] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` and Knives-under-€100 already covered in Phase 2)
+- [x] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` and Knives-under-€100 already covered in Phase 2)
 - [x] Structured request logging with key fingerprint (brought forward, done 2026-10-29)
 - [ ] Redeploy, re-import the tool collection, check every operation in the test agent
 - [x] Per-key rate limit (`429 rate_limited`) (brought forward, done 2026-10-29)
