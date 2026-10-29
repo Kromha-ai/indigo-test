@@ -45,8 +45,8 @@ The agent is built **from zero** in the sandbox workspace provided on the indigo
 
 ### Tool binding procedure
 
-1. Deploy the service and check `https://<host>/openapi.json` is public (`PLAYBOOK.md`, *Deploying*).
-2. **Integrations → Tool Collections → Create Custom Tool Collection**, and import from the URL `https://<host>/openapi.json`.
+1. Deploy the service and check `https://catalog.builtbykromha.com/openapi.json` is public (`PLAYBOOK.md`, *Deploying*).
+2. **Integrations → Tool Collections → Create Custom Tool Collection**, and import from the URL `https://catalog.builtbykromha.com/openapi.json`.
 3. **Endpoint**: Test = the deployed service URL. Production = the same URL (one deployment; `AUTHENTICATION.md` explains why the keys differ per environment).
 4. **Headers**: `X-API-Key: [[CATALOG_API_KEY]]`, with the secret defined in **Workspace settings → Secrets**, holding the `platform-test` key as its Test value and the `platform-prod` key as its Production value.
 5. Save. In the gift assistant's Agent block, **+ Add tool** once per operation (`search_products`, `get_product_details`, `get_products_by_category`, `get_categories`).

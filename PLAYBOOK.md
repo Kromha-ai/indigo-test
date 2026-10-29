@@ -66,10 +66,10 @@ Target: the DigitalOcean droplet, Docker Compose behind Caddy (`docs/specs/CATAL
 
 ### First time on the droplet
 
-1. DNS: create an A record for the service subdomain pointing at the droplet's IP.
+1. DNS: create an A record for `catalog.builtbykromha.com` pointing at the droplet's IP. Check with `dig +short catalog.builtbykromha.com` before starting Caddy; otherwise the certificate request fails and Let's Encrypt rate-limits retries.
 2. Firewall: allow only 22, 80 and 443 (DigitalOcean Cloud Firewall or `ufw allow OpenSSH && ufw allow 80,443/tcp && ufw enable`).
 3. Install Docker Engine and the Compose plugin; clone the repo as the deploy user.
-4. `cp deploy/.env.example deploy/.env && chmod 600 deploy/.env`. Set `CATALOG_API_KEYS` and `PUBLIC_BASE_URL=https://<subdomain>`. Set the domain in `deploy/Caddyfile`.
+4. `cp deploy/.env.example deploy/.env && chmod 600 deploy/.env`. Set `CATALOG_API_KEYS` and `PUBLIC_BASE_URL=https://catalog.builtbykromha.com`. The domain is already in `deploy/Caddyfile`.
 5. `docker compose -f deploy/docker-compose.yml up -d --build`. Caddy fetches the certificate on first start.
 
 ### Every deploy

@@ -403,12 +403,12 @@ The OpenAPI document is the product. Requirements:
 - Every operation has `operationId`, a `summary`, and a `description` written for an LLM: what it returns, when to call it, when **not** to call it (pointing to the better tool), and one example.
 - Every parameter has a description, its default, its constraints and an example.
 - Every response model field has a description, especially the non-obvious ones: `availability`, `is_digital`, the `suggestions` array, `recipient` wildcard semantics.
-- **Published at a public URL.** The deployed service serves the document at `https://<host>/openapi.json`, with Swagger UI at `/docs` and ReDoc at `/redoc`. These are FastAPI's defaults; the requirements are that they stay switched on in production and stay public:
+- **Published at a public URL.** The deployed service serves the document at `https://catalog.builtbykromha.com/openapi.json`, with Swagger UI at `/docs` and ReDoc at `/redoc`. These are FastAPI's defaults; the requirements are that they stay switched on in production and stay public:
   - `openapi_url`, `docs_url` and `redoc_url` keep their defaults in every environment. They are never set to `None` "for production".
   - Auth is a dependency on the data routers, **not** a middleware or an app-wide dependency, so the documentation routes never require a key. A test calls all three without a key and expects `200`.
   - `servers[0].url` equals `PUBLIC_BASE_URL`, so the published document names its real host and **Try it out** in `/docs` calls the deployed service.
   - The URL is listed in `README.md` and `AUTHENTICATION.md` once deployed.
-- **Imported from the public URL.** The indigo.ai tool collection imports the document straight from `https://<host>/openapi.json`. The live endpoint is the single source; there is no exported or committed copy. The public URL is therefore part of the contract: if it breaks, the platform cannot refresh the tools.
+- **Imported from the public URL.** The indigo.ai tool collection imports the document straight from `https://catalog.builtbykromha.com/openapi.json`. The live endpoint is the single source; there is no exported or committed copy. The public URL is therefore part of the contract: if it breaks, the platform cannot refresh the tools.
 - **Self-contained.** The document must not depend on anything external; FastAPI's `#/components` `$ref`s are internal and fine.
 - **`servers`** is set from `PUBLIC_BASE_URL` for the published document and `/docs`. The platform ignores it and uses the collection's **Endpoint** fields instead.
 - **Form editing.** Operations using `$ref` or `anyOf` show as read-only in the platform's form but work as defined. That is intended: descriptions are edited in code, never in the platform.
@@ -451,14 +451,14 @@ Draft tool descriptions (to be refined against real agent transcripts):
 
 ## Deployment
 
-On the developer's DigitalOcean VPS (decision D4), behind a reverse proxy that terminates HTTPS.
+On the developer's DigitalOcean VPS (decision D4) at **`https://catalog.builtbykromha.com`**, behind a reverse proxy that terminates HTTPS. The droplet is dedicated to this service: nothing else runs on it, and no other proxy holds ports 80 and 443.
 
 ```
 indigo.ai ──HTTPS──▶ Caddy (:443, automatic Let's Encrypt) ──HTTP──▶ catalog-service container (127.0.0.1:8000)
 ```
 
 - **Files**: `deploy/` at the repo root holds `docker-compose.yml` (service + Caddy), `Caddyfile`, and `.env.example`. The compose file builds the image from `catalog-service/`.
-- **TLS**: Caddy obtains and renews the Let's Encrypt certificate automatically. This needs a DNS name (a subdomain such as `catalog.<domain>`) with an A record pointing at the droplet.
+- **TLS**: Caddy obtains and renews the Let's Encrypt certificate automatically. The service's DNS name is **`catalog.builtbykromha.com`**, with an A record pointing at the droplet.
 - **Container**: Uvicorn, one worker (the in-memory rate limiter assumes a single process), `restart: unless-stopped`, port bound to `127.0.0.1` only, so the service is reachable only through Caddy. Uvicorn runs with `--proxy-headers` so redirects and `/docs` see the HTTPS scheme.
 - **Secrets**: `deploy/.env` on the droplet only (`chmod 600`, owned by the deploy user, git-ignored). Holds `CATALOG_API_KEYS` and `PUBLIC_BASE_URL`.
 - **Firewall**: DigitalOcean Cloud Firewall or `ufw` allows only 22 (SSH, key-only), 80 (ACME challenge and redirect to HTTPS) and 443.
@@ -544,7 +544,7 @@ Revisit if a breaking change is unavoidable, or if a consumer other than the pla
 
 **Context**: the service must be on public HTTPS, and it is called during live conversations, so a slow first response hurts the shopper. Managed hosts considered: Render, Railway, Fly.io, Cloud Run. Their free tiers sleep or scale to zero, and the first request after idling can take 30–60 s, which may exceed the platform's tool-call timeout.
 
-**Decision**: the developer's existing DigitalOcean VPS (droplet), running the container with Docker Compose behind Caddy for automatic HTTPS.
+**Decision**: the developer's existing DigitalOcean VPS (droplet), dedicated to this service, at `catalog.builtbykromha.com`. The container runs with Docker Compose behind **Caddy** for automatic HTTPS.
 
 **Consequences**:
 

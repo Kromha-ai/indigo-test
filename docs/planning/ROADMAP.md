@@ -39,8 +39,8 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [ ] `servers` populated from `PUBLIC_BASE_URL`
 - [ ] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
 - [ ] Dockerfile (ships `data/catalog.json`), `.env.example`
-- [ ] `deploy/`: `docker-compose.yml` (service bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`; Caddy), `Caddyfile`, `.env.example`
-- [ ] Droplet: DNS record, firewall (22/80/443), Docker; first deploy per `PLAYBOOK.md`; smoke-test over HTTPS
+- [ ] `deploy/`: `docker-compose.yml` (service bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`; Caddy), `Caddyfile` (`catalog.builtbykromha.com`), `.env.example`
+- [ ] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), firewall (22/80/443), Docker; first deploy per `PLAYBOOK.md`; smoke-test `https://catalog.builtbykromha.com/health`
 - [ ] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
 - [ ] Generate the three keys; set `CATALOG_API_KEYS` in `deploy/.env` on the droplet and the `CATALOG_API_KEY` workspace secret (Test and Production values) per `docs/guides/secrets-management.md`
@@ -105,7 +105,6 @@ Goal: the client can open the link, read the repo, and follow every decision.
 
 - [ ] Final full eval run, recorded in `agent/evals.md`
 - [ ] Droplet hygiene: unattended security upgrades on, Docker restart policy verified after a reboot, certificate renewal working
-- [ ] `AUTHENTICATION.md` examples use the real host
 - [ ] Final check that the public spec URL, `/docs` and `/redoc` work from a logged-out browser, and that the platform's Production collection was imported from the current version
 - [ ] `README.md`: what it is, the live link, the API base URL, how to authenticate (link to `AUTHENTICATION.md`), how to run locally, where decisions are recorded
 - [ ] `README.md` agent sections (`AGENT_SPEC.md`, *README requirements*): the prompt, how the tools were bound, and the conversation design decisions, leading with how many questions are asked before recommending and why

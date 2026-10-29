@@ -5,8 +5,8 @@ A product discovery assistant for an online gift shop. The shop's CSV catalogue 
 | | |
 |---|---|
 | Live assistant | *added in Phase 4* |
-| API base URL | *added in Phase 1* |
-| OpenAPI spec (public) | `<API base URL>/openapi.json` · Swagger UI `/docs` · ReDoc `/redoc`, *added in Phase 1* |
+| API base URL | `https://catalog.builtbykromha.com` (live from Phase 1) |
+| OpenAPI spec (public) | `https://catalog.builtbykromha.com/openapi.json` · Swagger UI `/docs` · ReDoc `/redoc` |
 | Authentication | `X-API-Key` header on every data endpoint; `/openapi.json`, `/docs`, `/redoc` and `/health` are public. How to authenticate, and why: `AUTHENTICATION.md` |
 
 ## Where to look
