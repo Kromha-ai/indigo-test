@@ -12,12 +12,12 @@ Every data endpoint requires an API key, sent in the `X-API-Key` request header 
 
 ```bash
 curl -s -H "X-API-Key: $CATALOG_API_KEY" \
-  "https://catalog.builtbykromha.com/products/search?occasion=housewarming&max_price=60"
+  "https://catalog.builtbykromha.com/categories/home-living/products?occasion=housewarming&max_price=60"
 ```
 
 | Route | Key required |
 |---|---|
-| `GET /categories`, `GET /categories/{category}/products`, `GET /products/search`, `GET /products/{product_id}` | Yes |
+| `GET /categories`, `GET /categories/{category}/products`, `GET /products/{product_id}` | Yes |
 | `GET /health`, `GET /openapi.json`, `GET /docs`, `GET /redoc` | No. They contain no catalogue data; the OpenAPI document is published publicly on purpose |
 
 There are no sessions, tokens to exchange or expiries: the key itself is sent on every request.

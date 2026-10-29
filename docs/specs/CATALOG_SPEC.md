@@ -13,7 +13,7 @@ Context: `docs/reference/scenario.md`. Data findings: `docs/reference/catalog-da
 
 ## Goals
 
-1. Expose the catalogue through at least `get_categories`, `get_products_by_category` and `get_product_details`, plus the additions justified in *Tools*.
+1. Expose the catalogue through exactly three tools, `get_categories`, `get_products_by_category` and `get_product_details`, and show that they cover the conversations (decision D6).
 2. Produce an OpenAPI document that loads cleanly into an indigo.ai tool collection, with every operation and parameter described for an LLM reader.
 3. Protect every data endpoint with an API key.
 4. Keep every response bounded in size, whatever the query.
@@ -23,7 +23,7 @@ Context: `docs/reference/scenario.md`. Data findings: `docs/reference/catalog-da
 
 - Writing back to the catalogue (orders, carts, stock reservations). The service is read-only.
 - A database. 152 rows load into memory at startup in milliseconds; a database would add operational cost with no benefit at this size.
-- Semantic or embedding search. Keyword scoring over name, tags, subcategory and description is enough for 152 short records. Revisit if the catalogue grows by an order of magnitude.
+- Free-text, keyword or semantic search. At 152 products the agent browses filtered categories and does the matching itself (decision D6). Revisit if the catalogue grows by an order of magnitude.
 - Product images and storefront URLs: the export has neither.
 - Multi-language catalogue content. Data stays in English; the agent handles the shopper's language.
 - Admin UI and hot-reloading. A new export means rebuild (`build_catalog`), review the diff and report, then redeploy.
@@ -51,8 +51,7 @@ The raw export is never modified. A build step reads it and writes a normalised,
 ```
 raw_data/gift-shop-catalog.csv            (client export, read-only)
         │   catalog-service/catalog_build/build_catalog.py
-        │   + catalog_build/interests.toml          (subcategory/tag → interest mapping)
-        │   + catalog_build/synonyms.toml           (category and query synonyms)
+        │   + catalog_build/synonyms.toml           (category synonyms for did_you_mean)
         ▼
 catalog-service/data/catalog.json         (what the service loads)
 catalog-service/data/catalog.normalized.csv   (same records, flat, for humans and the client)
@@ -62,7 +61,7 @@ catalog-service/data/BUILD_REPORT.md      (every fix applied, per row, plus buil
 - **Command**: `uv run python -m catalog_build.build_catalog` (from `catalog-service/`).
 - **Deterministic**: the same input and mapping files always give byte-identical output (sorted keys, fixed float rounding, records ordered by `product_id`, no timestamps in the data files). Only `BUILD_REPORT.md` carries the build date and the SHA-256 of the source CSV.
 - **Committed**: the three outputs are committed. A new export then shows up as a reviewable diff of the clean data, and the report is what gets shown to the client ("here is what we fixed in your export"). A test rebuilds in memory and fails if the committed `catalog.json` is stale.
-- **Fails loudly**: the build aborts, and writes nothing, if a row has an unparseable price, stock or shipping value, a category that does not normalise, an unknown recipient or occasion, or a subcategory with no interest mapping.
+- **Fails loudly**: the build aborts, and writes nothing, if a row has an unparseable price, stock or shipping value, a category that does not normalise, or an unknown recipient or occasion.
 - **Load-time check**: the service validates `catalog.json` against the Pydantic record model at startup and refuses to start if it does not match, so a hand-edited or truncated file is never half-served.
 - **Raw CSV in the image**: not needed. The Docker image ships `data/catalog.json` only.
 
@@ -99,15 +98,11 @@ One record per raw row. Columns marked *derived* do not exist in the export.
 | `recipient` | enum | | As published |
 | `recipients_match` | list | yes | Every recipient filter value this product satisfies (below) |
 | `occasions`, `tags` | list | | |
-| `interests` | list | yes | Controlled interest vocabulary (below) |
 | `color`, `material` | string, nullable | | |
 | `gift_wrap` | bool | | |
 | `shipping_days` | int | | |
 | `is_digital` | bool | yes | `shipping_days = 0` |
-| `listing_group` | string | yes | `product_id` of the primary listing. Equal to `product_id` unless cross-listed |
-| `is_primary_listing` | bool | yes | |
-| `also_listed_in` | list | yes | Other listings of the same product: `{product_id, category_slug}` |
-| `search_weights` | map token → weight | yes | Precomputed keyword index (below). Not in the CSV view |
+| `also_listed_in` | list | yes | Other listings of the same product: `{product_id, category_slug}`. Empty unless cross-listed |
 
 ### Derived fields
 
@@ -139,56 +134,22 @@ The recipient rule (see *Filter semantics*) is applied at build time, so the run
 | `kids` | `kids` |
 | `anyone` | `anyone`, `her`, `him`, `couple`. **Never** `kids` |
 
-#### `interests`: what the recipient is into
-
-Shoppers describe people by interests (*"she loves cooking"*, *"he's into music"*), while the export describes products by subcategory and free tags (380 tags, mostly used once). `interests` bridges the two with a small controlled vocabulary. It is exposed as an enum filter, so the agent picks from a list instead of guessing keywords.
-
-Vocabulary (10, chosen 2026-10-29 over a 19-value draft, which was more precise but harder for the model to choose from): `home`, `food-drink`, `tech-music`, `reading-writing`, `games-play`, `wellness-fitness`, `outdoors-travel`, `jewellery-style`, `pets`, `arts-crafts`.
-
-The mapping lives in `catalog_build/interests.toml`. Every subcategory must map to at least one interest; Gift Cards is the one explicit exception (it maps to none). Tag rules add interests on top of the subcategory, which is what makes the filter cross categories: tag `travel` adds `outdoors-travel` (10 products), `retro` adds `games-play`, `drawing` adds `arts-crafts`, `coffee` and `tea` add `food-drink`, `fitness` adds `wellness-fitness`. The final tag rules are checked against all 380 tags when the file is written.
-
-| Interest | Subcategories | Products (in stock) |
-|---|---|---|
-| `home` | Candles, Decor, Fragrance (Home & Living), Garden, Lighting, Storage, Textiles, Vases | 28 (26) |
-| `food-drink` | Bar, Coffee, Cookware, Knives, Serving, Tableware, Tea | 24 (22) |
-| `tech-music` | Audio, Creative, Desk, Home Tech, Mobile, Photo, Reading, Wearable | 25 (24) |
-| `reading-writing` | Books (both categories), Paper, Pens, Reading | 17 (16) |
-| `games-play` | Board Games, Classic Games, Puzzles, Toys | 17 (15) |
-| `wellness-fitness` | Bath, Fitness, Fragrance (Beauty & Wellness), Grooming, Recovery, Skincare, Sleep | 18 (17) |
-| `outdoors-travel` | Bags, Drinkware, Outdoor, plus tag `travel` | 17 (16) |
-| `jewellery-style` | Bracelets, Earrings, Necklaces, Rings, Watches | 8 (7) |
-| `pets` | Cats, Dogs | 3 (2) |
-| `arts-crafts` | Craft (both categories), plus tag `drawing` | 4 (4) |
-
-Several values nearly mirror a category (`home`, `food-drink`, `tech-music`). The filter earns its place where interests cross categories: `reading-writing` (books, the e-reader, kids' books), `games-play` (games and kids' toys) and `outdoors-travel` (travel-tagged products anywhere).
-
-`BUILD_REPORT.md` lists the product count per interest, so a thin or overloaded interest is visible at review time.
-
-#### `search_weights`: precomputed keyword index
-
-Each record carries a map from normalised token to weight, so a query is scored by summing the weights of its tokens.
-
-- **Normalisation**: lowercase, strip accents, split on non-alphanumerics, drop a short stopword list, light plural strip (`candles` → `candle`, `knives` → `knife`).
-- **Field weights**: name ×3, tags ×3, interests ×2, subcategory ×2, brand ×2, category ×1, description ×1. A token in several fields gets the highest weight, not the sum, so long descriptions cannot outscore names.
-- **Query side**: `catalog_build/synonyms.toml` expands query tokens before scoring (`kitchen`/`cooking` → `food-drink`, `music` → `tech-music`, `books` → `reading-writing`, `jewelry` → `jewellery`...). The same file holds the category synonyms used for `did_you_mean`.
-
 #### Cross-listed products
 
-Two products appear twice under different IDs (`HL-021`/`KD-024`, `HL-024`/`KD-023`). The build detects duplicates by an exact match on (`name`, `brand`, `price_eur`, `description`). The listing with the lexicographically lowest ID is primary, and every listing gets the same `listing_group`.
+Two products appear twice under different IDs (`HL-021`/`KD-024`, `HL-024`/`KD-023`). The build detects duplicates by an exact match on (`name`, `brand`, `price_eur`, `description`) and links each listing to the other through `also_listed_in`.
 
-- Both IDs resolve in `get_product_details`, and each response carries `also_listed_in`.
+- Both IDs resolve in `get_product_details`.
 - `get_products_by_category` shows each listing in its own category, because a shopper browsing Kitchen & Dining should see the tumbler set.
-- `search_products` returns one result per `listing_group` (the primary), so a cross-category result never recommends the same thing twice.
+- Every summary of a cross-listed product carries `also_listed_in`. An agent browsing both Home & Living and Kitchen & Dining therefore sees that the two tumbler sets are one product, and never recommends both.
 
 ### Product representations
 
-**`ProductSummary`** is used in lists and kept deliberately small, at roughly 60 tokens per item:
+**`ProductSummary`** is what category browsing returns. It carries enough for the agent to judge fit on its own (*"which of these is cosy?"*) while staying around 75 tokens per item:
 
 ```json
 {
   "product_id": "HL-003",
   "name": "Ember Ceramic Candle",
-  "category": "home-living",
   "subcategory": "Candles",
   "brand": "Fold Studio",
   "price_eur": 42.00,
@@ -197,13 +158,17 @@ Two products appear twice under different IDs (`HL-021`/`KD-024`, `HL-024`/`KD-0
   "availability": "in_stock",
   "recipient": "anyone",
   "occasions": ["thank-you", "birthday", "christmas"],
+  "tags": ["candle", "scented", "woody", "refillable"],
   "shipping_days": 2
 }
 ```
 
-`shipping_days` is in the summary, not only in the detail, because delivery time is often what decides between two candidates (*"it ships in two days"*). It costs about 4 tokens per item.
+- `tags` are included because, without a search engine, they are the agent's best matching signal after the name. Measured cost: +18% tokens (the largest category goes from ~1,950 to ~2,300).
+- `shipping_days` is included because delivery time often decides between two candidates (*"it ships in two days"*).
+- `also_listed_in` appears only on the cross-listed products, e.g. `"also_listed_in": [{"product_id": "KD-023", "category_slug": "kitchen-dining"}]`.
+- The category is not repeated per item: the response states it once.
 
-**`ProductDetail`** contains every field of the summary, plus `description`, `tags`, `interests`, `color`, `material`, `gift_wrap`, `is_digital` and `also_listed_in`. Internal fields (`stock`, `rating_score`, `recipients_match`, `listing_group`, `search_weights`) are never serialised.
+**`ProductDetail`** contains every field of the summary, plus `category`, `description`, `color`, `material`, `gift_wrap`, `is_digital` and `also_listed_in` (always present, possibly empty). Internal fields (`stock`, `rating_score`, `recipients_match`) are never serialised.
 
 The description is excluded from lists on purpose. The agent shortlists from summaries, then fetches detail for the two or three it intends to recommend, and the description is what it uses to say *why*.
 
@@ -215,18 +180,15 @@ Base path is `/`. All responses are `application/json`. Every operation has a st
 |---|---|---|
 | `get_categories` | `GET /categories` | API key |
 | `get_products_by_category` | `GET /categories/{category}/products` | API key |
-| `search_products` | `GET /products/search` | API key |
 | `get_product_details` | `GET /products/{product_id}` | API key |
 | *(not a tool)* | `GET /health` | none |
 | *(not a tool)* | `GET /openapi.json`, `GET /docs`, `GET /redoc` (public API documentation) | none |
-
-`/products/search` is declared before `/products/{product_id}` so that `search` is never captured as an ID.
 
 ### Tools
 
 #### `get_categories`
 
-No parameters. Returns all 11 categories. The payload is small enough to need no pagination.
+No parameters. Returns all 11 categories. The payload is small enough to need no pagination (about 1k tokens).
 
 ```json
 {
@@ -237,58 +199,38 @@ No parameters. Returns all 11 categories. The payload is small enough to need no
       "product_count": 28,
       "in_stock_count": 26,
       "price_range_eur": {"min": 28.00, "max": 249.00},
-      "subcategories": ["Candles", "Decor", "Fragrance", "Garden", "Lighting", "Storage", "Textiles", "Vases"]
+      "subcategories": ["Candles", "Decor", "Fragrance", "Garden", "Lighting", "Storage", "Textiles", "Vases"],
+      "in_stock_by_occasion": {"housewarming": 18, "thank-you": 9, "christmas": 6, "anniversary": 5, "birthday": 4, "graduation": 1}
     }
   ]
 }
 ```
 
-Subcategories are included so the agent can narrow a browse in one step without a separate tool.
+This is the agent's map for choosing which categories to browse:
+
+- Subcategories let it narrow a browse in one step.
+- `in_stock_by_occasion` tells it where the gifts for an occasion actually are. Housewarming gifts span five categories, and this shows which ones are worth a call.
 
 #### `get_products_by_category`
 
-Browse one category.
+Browse one category, narrowed by the shopper's constraints. The agent calls it for the one to three most relevant categories, in parallel when there are several.
 
 | Param | In | Type | Default | Constraint |
 |---|---|---|---|---|
 | `category` | path | string | required | Slug or display name, case-insensitive |
-| `subcategory` | query | string | none | Case-insensitive exact match |
+| `subcategory` | query | string | none | Case-insensitive exact match. Use for a specific product type (*"a chef's knife"* → Knives) |
 | `min_price` | query | number | none | ≥ 0 |
 | `max_price` | query | number | none | ≥ 0, ≥ `min_price` |
 | `recipient` | query | enum | none | See *Filter semantics* |
 | `occasion` | query | enum | none | |
-| `interest` | query | enum | none | See *Derived fields* → `interests` |
+| `max_shipping_days` | query | int | none | 0–14. Use when the shopper has a deadline |
+| `gift_wrap` | query | bool | none | `true` keeps only wrappable products |
 | `include_out_of_stock` | query | bool | `false` | |
 | `sort` | query | enum | `best_rated` | `best_rated`, `price_asc`, `price_desc` |
-| `limit` | query | int | `10` | 1–25 |
+| `limit` | query | int | `30` | 1–30. The largest category has 28 products, so any category fits in one call |
 | `offset` | query | int | `0` | ≥ 0 |
 
 Response: `ListResponse` (below).
-
-#### `search_products` (added)
-
-Search across all categories by constraints and free text.
-
-**Why it was added:** the conversation this assistant exists for (*"something for my sister, she just moved into a new flat, maybe fifty euros"*) is defined by recipient, occasion and budget, not by category. Housewarming gifts span Home & Living, Kitchen & Dining, Tech & Gadgets, Books and gift cards. With only category browsing, the agent has to guess categories, fetch several of them and filter in its head. That burns context, costs several tool round trips, and lets it miss the best match in a category it did not think of. One search call with structured filters answers the question directly.
-
-| Param | Type | Default | Constraint / meaning |
-|---|---|---|---|
-| `query` | string | none | Free text, 1–100 chars. Matched against name, tags, subcategory, brand and description |
-| `category` | string | none | Optional narrowing, same rules as the path param above |
-| `min_price`, `max_price` | number | none | As above |
-| `recipient` | enum | none | |
-| `occasion` | enum | none | |
-| `interest` | enum | none | What the recipient is into. Prefer this to `query` when one of the 10 values fits |
-| `max_shipping_days` | int | none | 0–14. Use when the shopper has a deadline |
-| `gift_wrap` | bool | none | `true` keeps only wrappable products |
-| `include_out_of_stock` | bool | `false` | |
-| `sort` | enum | `relevance` if `query` is set, else `best_rated` | `relevance`, `best_rated`, `price_asc`, `price_desc` |
-| `limit` | int | `10` | 1–25 |
-| `offset` | int | `0` | |
-
-At least one parameter besides `sort`/`limit`/`offset` must be set. An unconstrained search would just be a full catalogue dump and returns `400 search_too_broad`.
-
-**Relevance scoring**: the query is normalised the same way as the index and expanded with `synonyms.toml`. Each product's score is the sum of its `search_weights` for the query tokens (see *Derived fields*). Products scoring 0 are dropped when `query` is set. Ties break on `rating_score`, then `product_id`.
 
 **`best_rated`** sorts by `rating_score` descending, so ratings with few reviews count for less and unrated products sit at the catalogue mean.
 
@@ -298,40 +240,39 @@ At least one parameter besides `sort`/`limit`/`offset` must be set. An unconstra
 |---|---|---|---|
 | `product_id` | path | string | Case-insensitive, trimmed. `hl-003` resolves to `HL-003` |
 
-Response: `ProductDetail`. Out-of-stock products are still returned, with `availability: out_of_stock`, because the shopper may ask about one by name.
+Response: `{"found": true, "product": ProductDetail}`. Out-of-stock products are still returned, with `availability: out_of_stock`, because the shopper may ask about one by name.
 
 ### `ListResponse`
 
 ```json
 {
+  "found": true,
+  "category": {"slug": "kitchen-dining", "name": "Kitchen & Dining"},
   "items": [ProductSummary],
-  "total": 13,
-  "returned": 10,
+  "total": 2,
+  "returned": 2,
   "offset": 0,
-  "next_offset": 10,
-  "applied_filters": {"occasion": "housewarming", "min_price": 40, "max_price": 60},
-  "suggestions": [],
-  "near_misses": []
+  "next_offset": null,
+  "applied_filters": {"subcategory": "Knives", "max_price": 100},
+  "outside_price_range": {"above_max": {"count": 1, "min_price_eur": 149.00}},
+  "suggestions": []
 }
 ```
 
 - `total` is the match count before pagination. `next_offset` is `null` on the last page.
-- `applied_filters` echoes the normalised filters, for example `category: "Home and Living"` becomes `"home-living"`, so the agent can see how it was understood.
+- `applied_filters` echoes the normalised filters (`"Home and Living"` becomes `"home-living"`), so the agent can see how it was understood.
+- `outside_price_range` appears when a price filter is set. It counts the products that match **every other filter** but fall outside the price band: `above_max` and/or `below_min`, each with `count` and the nearest price. This is how the agent learns that what the shopper asked for exists just over budget. *"A chef's knife under €100"* browsed as `subcategory=Knives, max_price=100` returns the paring knife and the sharpening stone, plus `above_max: {count: 1, min_price_eur: 149}`: the chef's knife. Without the subcategory, the same browse over all of Kitchen & Dining says *"5 more from €115"*, which is true but not useful, which is why specific product types are browsed by subcategory.
 - `suggestions` appears when the result is empty (see *Empty results*).
-- `near_misses` (`search_products` only): when a `query` is set, the best-matching products that were excluded **only** by the price filter. At most 2 `ProductSummary` items, ranked by relevance, and only those that score at least as well as the top returned result. Otherwise it is empty.
 
-  **Why it was added**: *"a chef's knife under €100"* returns the €69 paring knife, but the only chef's knife costs €149. Without `near_misses`, the agent cannot tell the shopper that what they asked for exists just over budget, and it ends up presenting a different product as if it were the answer.
-
-**Size bound**: the default page of 10 summaries is around 600–800 tokens and the hard maximum of 25 is around 2,000. No single response from this service can exceed about 2.5k tokens.
+**Size bound**: a full page of 30 summaries with tags is about 2,700 tokens. No single response from this service exceeds about 3k tokens. A typical turn browses one to three filtered categories, about 1–4k tokens in total.
 
 ### Filter semantics
 
 - **Recipient**: `her`, `him` and `couple` match products tagged with that value **or** `anyone`. `kids` matches only `kids`. The `anyone` bucket includes chef's knives and fragrances, which are not children's gifts. `anyone` matches only `anyone`. Resolved at build time into `recipients_match`; the runtime check is membership.
-- **Interest**: matches when the value is in the product's `interests`.
 - **Occasion**: matches when the value is in the product's `occasions`. Products with no occasions never match an occasion filter.
 - **Price**: inclusive on both ends.
 - **Out of stock**: excluded by default from every list. The agent must not recommend what cannot be bought; it can opt in to answer "do you have X?".
-- **Enums** (`recipient`, `occasion`, `interest`, `sort`) are declared as OpenAPI enums, so the model sees the valid vocabulary in the tool schema itself.
+- **Enums** (`recipient`, `occasion`, `sort`) are declared as OpenAPI enums, so the model sees the valid vocabulary in the tool schema itself.
 
 ### Empty results
 
@@ -349,7 +290,7 @@ A filter combination that matches nothing returns **`200`**, not `404`, with `it
 }
 ```
 
-Relaxations tried: drop `occasion`, drop `recipient`, drop `interest`, drop `subcategory`, drop `max_shipping_days`, drop `gift_wrap`, widen the price band to the nearest price that yields a match, include out of stock, drop `query`. Only relaxations that produce at least one match are returned, ordered by `would_match` descending, capped at 3. This gives the agent something concrete to tell the shopper ("nothing under €20 for a housewarming, but there are four things under €25").
+Relaxations tried: drop `occasion`, drop `recipient`, drop `subcategory`, drop `max_shipping_days`, drop `gift_wrap`, widen the price band to the nearest price that yields a match, include out of stock. Only relaxations that produce at least one match are returned, ordered by `would_match` descending, capped at 3. This gives the agent something concrete to tell the shopper ("nothing under €20 for a housewarming, but there are four things under €25").
 
 ### Errors
 
@@ -376,15 +317,14 @@ Errors come in two kinds, and both use the same `error` envelope (decision D2):
 | `unauthorized` | 401 | Missing or wrong API key | `hint` names the header |
 | `category_not_found` | 200, `found: false` | Unknown category | `did_you_mean` (fuzzy match on slug and name, plus a synonym table: *electronics* and *gadgets* map to `tech-gadgets`, *beauty* and *skincare* to `beauty-wellness`, *toys* to `kids`, *travel* to `outdoor-travel`...), plus `valid_values` |
 | `subcategory_not_found` | 200, `found: false` | Subcategory not in that category | `valid_values` = that category's subcategories, `did_you_mean` if another category has it |
-| `product_not_found` | 200, `found: false` | Unknown product ID | `hint` to use `search_products`; `did_you_mean` for IDs one edit away |
+| `product_not_found` | 200, `found: false` | Unknown product ID | `hint` to browse with `get_products_by_category`; `did_you_mean` for IDs one edit away |
 | `invalid_parameter` | 422 | Validation failure | Plain-language message per field ("max_price (20) must be greater than or equal to min_price (50)"), replacing FastAPI's default validation body |
-| `search_too_broad` | 400 | `search_products` with no constraint | `hint` to add a query or filter |
 | `rate_limited` | 429 | Over the per-key rate limit | `hint` to retry after `Retry-After` seconds |
 | `internal_error` | 500 | Unexpected | Generic message, no stack trace |
 
-**Success responses carry `"found": true`** on `get_products_by_category` (as part of `ListResponse`) and `get_product_details` (`{"found": true, "product": {...}}`), so the agent always checks one field. `search_products` and `get_categories` cannot hit a not-found case and do not carry it. An empty result is still `found: true` with `items: []` and `suggestions`: the category exists, nothing in it matches.
+**Success responses carry `"found": true`** on `get_products_by_category` (as part of `ListResponse`) and `get_product_details` (`{"found": true, "product": {...}}`), so the agent always checks one field. `get_categories` cannot hit a not-found case and does not carry it. An empty result is still `found: true` with `items: []` and `suggestions`: the category exists, nothing in it matches.
 
-**Accepted cost**: if the platform hides 4xx bodies, the model gets a generic failure for `invalid_parameter` and `search_too_broad`. These are agent mistakes, not shopper situations; tool descriptions, enums and evals are what prevent them. The Phase 1 spike still records what the platform does with 4xx, for the README.
+**Accepted cost**: if the platform hides 4xx bodies, the model gets a generic failure for `invalid_parameter`. These are agent mistakes, not shopper situations; tool descriptions, enums and evals are what prevent them. The Phase 1 spike still records what the platform does with 4xx, for the README.
 
 ### Authentication
 
@@ -416,10 +356,9 @@ The OpenAPI document is the product. Requirements:
 
 Draft tool descriptions (to be refined against real agent transcripts):
 
-- **`search_products`**: *"Find gift ideas across the whole catalogue by who it is for, the occasion, what they are into (interest), a budget, a delivery deadline and/or free text for a product type (e.g. 'chef's knife', 'cosy'). This is the default tool for recommendations. Returns compact summaries; call get_product_details on the 2–3 you intend to recommend. Out-of-stock items are excluded unless include_out_of_stock=true. If nothing matches, 'suggestions' says which constraint to relax. 'near_misses' lists strong matches that are just outside the price range: tell the shopper about them rather than hiding them."*
-- **`get_categories`**: *"List the shop's product categories with product counts, price ranges and subcategories. Use when the shopper asks what the shop sells, or to pick a valid category before calling get_products_by_category. Not needed before search_products."*
-- **`get_products_by_category`**: *"Browse the products in one category, optionally narrowed by subcategory, price, recipient or occasion. Use when the shopper names a kind of product ('show me your candles', 'something for the kitchen'). For open-ended gift requests use search_products instead."*
-- **`get_product_details`**: *"Get the full record for one product: description, materials, colour, gift wrap, shipping time and availability. Call this for each product before recommending it, and whenever the shopper asks about a specific item."*
+- **`get_categories`**: *"List the shop's 11 categories with product counts, price ranges, subcategories and how many in-stock products suit each occasion. Call this first for any gift request, to decide which one to three categories to browse. Example: for a housewarming gift, browse the categories with the most housewarming products. It does not change during a conversation, so call it once."*
+- **`get_products_by_category`**: *"List the products in one category as compact summaries (name, subcategory, price, rating, availability, recipient, occasions, tags, shipping days), narrowed by the shopper's constraints: price, recipient, occasion, delivery deadline (max_shipping_days), gift wrap. Use subcategory for a specific product type ('a chef's knife' → subcategory Knives). When a request could fit several categories, call this for each of them in parallel. Choose the products yourself from what comes back: moods and tastes like 'cosy' or 'she loves music' are judged from names, tags and subcategories. Out-of-stock items are excluded unless include_out_of_stock=true. 'outside_price_range' tells you when matching products exist just outside the budget: tell the shopper rather than hiding them. If nothing matches, 'suggestions' says which constraint to relax. Products with 'also_listed_in' appear in two categories: never recommend both listings."*
+- **`get_product_details`**: *"Get the full record for one product: description, materials, colour, gift wrap, shipping time and availability. Call it for each of the 2–3 products before recommending them (in parallel), and whenever the shopper asks about a specific item. The description is what makes a good reason."*
 
 ### Observability
 
@@ -432,12 +371,12 @@ Draft tool descriptions (to be refined against real agent transcripts):
 2. A bad export fails the build, and a catalogue file that fails validation fails startup. Nothing is ever half-served.
 3. The committed `catalog.json` always equals a fresh build of the committed CSV and mapping files (enforced by a test).
 4. Lists never include out-of-stock products unless the caller opts in.
-5. `search_products` never returns the same physical product twice.
-6. No response exceeds the documented page size (`limit` ≤ 25).
+5. Every listing of a cross-listed product says so (`also_listed_in`), in summaries and details.
+6. No response exceeds the documented page size (`limit` ≤ 30).
 7. Every error is in the envelope, with a `hint` that names the next action.
 8. No data endpoint is reachable without a valid API key.
 9. `rating: null` means unrated. It is never reported or ranked as 0; for ranking, unrated products take the catalogue mean via `rating_score`.
-10. Internal fields (`stock`, `rating_score`, `recipients_match`, `listing_group`, `search_weights`) never appear in API responses.
+10. Internal fields (`stock`, `rating_score`, `recipients_match`) never appear in API responses.
 
 ## Configuration
 
@@ -475,17 +414,16 @@ indigo.ai ──HTTPS──▶ Caddy (:443, automatic Let's Encrypt) ──HTTP�
 
 ## Acceptance criteria
 
-- All four tools are callable from the indigo.ai agent with the API key configured on the platform side.
+- All three tools are callable from the indigo.ai agent with the API key configured on the platform side.
 - The build turns 152 raw rows into 152 records, and running it twice gives byte-identical `catalog.json`.
 - `BUILD_REPORT.md` lists the 6 category fixes, the 2 cross-listed pairs, and the derived constants `C` and `m`.
-- Every subcategory except Gift Cards has at least one interest.
-- `get_categories` reports exactly 11 categories and the counts sum to 152.
-- `get_products_by_category("Home and Living")` resolves to `home-living` and includes `HL-013`.
-- `search_products(occasion=housewarming, min_price=40, max_price=60)` returns 13 products, with no duplicate tumbler set.
-- `search_products(recipient=kids)` returns only `KI-*` products.
-- `search_products(interest=reading-writing)` spans categories: it includes `TG-006` (e-reader) and `KI-003` (kids' story collection).
-- `sort=best_rated` ranks the E-Reader (`TG-006`) first.
-- `search_products(query="chef's knife", max_price=100)` returns in-budget knife products, and `near_misses` contains `KD-001` (€149).
+- `get_categories` reports exactly 11 categories, the counts sum to 152, and Home & Living reports `in_stock_by_occasion.housewarming = 18`.
+- `get_products_by_category("Home and Living")` resolves to `home-living`, includes `HL-013`, and returns all 26 in-stock products in one call.
+- `get_products_by_category("home-living", occasion=housewarming, min_price=40, max_price=60)` includes `HL-024` with `also_listed_in` pointing to `KD-023`.
+- `get_products_by_category("kids")` returns only `KI-*` products; `recipient=kids` on any other category returns nothing (with `suggestions`).
+- `sort=best_rated` ranks the E-Reader (`TG-006`) first in Tech & Gadgets.
+- `get_products_by_category("kitchen-dining", subcategory="Knives", max_price=100)` returns `KD-002` and `KD-003`, with `outside_price_range.above_max = {count: 1, min_price_eur: 149}`.
+- Summaries carry `tags`, and no summary exposes `stock` or `rating_score`.
 - Unknown category `electronics` returns `200` with `found: false`, `category_not_found` and `did_you_mean: ["tech-gadgets"]`.
 - Unknown product `XX-999` returns `200` with `found: false` and `product_not_found`; a known ID returns `found: true` and `product`.
 - An empty filter result returns `200` with at least one actionable suggestion.
@@ -505,6 +443,8 @@ Decisions that are not obvious from the contract above, kept short enough to exp
 | D2 | Recoverable errors return `200` + `found: false` | Accepted | Below |
 | D3 | One deployment for both platform environments | Accepted | Below |
 | D4 | Hosting on a DigitalOcean VPS | Accepted | Below |
+| D5 | Narrow keyword `query` with no dead end | Superseded by D6 | Below |
+| D6 | Browse-first with three tools, no search | Accepted | Below |
 
 ### D2: Recoverable errors return `200` with `found: false`
 
@@ -555,3 +495,72 @@ Revisit if a breaking change is unavoidable, or if a consumer other than the pla
 - Single instance: if the droplet is down, the assistant cannot recommend anything. Acceptable for this scope.
 
 **Revisit if** traffic needs more than one instance (the in-memory rate limiter would then need a shared store), or if the droplet's other workloads start competing for resources.
+
+### D5: Narrow keyword `query` with no dead end
+
+**Status**: Superseded by D6 · 2026-10-29
+
+**Context**: a test of 60 typical shopper words against the catalogue, using the first draft rules (exact tokens plus plural strip), showed two clear groups:
+
+- **Concrete product nouns worked**: knife, candle, coffee, necklace, blanket, headphones.
+- **Interests and moods missed entirely**: cosy, pamper, spa, music, gaming, gardening, jewelry, puppy all found 0 products. Near forms missed too (`plants` did not find the planter, `cooking` found only a cookbook).
+- **Descriptions and category names produced false positives**: `cat` matched a diffuser, and `smart home` matched 36 products.
+
+A synonym table fixes these one at a time and never ends. Meanwhile the catalogue is small: the structured filters cut it to 10–25 summaries, and the model can tell which of them are "cosy" far better than any keyword engine.
+
+**Options**:
+
+- **(A)** Narrow and harden the keyword search: product words only, any-word matching with the agent expanding synonyms, stem, prefix and typo matching, descriptions and category names left out of the index, and no dead end.
+- **(B)** A plus semantic search with local embeddings.
+- **(C)** Drop `query`, filters only.
+
+**Decision**: (A). It keeps the case keyword search is good at, a concrete product lookup with `near_misses`. It fixes the measured near-form misses, and it stops an unmatched query from emptying a filtered result. (B) was rejected for now: about 150 MB of model, a similarity cut-off to tune, and harder to test. Semantic search always returns *something*, which looks like relevance when it is not.
+
+**Consequences**:
+
+- Understanding moods and interests moves to the agent, through the filters and its own judgement. The tool description and system prompt must teach this: filters first, concrete words, several alternatives.
+- Results carry `query_matched` / `query_note`, so the agent knows when the query was ignored.
+- This has to be **proven by the evals** (E15–E17 in `AGENT_SPEC.md`), not assumed.
+
+**Revisit if** the vague-word evals fail after tuning the description and prompt. The fallback is **(C)**: remove `query`, keep the filters, and let the agent browse summaries. Losing the direct product lookup is acceptable at this catalogue size, and `near_misses` would then come from a `subcategory` filter instead.
+
+### D6: Browse-first with three tools, no search
+
+**Status**: Accepted · 2026-10-29 · supersedes D5
+
+**Context**: D5 kept a keyword `query` on a fourth tool, `search_products`, and hardened it. The same test that motivated D5 showed that the hard cases (*"cosy"*, *"she loves music"*, *"a pamper gift"*) are meaning, not words, and that the catalogue is small enough for the model to read:
+
+| | In-stock products | Summary tokens |
+|---|---|---|
+| Largest category (Home & Living) | 26 | ~2,000 (~2,300 with tags) |
+| Typical category | 10–20 | 700–1,600 |
+| Whole in-stock catalogue | 140 | ~10,600 |
+
+The platform calls tools in parallel, so browsing several categories costs one round trip.
+
+**Options**:
+
+- **(A)** Keep D5: `search_products` with a hardened keyword `query`.
+- **(B)** Browse-first with `search_products` kept as filters only, no `query`, for cross-category requests.
+- **(C)** Browse-first with three tools: `get_categories` → `get_products_by_category` (one to three categories, in parallel) → `get_product_details`.
+
+**Decision**: (C).
+
+- The model does the matching over full, filtered lists, which beats any keyword engine on moods and tastes.
+- Three tools with distinct jobs leave no "which tool?" ambiguity. (B) brings that ambiguity back for a convenience that parallel category calls already give.
+- It removes relevance scoring, matching rules, `query_matched`, `near_misses` and the `interests` vocabulary: less to build, test and explain.
+
+**Consequences**:
+
+- **Removed**: `search_products`, `query`, `search_weights`, `near_misses`, `interests` (and `interests.toml`), `search_too_broad`, `listing_group`.
+- **Added**:
+  - in summaries: `tags`, and `also_listed_in` on cross-listed products;
+  - in `get_categories`: `in_stock_by_occasion`;
+  - in category lists: `outside_price_range`, which replaces `near_misses`;
+  - `max_shipping_days` and `gift_wrap` filters on category browsing;
+  - the page limit raised to 30, so any category fits in one call.
+- **Cross-category requests rely on the agent choosing categories well.** `in_stock_by_occasion` and the subcategory lists are its map, and the prompt tells it to browse the two or three most relevant categories in parallel.
+- **Over-budget cases rely on browsing by subcategory** for a specific product type, so that `outside_price_range` is specific.
+- **The evals have to prove it**: E1 (spans categories), E3 (over budget), and E15–E17 (moods and tastes).
+
+**Revisit if** the catalogue grows past a few hundred products (a category would no longer fit in one call), or the evals show the agent regularly missing the best category for cross-category requests. The first step would then be option (B).

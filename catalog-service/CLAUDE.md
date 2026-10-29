@@ -26,15 +26,14 @@ docker build -t catalog-service .           # the image ships data/catalog.json,
 ```
 catalog_build/
   build_catalog.py   raw CSV → data/ (normalise, derive, index, report)
-  interests.toml     subcategory/tag → interest mapping
-  synonyms.toml      category and query synonyms
+  synonyms.toml      category synonyms for did_you_mean
 data/              build outputs, committed: catalog.json, catalog.normalized.csv, BUILD_REPORT.md
 app/
   main.py        app factory, exception handlers, OpenAPI customisation
   settings.py    env-driven settings
   auth.py        X-API-Key dependency
   loader.py      reads and validates data/catalog.json (pure, no FastAPI imports)
-  catalog.py     in-memory index, filtering, search, relaxation suggestions
+  catalog.py     in-memory index, filtering, outside_price_range, relaxation suggestions
   models.py      Pydantic response models with field descriptions
   errors.py      error envelope and codes
   routes/        one module per tool

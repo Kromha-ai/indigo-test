@@ -27,15 +27,15 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 Goal: a deployed, authenticated service with `get_categories` bound as a tool on the indigo.ai platform, and the remaining platform unknowns answered.
 
 - [ ] Scaffold `catalog-service/`: `pyproject.toml` (uv), FastAPI app factory, settings from env, `ruff`, `pytest`
-- [ ] Build step `catalog_build/build_catalog.py`: every normalisation rule, derived fields (`availability`, `rating_score`, `recipients_match`, `interests`, `listing_group`, `search_weights`), and fail-fast on bad rows
-- [ ] `catalog_build/interests.toml` (from the spec's draft mapping, checked against the full tag list) and `catalog_build/synonyms.toml`
+- [ ] Build step `catalog_build/build_catalog.py`: every normalisation rule, derived fields (`availability`, `rating_score`, `recipients_match`, `also_listed_in`), and fail-fast on bad rows
+- [ ] `catalog_build/synonyms.toml` (category synonyms for `did_you_mean`)
 - [ ] Generate and commit `data/catalog.json`, `data/catalog.normalized.csv` and `data/BUILD_REPORT.md`; review the report
-- [ ] Build tests against the real CSV: 152 records, 11 categories, the 6 drifted rows land in the right category, the 2 cross-listed pairs share a `listing_group`, 5 unrated products stay `null`, `kids` never in an `anyone` product's `recipients_match`, every subcategory but Gift Cards has an interest
-- [ ] Build tests against small fixture CSVs: unknown category, bad price and unmapped subcategory abort the build; two runs give byte-identical output; committed `catalog.json` is not stale
+- [ ] Build tests against the real CSV: 152 records, 11 categories, the 6 drifted rows land in the right category, the 2 cross-listed pairs point to each other in `also_listed_in`, 5 unrated products stay `null`, `kids` never in an `anyone` product's `recipients_match`
+- [ ] Build tests against small fixture CSVs: unknown category, bad price and unknown recipient abort the build; two runs give byte-identical output; committed `catalog.json` is not stale
 - [ ] `app/loader.py`: load and validate `catalog.json` at startup, refuse to start on a malformed file
 - [x] Sign off the authentication decision in `AUTHENTICATION.md` (Accepted 2026-10-29)
 - [ ] `X-API-Key` auth dependency with multiple keys; refuse to start without keys; tests for missing, wrong and valid key
-- [ ] `GET /categories` and `GET /health`
+- [ ] `GET /categories` (with subcategories, price ranges, `in_stock_by_occasion`) and `GET /health`
 - [ ] `servers` populated from `PUBLIC_BASE_URL`
 - [ ] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
 - [ ] Dockerfile (ships `data/catalog.json`), `.env.example`
@@ -57,30 +57,26 @@ Goal: `get_products_by_category` and `get_product_details` complete, with the fu
 
 Prerequisite: Phase 1.
 
-- [ ] `ProductSummary` and `ProductDetail` response models with field descriptions
+- [ ] `ProductSummary` (with `tags`, `shipping_days`, `also_listed_in` on cross-listed products) and `ProductDetail` response models with field descriptions
 - [ ] Category resolution: slug, display name, case and whitespace insensitive, `and`/`&`
-- [ ] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, out-of-stock flag, sort, pagination, `ListResponse`
+- [ ] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, `sort=best_rated` by `rating_score`, pagination with `limit` up to 30, `ListResponse`
 - [ ] Recipient semantics: `her`/`him`/`couple` include `anyone`; `kids` exact
 - [ ] `GET /products/{product_id}`: case-insensitive ID, `also_listed_in`
 - [ ] Error envelope plus exception handlers; replace the default 422 body with plain-language `invalid_parameter`
 - [ ] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
-- [ ] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25), and the size bound
+- [ ] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 30), and the size bound
 - [ ] Redeploy, re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
 
-## Phase 3: Search, recovery, and LLM-ready OpenAPI
+## Phase 3: Recovery and LLM-ready OpenAPI
 
-Goal: `search_products` working with relaxation suggestions, and an OpenAPI document whose descriptions are good enough to drive the agent.
+Goal: every response gives the agent what it needs to decide and recover, and the OpenAPI descriptions are good enough to drive browse-first (decision D6).
 
-- [ ] `GET /products/search`, declared before `/products/{product_id}`, with every filter including `max_shipping_days` and `gift_wrap`
-- [ ] Relevance scoring over `search_weights` with query-side synonym expansion; tie-break on `rating_score`; `search_too_broad`
-- [ ] `interest` filter on both list tools; `sort=best_rated`
-- [ ] Deduplicate cross-listed products in search results
-- [ ] Empty-result `suggestions` for both list tools (one relaxation at a time, at most 3, only ones that match)
-- [ ] `near_misses` on `search_products` (strong matches excluded only by price, at most 2)
+- [ ] Empty-result `suggestions` on category browsing (one relaxation at a time, at most 3, only ones that match)
+- [ ] `outside_price_range` (`above_max` / `below_min`, count and nearest price, over every other filter)
 - [ ] `applied_filters` echo
 - [ ] Write the final operation, parameter and field descriptions (start from the spec drafts)
 - [ ] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description
-- [ ] Tests for the spec acceptance criteria (housewarming €40–60 = 13 products, kids returns only `KI-*`, `electronics` suggests `tech-gadgets`, chef's knife under €100 returns `KD-001` in `near_misses`)
+- [ ] Tests for the spec acceptance criteria (Home & Living `in_stock_by_occasion.housewarming = 18`; tumbler set carries `also_listed_in`; kids returns only `KI-*`; `electronics` suggests `tech-gadgets`; Knives under €100 reports the €149 knife in `outside_price_range`)
 - [ ] Structured request logging with key fingerprint
 - [ ] Redeploy, re-import the tool collection, check every operation in the test agent
 - [ ] Per-key rate limit (`429 rate_limited`)
@@ -93,9 +89,10 @@ Goal: the gift assistant live on the platform, passing the evaluation scenarios.
 - [ ] `agent/greeting.md` with 2–3 suggested starters
 - [ ] Configure the agent on the platform with the four tools; record every binding step in `agent/tools.md` so it can be reproduced
 - [ ] Format check on the shareable link at phone width: each recommendation fits one screen
-- [ ] Write `agent/evals.md` (E1–E14) and run the first pass
+- [ ] Write `agent/evals.md` (E1–E17) and run the first pass
 - [ ] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
-- [ ] Re-run E1–E14 and record the dated results
+- [ ] Decision point for D6: if cross-category evals (E1, E15–E17) keep missing the best category after tuning, consider D6's revisit path (a filters-only cross-category tool) through the spec first
+- [ ] Re-run E1–E17 and record the dated results
 - [ ] Publish the workspace (tool collection and agent) to Production; check a production tool call shows the `platform-prod` key fingerprint
 - [ ] Generate the public link and test it in a private window, logged out
 
@@ -109,7 +106,7 @@ Goal: the client can open the link, read the repo, and follow every decision.
 - [ ] `README.md`: what it is, the live link, the API base URL, how to authenticate (link to `AUTHENTICATION.md`), how to run locally, where decisions are recorded
 - [ ] `README.md` agent sections (`AGENT_SPEC.md`, *README requirements*): the prompt, how the tools were bound, and the conversation design decisions, leading with how many questions are asked before recommending and why
 - [ ] `PLAYBOOK.md` and `docs/guides/testing.md` reflect the real commands
-- [ ] Decision summary for the walkthrough: data cleaning, why `search_products`, response size bound, error design, `near_misses`, recipient semantics, cross-listing, question rule, message format, what was left out
+- [ ] Decision summary for the walkthrough: data cleaning, why three tools are enough (D5 → D6), response size bound, error design, `outside_price_range`, recipient semantics, cross-listing, question rule, message format, what was left out
 - [ ] Mark both specs **Implemented**; move this roadmap to `archive/`
 
 ## Phase 6 (bonus): Site widget
@@ -121,5 +118,5 @@ Prerequisite: Phase 5. Not needed for the handover; the shareable link is the de
 - [ ] Read *Configure & Install the Web Chat*: whether it adds quick-reply buttons, cards or carousels on top of Markdown, and its settings. It is embedded with `<script defer src="https://platform.indigo.ai/widget.js?token=<TOKEN>&v=3"></script>`; leave `uid` unset (anonymous shoppers)
 - [ ] Decide the widget message format: quick replies for the next-step line, and cards only if they stay within one phone screen. Update `AGENT_SPEC.md` first
 - [ ] Embed the widget in a minimal demo page and test it at phone width
-- [ ] Re-run E1–E14 in the widget; record the results
+- [ ] Re-run E1–E17 in the widget; record the results
 - [ ] README: link to the demo page

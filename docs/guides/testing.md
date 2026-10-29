@@ -37,15 +37,15 @@ Tests need no network, no database and no secrets. The test settings inject a fi
 - **Test at the HTTP boundary.** The platform calls HTTP, so the tests do too. Go through `TestClient` with the `X-API-Key` header, not through internal functions. Build and loader tests are the exception.
 - **The real data is a fixture.** Acceptance criteria in the spec are written against the committed export and its build (11 categories, 13 housewarming products at €40–60, and so on), so assert those numbers directly. If the client sends a new export, these tests are supposed to fail: rebuild, re-profile (`docs/reference/catalog-data-profile.md`) and update.
 - **The build is under contract.** `test_build.py` runs the build in memory and compares it with the committed `data/catalog.json`. A mismatch means someone changed a mapping or the script without regenerating, or hand-edited the data.
-- **Edge cases use small fixture CSVs** fed to the build (bad price, unknown category, unmapped subcategory), so each test shows its own input.
+- **Edge cases use small fixture CSVs** fed to the build (bad price, unknown category, unknown recipient), so each test shows its own input.
 - **Assert the shape the agent reads**: `found`, `error.code`, `hint` and `did_you_mean`, not only the status code. Recoverable cases are `200` (decision D2), so a status-only assertion would pass on a broken response.
 - **The OpenAPI document is under contract.** `test_openapi.py` fails if any operation lacks `operationId`, `summary` or `description`, or if any parameter or response field lacks a description. Tool descriptions drive the agent, so a missing one is a bug.
-- **Size bound.** At least one test requests `limit=25` and asserts the serialised response stays under the documented budget.
+- **Size bound.** At least one test requests the largest category with `limit=30` and asserts the serialised response stays under the documented budget.
 - **Bug fixes ship with a failing test first** (see `WORKFLOW.md`, Step 4).
 
 ## Gift Assistant
 
-The agent is tested by scenario, not by unit test. `agent/evals.md` holds the scenarios (E1–E14 in `docs/specs/AGENT_SPEC.md`) with expected behaviour. Run them by hand in the platform's test chat after any prompt or tool-description change.
+The agent is tested by scenario, not by unit test. `agent/evals.md` holds the scenarios (E1–E17 in `docs/specs/AGENT_SPEC.md`) with expected behaviour. Run them by hand in the platform's test chat after any prompt or tool-description change.
 
 For each run, record:
 

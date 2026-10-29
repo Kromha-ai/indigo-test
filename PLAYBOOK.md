@@ -28,7 +28,7 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
    uv run uvicorn app.main:app --reload
    curl -s localhost:8000/health
    curl -s -H "X-API-Key: $KEY" localhost:8000/categories
-   curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"
+   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/home-living/products?occasion=housewarming&min_price=40&max_price=60"
    ```
 
    Interactive docs: <http://localhost:8000/docs>. The OpenAPI document is at <http://localhost:8000/openapi.json>; once deployed, the platform imports it from the public URL.
@@ -50,7 +50,7 @@ There is no database. The service loads `catalog-service/data/catalog.json` at s
 
 ## Rebuilding the catalogue
 
-Run this after a new client export, or after changing `catalog_build/interests.toml`, `catalog_build/synonyms.toml` or the build script:
+Run this after a new client export, or after changing `catalog_build/synonyms.toml` or the build script:
 
 ```bash
 cd catalog-service
@@ -58,7 +58,7 @@ uv run python -m catalog_build.build_catalog
 git diff --stat data/          # review what changed
 ```
 
-Read `data/BUILD_REPORT.md`: any new fixes, unmapped subcategories or cross-listings need a decision before the build is committed. For a new export, also update `docs/reference/catalog-data-profile.md`.
+Read `data/BUILD_REPORT.md`: any new fixes or cross-listings need a decision before the build is committed. For a new export, also update `docs/reference/catalog-data-profile.md`.
 
 ## Deploying
 
