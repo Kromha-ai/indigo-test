@@ -14,8 +14,8 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 | Phase | Goal | Status |
 |---|---|---|
 | 1 | Walking skeleton on the platform | In progress: service live at catalog.builtbykromha.com (2026-10-29); platform tasks next |
-| 2 | Browse and detail tools | Built and tested 2026-10-29; redeploy and re-import pending |
-| 3 | Search, recovery, and LLM-ready OpenAPI | Built and tested 2026-10-29; redeploy and re-import pending |
+| 2 | Browse and detail tools | Deployed 2026-10-29; re-import on indigo.ai pending |
+| 3 | Search, recovery, and LLM-ready OpenAPI | Deployed 2026-10-29; re-import on indigo.ai pending |
 | 4 | The assistant | Not started |
 | 5 | Hardening and handover | Not started |
 | 6 (bonus) | Site widget | Not started |
@@ -41,7 +41,7 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] Dockerfile (ships `data/catalog.json`), `.local.env.example`
 - [x] `deploy/`: `docker-compose.yml` (service only, bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`), `catalog.caddy` (site block imported by the droplet's system Caddy), `.env.example`
 - [x] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), Docker, clone to `/var/www/indigo-test`, `deploy/.env`, `docker compose up`, `import` the site block in `/etc/caddy/Caddyfile` and reload Caddy; smoke-test `https://catalog.builtbykromha.com/health`
-- [x] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
+- [x] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Every deploy*, step 2) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
 - [x] Generate the three keys (`platform-test`, `platform-prod`, `local-dev`) and set `CATALOG_API_KEYS` in `deploy/.env` on the droplet
 - [ ] Set the `CATALOG_API_KEY` workspace secret on indigo.ai (Test and Production values) per `docs/guides/secrets-management.md`
@@ -67,7 +67,8 @@ Prerequisite: Phase 1.
 - [x] Tests for `invalid_parameter` once routes take parameters (e.g. `max_price` < `min_price`, `limit=0`)
 - [x] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
 - [x] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25)
-- [ ] Redeploy, re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
+- [x] Redeploy (live at catalog.builtbykromha.com, 2026-10-29)
+- [ ] Re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
 
 ## Phase 3: Search, recovery and LLM-ready OpenAPI
 
@@ -83,7 +84,8 @@ Goal: `search_products` (filters only) working, every response within its budget
 - [x] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description (`tests/test_openapi.py`, Phase 1; covers new operations automatically)
 - [x] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` and Knives-under-€100 already covered in Phase 2)
 - [x] Structured request logging with key fingerprint (brought forward, done 2026-10-29)
-- [ ] Redeploy, re-import the tool collection, check every operation in the test agent
+- [x] Redeploy (live, verified against the public `/openapi.json`, 2026-10-29)
+- [ ] Re-import the tool collection, check every operation in the test agent
 - [x] Per-key rate limit (`429 rate_limited`) (brought forward, done 2026-10-29)
 
 ## Phase 4: The assistant
@@ -106,11 +108,12 @@ Goal: the gift assistant live on the platform, passing the evaluation scenarios.
 Goal: the client can open the link, read the repo, and follow every decision.
 
 - [ ] Final full eval run, recorded in `agent/evals.md`
-- [ ] Droplet hygiene: unattended security upgrades on, Docker restart policy verified after a reboot, certificate renewal working
+- [x] Droplet hygiene: unattended security upgrades on, Docker restart policy verified after a reboot, certificate renewal working (done by the developer, 2026-10-29)
 - [ ] Final check that the public spec URL, `/docs` and `/redoc` work from a logged-out browser, and that the platform's Production collection was imported from the current version
-- [ ] `README.md`: what it is, the live link, the API base URL, how to authenticate (link to `AUTHENTICATION.md`), how to run locally, where decisions are recorded
+- [x] `README.md`: what it is, the API base URL, how to authenticate (link to `AUTHENTICATION.md`), how to run locally, where decisions are recorded (2026-10-29)
+- [ ] `README.md`: the live assistant link, once published
 - [ ] `README.md` agent sections (`AGENT_SPEC.md`, *README requirements*): the prompt, how the tools were bound, and the conversation design decisions, leading with how many questions are asked before recommending and why
-- [ ] `PLAYBOOK.md` and `docs/guides/testing.md` reflect the real commands
+- [x] `PLAYBOOK.md` and `docs/guides/testing.md` reflect the real commands (every command run on a clean copy, 2026-10-29; re-check if commands change)
 - [ ] Decision summary for the walkthrough: data cleaning, how the tools evolved (D5 → D6 → D7: why search was added back without free text), the response budget, error design, `outside_price_range`, recipient semantics, cross-listing, question rule, message format, what was left out
 - [ ] Mark both specs **Implemented**; move this roadmap to `archive/`
 

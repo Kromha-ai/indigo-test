@@ -17,6 +17,12 @@ cp .local.env.example .local.env
 python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CATALOG_API_KEYS in .local.env
 ```
 
+The `curl` examples below read the key from `$KEY`. Set it in each new shell:
+
+```bash
+export KEY=$(grep '^CATALOG_API_KEYS=' .local.env | cut -d= -f2 | cut -d, -f1)
+```
+
 ## Daily workflow
 
 1. Open `docs/planning/ROADMAP.md` and pick the next unchecked task.
@@ -34,6 +40,8 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
    ```
 
    Interactive docs: <http://localhost:8000/docs>. The OpenAPI document is at <http://localhost:8000/openapi.json>; once deployed, the platform imports it from the public URL.
+
+   To check the container image locally: `docker build -t catalog-service .` (from `catalog-service/`).
 
 4. Run the tests and lint before staging (`docs/guides/testing.md`).
 5. Tick the task in the roadmap. The developer commits.
@@ -60,32 +68,51 @@ uv run python -m catalog_build.build_catalog
 git diff --stat data/          # review what changed
 ```
 
-Read `data/BUILD_REPORT.md`: any new fixes or cross-listings need a decision before the build is committed. For a new export, also update `docs/reference/catalog-data-profile.md`.
+With an unchanged export, only the build date in `BUILD_REPORT.md` changes. Otherwise read `data/BUILD_REPORT.md`: any new fixes or cross-listings need a decision before the build is committed. For a new export, also update `docs/reference/catalog-data-profile.md`.
 
 ## Deploying
 
-Target: the DigitalOcean droplet. The service runs with Docker Compose on `127.0.0.1:8000`; the droplet's system Caddy proxies `catalog.builtbykromha.com` to it (`docs/specs/CATALOG_SPEC.md`, *Deployment*). The repo lives at `/var/www/indigo-test`.
-
+Target: the DigitalOcean droplet. The service runs with Docker Compose on `127.0.0.1:8000`; the droplet's system Caddy proxies `catalog.builtbykromha.com` to it (`docs/specs/CATALOG_SPEC.md`, *Deployment*). The repo lives at `/var/www/indigo-test`; run the commands below from there.
 
 ### Every deploy
 
 1. On the droplet: `git pull && docker compose -f deploy/docker-compose.yml up -d --build`.
-2. Check `GET $PUBLIC_BASE_URL/health` reports `products_loaded: 152`.
-3. If something is wrong: `docker compose -f deploy/docker-compose.yml logs --tail=100 catalog-service`. If `deploy/catalog.caddy` changed, also `sudo systemctl reload caddy`. To roll back, `git checkout <previous-sha>` and run step 1 again.
-4. Check that the OpenAPI spec is published and correct:
+2. Check the service is up and published correctly (from anywhere):
 
    ```bash
-   curl -sf "$PUBLIC_BASE_URL/openapi.json" | python3 -c "import json,sys; print(json.load(sys.stdin)['servers'][0]['url'])"   # must print PUBLIC_BASE_URL
-   curl -sf -o /dev/null -w '%{http_code}\n' "$PUBLIC_BASE_URL/docs"    # 200, no key
+   curl -s https://catalog.builtbykromha.com/health        # "products_loaded": 152
+   curl -s https://catalog.builtbykromha.com/openapi.json | python3 -c "import json,sys; print(json.load(sys.stdin)['servers'][0]['url'])"   # the public URL
+   curl -s -o /dev/null -w '%{http_code}\n' https://catalog.builtbykromha.com/docs    # 200, no key
    ```
+
+3. If `deploy/catalog.caddy` changed, also `sudo systemctl reload caddy`.
+
+### Changing configuration
+
+Edit `deploy/.env`, then `docker compose -f deploy/docker-compose.yml up -d` (Compose recreates the container with the new environment; no rebuild needed). Variables left out of `deploy/.env` take the service's defaults (see `docs/specs/CATALOG_SPEC.md`, *Configuration*).
+
+### When something is wrong
+
+- Logs, one JSON line per request (operation, status, latency, `error_code`, `key_fingerprint`):
+  `docker compose -f deploy/docker-compose.yml logs --tail=100 catalog-service`
+- **Roll back** to the previous commit, then return to `main` once fixed:
+
+  ```bash
+  git log --oneline -5                     # pick the last good commit
+  git checkout <sha> && docker compose -f deploy/docker-compose.yml up -d --build
+  # later, after the fix is pushed:
+  git checkout main && git pull && docker compose -f deploy/docker-compose.yml up -d --build
+  ```
+
+  `git pull` does not work while a commit is checked out directly, which is why returning to `main` comes first.
 
 ## Updating the agent's tools
 
 After any change to routes, parameters or descriptions:
 
 1. Deploy the service.
-2. Check `$PUBLIC_BASE_URL/openapi.json` shows the change.
-3. On the platform, open the tool collection (**Agent settings → Integrations → Tool Collections**) and re-import from `$PUBLIC_BASE_URL/openapi.json`. Never edit names or descriptions in the form: change them in code.
+2. Check `https://catalog.builtbykromha.com/openapi.json` shows the change.
+3. On the platform, open the tool collection (**Agent settings → Integrations → Tool Collections**) and re-import from `https://catalog.builtbykromha.com/openapi.json`. Never edit names or descriptions in the form: change them in code.
 4. If operations were added, assign them in the agent's **Tools** section (**+ Add tool**).
 5. Re-run the evals in `agent/evals.md` in the Test environment, then **Publish** the workspace. Until then, production keeps the previous version (the card shows **Unpublished changes**).
 6. Record anything non-obvious in `agent/tools.md`.
