@@ -1,1 +1,1 @@
-# indigo-test
+# Indigo Test - Catalog Service
