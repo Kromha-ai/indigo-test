@@ -5,7 +5,7 @@ A product discovery assistant for an online gift shop. The shop's CSV catalogue 
 | | |
 |---|---|
 | Live assistant | *added in Phase 4* |
-| API base URL | `https://catalog.builtbykromha.com` (live from Phase 1) |
+| API base URL | `https://catalog.builtbykromha.com` |
 | OpenAPI spec (public) | `https://catalog.builtbykromha.com/openapi.json` · Swagger UI `/docs` · ReDoc `/redoc` |
 | Authentication | `X-API-Key` header on every data endpoint; `/openapi.json`, `/docs`, `/redoc` and `/health` are public. How to authenticate, and why: `AUTHENTICATION.md` |
 
@@ -13,7 +13,7 @@ A product discovery assistant for an online gift shop. The shop's CSV catalogue 
 
 - **The problem**: `docs/reference/scenario.md`
 - **What the data really contains**: `docs/reference/catalog-data-profile.md`
-- **API contract and design decisions**: `docs/specs/CATALOG_SPEC.md`
+- **API contract**: `docs/specs/CATALOG_SPEC.md` · **why it is that way**: `archive/catalog-spec-decisions.md`
 - **Assistant behaviour and evaluation**: `docs/specs/AGENT_SPEC.md`
 - **Progress**: `docs/planning/ROADMAP.md`
 - **How to authenticate**: `AUTHENTICATION.md`

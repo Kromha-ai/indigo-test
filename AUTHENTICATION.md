@@ -12,7 +12,7 @@ Every data endpoint requires an API key, sent in the `X-API-Key` request header 
 
 ```bash
 curl -s -H "X-API-Key: $CATALOG_API_KEY" \
-  "https://catalog.builtbykromha.com/products/search?occasion=housewarming&max_price=60"
+  "https://catalog.builtbykromha.com/categories"
 ```
 
 | Route | Key required |

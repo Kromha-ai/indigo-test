@@ -28,8 +28,8 @@ python3 -c "import secrets; print(secrets.token_urlsafe(32))"   # paste into CAT
    uv run uvicorn app.main:create_app --factory --env-file .env --reload
    curl -s localhost:8000/health
    curl -s -H "X-API-Key: $KEY" localhost:8000/categories
-   curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"
-   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/kitchen-dining/products?subcategory=Knives&max_price=100"
+   curl -s -H "X-API-Key: $KEY" "localhost:8000/categories/kitchen-dining/products?subcategory=Knives&max_price=100"   # from Phase 2
+   curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"     # from Phase 3
    ```
 
    Interactive docs: <http://localhost:8000/docs>. The OpenAPI document is at <http://localhost:8000/openapi.json>; once deployed, the platform imports it from the public URL.
@@ -63,7 +63,7 @@ Read `data/BUILD_REPORT.md`: any new fixes or cross-listings need a decision bef
 
 ## Deploying
 
-Target: the DigitalOcean droplet. The service runs with Docker Compose on `127.0.0.1:8000`; the droplet's system Caddy proxies `catalog.builtbykromha.com` to it (`docs/specs/CATALOG_SPEC.md`, *Deployment*).
+Target: the DigitalOcean droplet. The service runs with Docker Compose on `127.0.0.1:8000`; the droplet's system Caddy proxies `catalog.builtbykromha.com` to it (`docs/specs/CATALOG_SPEC.md`, *Deployment*). The repo lives at `/var/www/indigo-test`.
 
 
 ### Every deploy

@@ -5,7 +5,7 @@
 
 Five phases, each a shippable slice, plus an optional sixth. Every phase ends with the service deployable and tests green.
 
-The order is deliberate. Phase 1 puts a thin service on the real platform first, because the platform unknowns (error visibility, OpenAPI version, auth configuration) change the API design. Finding them after the API is built would mean reworking it.
+The order is deliberate. Phase 1 puts a thin service on the real platform first, so that whatever the platform does differently from what the docs suggest is found before the full API is built.
 
 ---
 
@@ -13,7 +13,7 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 
 | Phase | Goal | Status |
 |---|---|---|
-| 1 | Walking skeleton on the platform | In progress: local work done 2026-10-29; droplet and platform tasks next |
+| 1 | Walking skeleton on the platform | In progress: service live at catalog.builtbykromha.com (2026-10-29); platform tasks next |
 | 2 | Browse and detail tools | Not started |
 | 3 | Search, recovery, and LLM-ready OpenAPI | Not started |
 | 4 | The assistant | Not started |
@@ -40,10 +40,11 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] OpenAPI spec published: `/openapi.json`, `/docs`, `/redoc` left at FastAPI defaults; auth applied as a router dependency so they stay public; tests that all three answer `200` without a key and that `/openapi.json` declares no header parameters
 - [x] Dockerfile (ships `data/catalog.json`), `.env.example`
 - [x] `deploy/`: `docker-compose.yml` (service only, bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`), `catalog.caddy` (site block imported by the droplet's system Caddy), `.env.example`
-- [ ] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), Docker, clone to `/var/www/indigo-test`, `deploy/.env`, `docker compose up`, `import` the site block in `/etc/caddy/Caddyfile` and reload Caddy (`PLAYBOOK.md`); smoke-test `https://catalog.builtbykromha.com/health`
-- [ ] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
+- [x] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), Docker, clone to `/var/www/indigo-test`, `deploy/.env`, `docker compose up`, `import` the site block in `/etc/caddy/Caddyfile` and reload Caddy; smoke-test `https://catalog.builtbykromha.com/health`
+- [x] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Deploying*, step 4) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
-- [ ] Generate the three keys; set `CATALOG_API_KEYS` in `deploy/.env` on the droplet and the `CATALOG_API_KEY` workspace secret (Test and Production values) per `docs/guides/secrets-management.md`
+- [x] Generate the three keys (`platform-test`, `platform-prod`, `local-dev`) and set `CATALOG_API_KEYS` in `deploy/.env` on the droplet
+- [ ] Set the `CATALOG_API_KEY` workspace secret on indigo.ai (Test and Production values) per `docs/guides/secrets-management.md`
 - [ ] Create the agent from zero in the sandbox workspace
 - [ ] Create the tool collection by importing from the public `/openapi.json` (`AGENT_SPEC.md`, *Tool binding procedure*), assign it to the agent, configure the API key, and call `get_categories` from a test agent
 - [ ] Spike: check what the model sees on a 4xx (for the README; not blocking, see decision D2)
@@ -62,7 +63,8 @@ Prerequisite: Phase 1.
 - [ ] `GET /categories/{category}/products`: subcategory, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, `sort=best_rated` by `rating_score`, pagination (`limit` default 15, max 25), `ListResponse`
 - [ ] Recipient semantics: `her`/`him`/`couple` include `anyone`; `kids` exact
 - [ ] `GET /products/{product_id}`: case-insensitive ID, `also_listed_in`
-- [ ] Error envelope plus exception handlers; replace the default 422 body with plain-language `invalid_parameter`
+- [x] Error envelope plus exception handlers; replace the default 422 body with plain-language `invalid_parameter` (built in Phase 1)
+- [ ] Tests for `invalid_parameter` once routes take parameters (e.g. `max_price` < `min_price`, `limit=0`)
 - [ ] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
 - [ ] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25)
 - [ ] Redeploy, re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
@@ -74,13 +76,12 @@ Goal: `search_products` (filters only) working, every response within its budget
 - [ ] `GET /products/search`, declared before `/products/{product_id}`: category, price, recipient, occasion, `max_shipping_days`, `gift_wrap`, out-of-stock flag, sort, pagination; `400 search_too_broad` without a constraint
 - [ ] Deduplicate cross-listed products in search results (primary listing only)
 - [ ] Response budget tests: `limit=25` under 2.6k tokens (*Response budget* in the spec)
-
 - [ ] Empty-result `suggestions` on both list tools (one relaxation at a time, at most 3, only ones that match)
 - [ ] `outside_price_range` on both list tools (`above_max` / `below_min`, count and nearest price, over every other filter)
 - [ ] `applied_filters` echo
 - [ ] Write the final operation, parameter and field descriptions (start from the spec drafts)
-- [ ] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description
-- [ ] Tests for the spec acceptance criteria (Home & Living `in_stock_by_occasion.housewarming = 18`; search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` suggests `tech-gadgets`; Knives under €100 reports the €149 knife in `outside_price_range`)
+- [x] Test: every operation has `operationId`, `summary` and `description`; every parameter and response field has a description (`tests/test_openapi.py`, Phase 1; covers new operations automatically)
+- [ ] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` suggests `tech-gadgets`; Knives under €100 reports the €149 knife in `outside_price_range`)
 - [ ] Structured request logging with key fingerprint
 - [ ] Redeploy, re-import the tool collection, check every operation in the test agent
 - [ ] Per-key rate limit (`429 rate_limited`)

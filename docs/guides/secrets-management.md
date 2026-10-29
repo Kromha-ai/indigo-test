@@ -37,7 +37,7 @@ The platform resolves the secret server-side; it never reaches the LLM, the conv
 
 Every key held by the platform must be one of the values in `CATALOG_API_KEYS` on the deployed service. After any change:
 
-- Make a tool call from the platform's Test environment and check that the service logs show the `platform-test` key's fingerprint (the first 6 hex characters of its SHA-256).
+- Make a tool call from the platform's Test environment and check it succeeds (a wrong key gets `401`). Once request logging lands (roadmap Phase 3), also check that the service logs show the `platform-test` key's fingerprint (the first 6 hex characters of its SHA-256).
 - After Publish, do the same from Production with the `platform-prod` fingerprint.
 
 ```bash

@@ -45,7 +45,7 @@ tests/
 - All cleaning and derivation lives in `catalog_build/`, never in `app/`. The service does no data fixing at runtime.
 - Never hand-edit `data/`. Change the mapping files or the build script and regenerate. `tests/test_build.py` fails if `data/catalog.json` is stale.
 - `loader.py` and `catalog.py` contain no HTTP concerns; routes stay thin.
-- Every route sets `operation_id` to the tool name, plus `summary` and `description`. Every `Query`/`Path` sets `description` and `examples`. `tests/test_openapi.py` enforces this.
+- Every route sets `operation_id` to the tool name, plus `summary` and `description`. Every `Query`/`Path` sets `description` (and `examples` where they help). `tests/test_openapi.py` enforces the descriptions.
 - Errors are raised as `CatalogError(code, message, hint, ...)` and rendered by one handler. Never return a bare `HTTPException` detail.
 - Do not expose raw `stock` counts. Use `availability`.
 - Keep `openapi_url`, `docs_url` and `redoc_url` at their defaults, and apply auth as a dependency on the data routers (never middleware or app-wide), so the published spec stays public.

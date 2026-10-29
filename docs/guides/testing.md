@@ -13,8 +13,7 @@
 ```bash
 cd catalog-service
 uv run pytest            # everything
-uv run pytest -k search  # by name
-uv run pytest --cov=app --cov-report=term-missing
+uv run pytest -k auth    # by name
 uv run ruff check . && uv run ruff format --check .
 ```
 
