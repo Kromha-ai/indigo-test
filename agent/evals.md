@@ -37,9 +37,9 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 | Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
 |---|---|---|---|---|---|
-| E1 | Fail (68) | Three products €40–60 tied to the new home, concise; but asks before recommending | | Question rule | |
-| E2 | Fail (65) | Relevant picks around €40, but a second round of questions after the shopper's answer | | Question rule | |
-| E4 | Fail (72) | Keeps the context and offers the €46 moka pot, but ends with "Who else are you shopping for?" | | Closing line asks about another recipient | |
+| E1 | Fail (68) | Three products €40–60 tied to the new home, concise; but asks before recommending | Fail (72) | The judge counts the welcome message as a question; the transcript has none | Every criterion ignores the welcome message |
+| E2 | Fail (65) | Relevant picks around €40, but a second round of questions after the shopper's answer | Fail (45) | The judge counts the welcome message as the first round; the transcript has one | Every criterion ignores the welcome message |
+| E4 | Fail (72) | Keeps the context and offers the €46 moka pot, but ends with "Who else are you shopping for?" | Pass (90) | Closing line asks about another recipient | Closing line offers directions for the same gift |
 | E3, E5–E13, E15–E20 | Pass (88–100) | E6: an e-reader in the first reply; E18: the weather line adds "Who are you shopping for?" | | | |
 
 ### 2026-10-30: NRT run 2

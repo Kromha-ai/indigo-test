@@ -380,7 +380,7 @@ E14 is not a separate simulation: its format criteria are part of the success cr
 
 Platform simulations (**Improve → Simulations**) play the shopper with an AI role-player, then judge the transcript against success criteria, returning Pass / Fail / Error with an explanation and the full conversation.
 
-- **Source of truth**: `agent/simulations.csv`, in the platform's import format (`name`, `prompt`, `success_criteria`, `good_output`, `bad_output`, `suite`, `max_messages`). Edited in the repo, then imported; never edited only on the platform. Every field is a single line: the platform's CSV parser rejects a quoted field that spans more than 10 lines, so the message layout is described in `success_criteria`, not drawn in `good_output`.
+- **Source of truth**: `agent/simulations.csv`, in the platform's import format (`name`, `prompt`, `success_criteria`, `good_output`, `bad_output`, `suite`, `max_messages`). Edited in the repo, then imported; never edited only on the platform. Every field is a single line: the platform's CSV parser rejects a quoted field that spans more than 10 lines, so the message layout is described in `success_criteria`, not drawn in `good_output`. Every `success_criteria` starts by telling the judge to ignore the welcome message, which it otherwise reads as the assistant's first question.
 - **Suites**:
   - **No Regression Test (NRT)**: every scenario, E1–E13 and E15–E20. The platform warns on Publish if the latest NRT run has failures; since simulations run against Live, that run tested the previous published version.
   - **Tool choice**: E1, E3, E8, E15–E17, E19.
