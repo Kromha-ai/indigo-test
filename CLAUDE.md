@@ -5,7 +5,7 @@ A product discovery assistant for an online gift shop. The client's CSV catalogu
 ## Projects in this workspace
 
 - `catalog-service/`: FastAPI service exposing the catalogue as agent tools (Python 3.12, uv, pytest).
-- `agent/`: version-controlled record of the indigo.ai agent configuration (system prompt, greeting, tool setup, eval results). Created in roadmap Phase 4.
+- `agent/`: version-controlled record of the indigo.ai configuration: Global Agent Settings, the Gift Assistant and General Agent blocks, greeting, tool setup, simulations (`simulations.csv`), custom evaluator prompts and the guardrails' Control Room rules (`quality.md`) and dated runs (`evals.md`). Created in roadmap Phase 4.
 - `deploy/`: Docker Compose for the service and the Caddy site block (`catalog.caddy`) imported by the droplet's system Caddy (decision D4).
 - `raw_data/`: the client's export, as received. **Never edit it.** All cleaning and enrichment happens in the build step (`catalog-service/catalog_build/`), which writes the normalised catalogue to `catalog-service/data/`.
 
@@ -36,14 +36,14 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | When to use it |
 |---|---|
-| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover, plus a bonus widget phase. Open it to see what is next and tick tasks off. |
+| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover, plus two bonus phases (site widget, model comparison). Open it to see what is next and tick tasks off. |
 
 ### specs
 
 | Document | When to use it |
 |---|---|
 | `docs/specs/CATALOG_SPEC.md` | Catalog Service contract (the reasoning lives in `archive/catalog-spec-decisions.md`): build step and normalisation rules, the four tools, parameters, response shapes, the response budget, error envelope, auth, OpenAPI requirements, acceptance criteria. |
-| `docs/specs/AGENT_SPEC.md` | Gift assistant: persona, conversation flow, mapping shopper language to tool parameters, hard rules, platform unknowns, the question rule, message format, hard-case handling, evaluation scenarios E1–E17. |
+| `docs/specs/AGENT_SPEC.md` | Gift assistant: architecture (a specialised Gift Assistant agent with the tools, plus the customised General Agent as fallback), Agent Block mapping and settings, conversation flows (what it can and cannot do, flowchart, data per flow), persona, conversation flow, mapping shopper language to tool parameters, hard rules, platform unknowns, the question rule, message format, hard-case handling, evaluation (scenarios E1–E18 as platform simulations, guardrails, evaluators). Reasoning in `archive/agent-spec-decisions.md`. |
 
 ### guides
 
@@ -65,6 +65,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | Notes |
 |---|---|
+| `archive/agent-spec-decisions.md` | Reasoning behind the agent spec (A1: evaluation in three layers). The spec is the source of truth |
 | `archive/catalog-spec-decisions.md` | Reasoning behind the Catalog spec (D2–D7, including superseded D5 and D6), moved out of the spec on 2026-10-29. The spec is the source of truth |
 
 ---

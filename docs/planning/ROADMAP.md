@@ -19,6 +19,7 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 | 4 | The assistant | Not started |
 | 5 | Hardening and handover | Not started |
 | 6 (bonus) | Site widget | Not started |
+| 7 (bonus) | Model comparison | Not started |
 
 ---
 
@@ -90,16 +91,20 @@ Goal: `search_products` (filters only) working, every response within its budget
 
 ## Phase 4: The assistant
 
-Goal: the gift assistant live on the platform, passing the evaluation scenarios.
+Goal: the gift assistant live on the platform, passing the NRT simulation suite, with guardrails and evaluators active (decision A1).
 
-- [ ] Write `agent/system-prompt.md` from the agent spec (persona, question rule, flow, parameter mapping, message format, hard-case handling, hard rules, gift card policy)
+- [ ] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; under about 4.5k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
 - [ ] `agent/greeting.md` with 2–3 suggested starters
-- [ ] Configure the agent on the platform with the four tools; record every binding step in `agent/tools.md` so it can be reproduced
+- [ ] Configure Global Agent Settings, the Gift Assistant (with the four tools) and the General Agent on the platform, both on `gpt-4.1-mini (EU)`; record every binding step in `agent/tools.md` so it can be reproduced
 - [ ] Format check on the shareable link at phone width: each recommendation fits one screen
-- [ ] Write `agent/evals.md` (E1–E17) and run the first pass
+- [ ] Write `agent/simulations.csv` (E1–E13, E15–E18, with suites) and import it
+- [ ] Security layer: edit the generated perimeter (gift shopping plus the shop's own questions), set it to Manual with automatic regeneration off, General Agent as guardrail agent for jailbreaks and out-of-scope, mode **Shadow**
+- [ ] Write `agent/quality.md` (custom evaluator prompts, Control Room rules for the two built-in guardrails) and configure them on the platform
+- [ ] Run the NRT suite; record the first run in `agent/evals.md`, including the tool-choice check from the service logs
 - [ ] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
 - [ ] Decision point for D7: check in the transcripts that the agent picks `search_products` for constraint-led requests and browsing for named product types (E1, E3, E8); if it keeps needing free-text lookup, consider D7's revisit path through the spec first
-- [ ] Re-run E1–E17 and record the dated results
+- [ ] Review the Shadow classifications from the runs: no shopping message would be blocked; then switch the Security layer to **Enforce**
+- [ ] Re-run the NRT suite until it passes; record the dated result
 - [ ] Publish the workspace (tool collection and agent) to Production; check a production tool call shows the `platform-prod` key fingerprint
 - [ ] Generate the public link and test it in a private window, logged out
 
@@ -107,7 +112,7 @@ Goal: the gift assistant live on the platform, passing the evaluation scenarios.
 
 Goal: the client can open the link, read the repo, and follow every decision.
 
-- [ ] Final full eval run, recorded in `agent/evals.md`
+- [ ] Final NRT run, recorded in `agent/evals.md`
 - [x] Droplet hygiene: unattended security upgrades on, Docker restart policy verified after a reboot, certificate renewal working (done by the developer, 2026-10-29)
 - [ ] Final check that the public spec URL, `/docs` and `/redoc` work from a logged-out browser, and that the platform's Production collection was imported from the current version
 - [x] `README.md`: what it is, the API base URL, how to authenticate (link to `AUTHENTICATION.md`), how to run locally, where decisions are recorded (2026-10-29)
@@ -123,8 +128,19 @@ Goal: the assistant embedded in a web widget, as it would sit on the client's si
 
 Prerequisite: Phase 5. Not needed for the handover; the shareable link is the deliverable.
 
+- [ ] Gift Assistant **Connection**: save the recommended products in a variable, and show them through a small workflow as cards or quick replies
 - [ ] Read *Configure & Install the Web Chat*: whether it adds quick-reply buttons, cards or carousels on top of Markdown, and its settings. It is embedded with `<script defer src="https://platform.indigo.ai/widget.js?token=<TOKEN>&v=3"></script>`; leave `uid` unset (anonymous shoppers)
 - [ ] Decide the widget message format: quick replies for the next-step line, and cards only if they stay within one phone screen. Update `AGENT_SPEC.md` first
 - [ ] Embed the widget in a minimal demo page and test it at phone width
-- [ ] Re-run E1–E17 in the widget; record the results
+- [ ] Re-run the NRT suite in the widget; record the results
 - [ ] README: link to the demo page
+
+## Phase 7 (bonus): Model comparison
+
+Goal: confirm the Gift Assistant runs on the best model for this job, measured, not assumed.
+
+Prerequisite: Phase 4 (the NRT suite passes on `gpt-4.1-mini`).
+
+- [ ] Run the NRT suite with the Gift Assistant on `claude-4.6-sonnet (EU)`, everything else unchanged
+- [ ] Compare with the `gpt-4.1-mini` run: pass rate, which scenarios differ (E14–E17 are the likely ones), observed reply latency, price per conversation from the model selector
+- [ ] Record the comparison in `agent/tools.md`; switch only if Sonnet passes clearly more for an acceptable latency, then re-run NRT and Publish

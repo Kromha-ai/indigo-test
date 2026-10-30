@@ -79,7 +79,7 @@ Daily workflow, rebuilding the catalogue, deploying and rolling back: [`PLAYBOOK
 | `docs/reference/` | [The client's problem](docs/reference/scenario.md) and [what the data really contains](docs/reference/catalog-data-profile.md) |
 | `docs/guides/` | [Testing](docs/guides/testing.md) and [secrets management](docs/guides/secrets-management.md) |
 | `docs/planning/` | [The roadmap](docs/planning/ROADMAP.md) |
-| `archive/` | [Why the API is the way it is](archive/catalog-spec-decisions.md): every design decision with the options considered |
+| `archive/` | Why things are the way they are, every decision with the options considered: [the API](archive/catalog-spec-decisions.md) and [the assistant](archive/agent-spec-decisions.md) |
 | [`AUTHENTICATION.md`](AUTHENTICATION.md) | How callers authenticate, and why this scheme |
 | [`WORKFLOW.md`](WORKFLOW.md) | How the project is run: spec first, then plan, then code |
 

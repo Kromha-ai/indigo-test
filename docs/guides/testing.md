@@ -46,12 +46,35 @@ Tests need no network, no database and no secrets. The test settings inject a fi
 
 ## Gift Assistant
 
-The agent is tested by scenario, not by unit test. `agent/evals.md` holds the scenarios (E1–E17 in `docs/specs/AGENT_SPEC.md`) with expected behaviour. Run them by hand in the platform's test chat after any prompt or tool-description change.
+The assistant is tested by scenario, on the indigo.ai platform (`docs/specs/AGENT_SPEC.md`, *Evaluation*).
 
-For each run, record:
+### Running the simulations
 
-- the date and what changed since the previous run;
-- pass/fail per scenario, with a one-line note for each failure;
-- for failures, whether the cause was the prompt, a tool description or the API, and where it was fixed.
+After any change to the prompt, a tool description or the API:
 
-A change to a tool description is also a Catalog Service change: redeploy, re-import the tool collection from the public `/openapi.json`, re-run the evals, then Publish.
+1. Edit `agent/simulations.csv` if a scenario changed, then import it in **Improve → Simulations** (replacing the previous version).
+2. Run the **NRT** suite, or a smaller suite while iterating (*Tool choice*, *Hard cases*, *Off-topic and safety*, *Routing*).
+3. For the tool-choice scenarios (E1, E3, E8, E15–E17), check which tools were called in the Catalog Service's logs on the droplet:
+
+   ```bash
+   docker compose -f deploy/docker-compose.yml logs --since 30m catalog-service | grep catalog.access
+   ```
+
+   Each line shows `operation` (e.g. `search_products`) and `query` (the filters used).
+4. Re-run a failing simulation once and read its transcript before changing the prompt: the role-player and the judge are both LLMs.
+5. While the Security layer is in **Shadow** mode, check what it would have blocked: no shopping message may appear among the jailbreak or out-of-scope classifications. Record it in the run's entry; it is the condition for switching to **Enforce**.
+
+### Recording a run
+
+Each run gets a dated entry in `agent/evals.md`:
+
+- what changed since the previous run;
+- the suite and its result (passed / total);
+- for each failure: the platform's explanation, whether it reproduced on re-run, the cause (prompt, tool description or API) and where it was fixed;
+- the tool-choice check from the logs.
+
+A change to a tool description is also a Catalog Service change: redeploy, re-import the tool collection from the public `/openapi.json`, run the NRT suite, then Publish.
+
+### Live monitoring
+
+Guardrails and evaluators run on real conversations. Their results are in **Improve → Evaluators → Analytics**. A conversation that went wrong becomes a new simulation (**From a real conversation**), so the fix is tested from then on.
