@@ -9,3 +9,6 @@ __pycache__/
 .coverage
 htmlcov/
 deploy/.env
+
+# OpenAPI document downloaded for the platform import
+/openapi.json

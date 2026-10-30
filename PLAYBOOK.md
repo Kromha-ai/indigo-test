@@ -39,7 +39,7 @@ export KEY=$(grep '^CATALOG_API_KEYS=' .local.env | cut -d= -f2 | cut -d, -f1)
    curl -s -H "X-API-Key: $KEY" "localhost:8000/products/search?occasion=housewarming&min_price=40&max_price=60"
    ```
 
-   Interactive docs: <http://localhost:8000/docs>. The OpenAPI document is at <http://localhost:8000/openapi.json>; once deployed, the platform imports it from the public URL.
+   Interactive docs: <http://localhost:8000/docs>. The OpenAPI document is at <http://localhost:8000/openapi.json>.
 
    To check the container image locally: `docker build -t catalog-service .` (from `catalog-service/`).
 
@@ -112,7 +112,7 @@ After any change to routes, parameters or descriptions:
 
 1. Deploy the service.
 2. Check `https://catalog.builtbykromha.com/openapi.json` shows the change.
-3. On the platform, open the tool collection (**Agent settings → Integrations → Tool Collections**) and re-import from `https://catalog.builtbykromha.com/openapi.json`. Never edit names or descriptions in the form: change them in code.
+3. Download the document: `curl -s https://catalog.builtbykromha.com/openapi.json -o openapi.json`. On the platform, open the tool collection (**Agent settings → Integrations → Tool Collections**) and re-import it from that file. Never edit names or descriptions in the form: change them in code.
 4. If operations were added, assign them in the agent's **Tools** section (**+ Add tool**).
 5. Re-run the evals in `agent/evals.md` in the Test environment, then **Publish** the workspace. Until then, production keeps the previous version (the card shows **Unpublished changes**).
 6. Record anything non-obvious in `agent/tools.md`.

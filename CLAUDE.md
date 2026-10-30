@@ -82,7 +82,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 - **Tool choice** (decision D7): `search_products` (filters only, across categories) for gift requests defined by recipient, occasion, budget or deadline; `get_products_by_category` when the shopper names a kind of product; `get_product_details` for the 2–3 products about to be recommended; `get_categories` for "what do you sell?". There is no free-text search.
 - **`rating_score`**: rating weighted by review count (Bayesian average), used only for ranking (`sort=best_rated`), never shown.
 - **Digital product**: `shipping_days = 0`. Currently only the gift cards (`EX-001`, `EX-002`).
-- **Tool collection / operation**: on the indigo.ai platform, a tool collection is imported from the service's public `/openapi.json`. Each API operation becomes an action the agent can call, named by its `operationId`.
+- **Tool collection / operation**: on the indigo.ai platform, a tool collection is imported from a file of the service's OpenAPI document, downloaded from its public `/openapi.json`. Each API operation becomes an action the agent can call, named by its `operationId`.
 - **Test / Production**: platform environments. Tool collection edits reach Production only on workspace Publish; secrets hold one value per environment.
 - **Shortlist**: the 2–3 products the assistant recommends in one turn.
 
