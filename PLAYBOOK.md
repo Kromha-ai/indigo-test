@@ -114,7 +114,7 @@ After any change to routes, parameters or descriptions:
 2. Check `https://catalog.builtbykromha.com/openapi.json` shows the change.
 3. Download the document: `curl -s https://catalog.builtbykromha.com/openapi.json -o openapi.json`. On the platform, open the tool collection (**Agent settings → Integrations → Tool Collections**) and re-import it from that file. Never edit names or descriptions in the form: change them in code.
 4. If operations were added, assign them in the agent's **Tools** section (**+ Add tool**).
-5. Re-run the evals in `agent/evals.md` in the Test environment, then **Publish** the workspace. Until then, production keeps the previous version (the card shows **Unpublished changes**).
+5. Check the change in **Preview** (Test), then **Publish** the workspace and run the NRT suite: simulations run against Live, so they test only what is published. Record the run in `agent/evals.md`.
 6. Record anything non-obvious in `agent/tools.md`.
 
 ## Rotating the API key

@@ -84,5 +84,7 @@ Record answers here and in `docs/specs/AGENT_SPEC.md` (*Still to verify*):
 | Does a secret change need a Publish? | *to record* |
 | Shareable link: how it is produced, access settings, which environment it serves | *to record* |
 | Does the simulation judge see tool calls? | *to record* |
+| Which environment simulations run against | **Live (Production)**: an agent must be published before simulations can test it |
+| Language of the judge's explanations | The workspace language (Italian) |
 | Evaluators and guardrails | Not available in this workspace |
 | Routing of follow-ups: routed afresh, or the active agent keeps the conversation? | *to record* |

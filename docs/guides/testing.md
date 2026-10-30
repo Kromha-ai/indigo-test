@@ -73,7 +73,7 @@ Each run gets a dated entry in `agent/evals.md`:
 - for each failure: the platform's explanation, whether it reproduced on re-run, the cause (prompt, tool description or API) and where it was fixed;
 - the tool-choice check from the logs.
 
-A change to a tool description is also a Catalog Service change: redeploy, download the OpenAPI document and re-import the tool collection from the file, run the NRT suite, then Publish.
+A change to a tool description is also a Catalog Service change: redeploy, download the OpenAPI document and re-import the tool collection from the file, check it in Preview, Publish, then run the NRT suite.
 
 ### Live monitoring
 

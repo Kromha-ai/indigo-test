@@ -163,7 +163,7 @@ The agent is built **from zero** in the sandbox workspace provided on the indigo
 3. **Endpoint**: Test = the deployed service URL. Production = the same URL (one deployment; `AUTHENTICATION.md` explains why the keys differ per environment).
 4. **Headers**: `X-API-Key: [[CATALOG_API_KEY]]`, with the secret defined in **Workspace settings → Secrets**, holding the `platform-test` key as its Test value and the `platform-prod` key as its Production value.
 5. Save. In the **Gift Assistant**'s Agent Block (not the General Agent), **+ Add tool** once per operation (`search_products`, `get_products_by_category`, `get_product_details`, `get_categories`).
-6. Test in the Test environment, then **Publish** the workspace.
+6. Test in **Preview** (the Test environment), then **Publish** the workspace.
 
 **Descriptions are never edited in the platform form.** They are written in the FastAPI code, deployed, and re-imported. A description edited only in the platform would be lost on the next import and would silently diverge from the repo.
 
@@ -185,7 +185,7 @@ All agent configuration the platform stores as text is also versioned under `age
 ### Confirmed
 
 - **OpenAPI 3.1 is accepted** by the importer.
-- **The chat renders Markdown.** Recommendation messages use `**bold**` names and line breaks as in the target shape below.
+- **The chat renders paragraphs and line breaks, but not bold.** The platform turns the reply into HTML (`<p>`, `<br />`) and bold does not survive, so recommendation messages are plain text with line breaks, as in the target shape below.
 - **Models.** The Agent Block's model selector offers, among others:
   - **EU-hosted proprietary models**: `gpt-4.1-mini` (the platform default and its *speed* recommendation), `gpt-4.1` (*power*), `claude-4.6-sonnet` (*power*), `claude-4.5-haiku` (*speed*), `mistral-small-4`, and the *reasoning* models `gpt-5.1`, `gpt-5-mini` and `gpt-5-nano` (higher latency, because they reason before answering).
   - **US-hosted open-weight models** on Groq (`gpt-oss-120b`, `gpt-oss-20b`): very low latency.
@@ -293,18 +293,18 @@ The widget is a narrow column, often on a phone. The message has to be readable 
 - **One next-step line** after the products, offering two or three concrete directions (*"Want something more personal, a lower price, or more like the vase?"*). Quick-reply buttons belong to the widget work (bonus phase); until then the next step is plain text.
 - **Whole message**: about 90 words at most.
 
-Target shape (Markdown, confirmed to render). Keep it to bold and line breaks: no headings, tables or nested lists, which crowd a narrow column. Widget-specific formatting (buttons, cards) is the bonus phase:
+Target shape. Plain text and line breaks only: no bold, headings, tables or nested lists. Widget-specific formatting (buttons, cards) is the bonus phase:
 
 ```
 Three ideas for her new flat, all around €50:
 
-**Reed Diffuser, Cedar** · €46
+Reed Diffuser, Cedar · €46
 Makes a new place smell like home straight away, with no flame, and it ships in 2 days.
 
-**Ceramic Planter, Medium** · €52
+Ceramic Planter, Medium · €52
 A first plant for the flat; comes with a saucer, gift wrap available.
 
-**Linen Table Runner** · €48
+Linen Table Runner · €48
 Dresses up her new table for the first dinner she hosts there.
 
 Something more personal, cheaper, or more like one of these?
@@ -345,7 +345,7 @@ Gift cards (`EX-001` €50, `EX-002` €100) are a fallback, not a lead. Offer o
 
 ## Evaluation
 
-Evaluators and guardrails are not available in this workspace. Quality rests on prompting (the hard rules and sections in each Agent Block) and is checked by **platform simulations** before every Publish: scripted scenarios E1–E20, played by an AI role-player and judged against success criteria. They are the release gate (decision A1).
+Evaluators and guardrails are not available in this workspace. Quality rests on prompting (the hard rules and sections in each Agent Block) and is checked by **platform simulations**, which run against **Live**: a change is checked in Preview, published, then run through NRT: scripted scenarios E1–E20, played by an AI role-player and judged against success criteria. They are the release gate (decision A1).
 
 ### Scenarios (the contract)
 
@@ -382,7 +382,7 @@ Platform simulations (**Improve → Simulations**) play the shopper with an AI r
 
 - **Source of truth**: `agent/simulations.csv`, in the platform's import format (`name`, `prompt`, `success_criteria`, `good_output`, `bad_output`, `suite`, `max_messages`). Edited in the repo, then imported; never edited only on the platform. Every field is a single line: the platform's CSV parser rejects a quoted field that spans more than 10 lines, so the message layout is described in `success_criteria`, not drawn in `good_output`.
 - **Suites**:
-  - **No Regression Test (NRT)**: every scenario, E1–E13 and E15–E20. It gates Publish: the platform warns if the latest NRT run has failures.
+  - **No Regression Test (NRT)**: every scenario, E1–E13 and E15–E20. The platform warns on Publish if the latest NRT run has failures; since simulations run against Live, that run tested the previous published version.
   - **Tool choice**: E1, E3, E8, E15–E17, E19.
   - **Hard cases**: E3–E7, E9.
   - **Off-topic and safety**: E10–E12.
@@ -428,4 +428,4 @@ Reasoning in `archive/agent-spec-decisions.md`.
 
 | # | Decision | Status |
 |---|---|---|
-| A1 | Evaluation by platform simulations (E1–E20, NRT gates Publish); evaluators and guardrails are not available in this workspace | Accepted |
+| A1 | Evaluation by platform simulations (E1–E20, run against Live after each Publish); evaluators and guardrails are not available in this workspace | Accepted |
