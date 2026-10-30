@@ -77,4 +77,4 @@ A change to a tool description is also a Catalog Service change: redeploy, downl
 
 ### Live monitoring
 
-Guardrails and evaluators run on real conversations. Their results are in **Improve → Evaluators → Analytics**. A conversation that went wrong becomes a new simulation (**From a real conversation**), so the fix is tested from then on.
+Evaluators and guardrails are not available in this workspace, so real conversations are reviewed in **Observe → Conversation Logs**. A conversation that went wrong becomes a new simulation (**From a real conversation**), so the fix is tested from then on.

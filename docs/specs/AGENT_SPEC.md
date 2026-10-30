@@ -83,9 +83,9 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 | Tool calls | All | — | Earlier results stay available (*"the first one"*) |
 | Creativity | Low (about 0.3) | Low | Factual, still natural |
 | Max answer tokens | About 400 | About 200 | A hard ceiling on the message format |
-| Hypercontrol | Off | Off | Adds latency to every reply; format is checked by simulations and an evaluator |
+| Hypercontrol | Off | Off | Adds latency to every reply; format is checked by simulations |
 | Documents to use | None | None | The catalogue comes from the tools |
-| User feedback | Off | Off | It would also appear on clarifying questions; quality is measured by evaluators |
+| User feedback | Off | Off | It would also appear on clarifying questions; quality is measured by simulations |
 | Typebar | On | On | Free text is the point |
 | Error handling | Custom message: *"I can't reach the catalogue right now. Please try again in a moment."* | Default | |
 | Stateful Agents (workspace setting) | On | On | Short answers to the assistant's questions make sense only in context; routed one by one, they can land on the General Agent, which has no tools. On, the agent that took the conversation keeps it |
@@ -179,8 +179,7 @@ All agent configuration the platform stores as text is also versioned under `age
 | Greeting | `agent/greeting.md` |
 | Tool binding: collection name, import URL, endpoints, headers, secret names, the operations assigned to the agent | `agent/tools.md` |
 | Simulations E1–E20, in the platform's CSV import format | `agent/simulations.csv` |
-| Custom evaluator prompts, and the Control Room rules for the guardrails | `agent/quality.md` |
-| Dated simulation runs, evaluator results, failures and fixes | `agent/evals.md` |
+| Dated simulation runs, failures and fixes | `agent/evals.md` |
 | Public link and platform IDs | `agent/README.md` |
 
 ### Confirmed
@@ -212,8 +211,7 @@ Not covered by the Tools or Sessions pages. Record the answers here, replacing t
 - **Tool call timeout**: how long the platform waits for a tool response. This is not the 10-minute session timeout. If it is not documented, measure it: add a temporary delay to a test endpoint and find where the call fails.
 - Whether changing a secret's value takes effect immediately or needs a Publish (it matters for key rotation).
 - How the shareable public link is produced and what access settings it needs. Preview runs against Test and the published web chat against Production; which one the shareable link uses decides whether the handover link shows the published version.
-- Whether the simulation judge, evaluators and guardrails **see tool calls and their results**. If not, rules about prices, stock and duplicates are judged from the visible text only, and tool choice is checked in the service logs (see *Evaluation*).
-- The latency a guardrail adds per message, and which model runs evaluators and guardrails.
+- Whether the simulation judge **sees tool calls and their results**. If not, rules about prices, stock and duplicates are judged from the visible text only, and tool choice is checked in the service logs (see *Evaluation*).
 - What the Security layer classifies as out of scope with the edited perimeter, read from the simulation runs.
 - How the **Stateful Agents** hand-over works in practice: a conversation that opens with a greeting starts on the General Agent, which has no tools, and must pass to the Gift Assistant when the shopper asks for a gift (E20); after an aside answered by the General Agent, the conversation must come back (E18). Checked by the *Routing* suite (E2, E4, E10, E11, E18–E20).
 
@@ -347,13 +345,7 @@ Gift cards (`EX-001` €50, `EX-002` €100) are a fallback, not a lead. Offer o
 
 ## Evaluation
 
-Three layers, each covering a different moment (decision A1):
-
-| Layer | When it runs | Role |
-|---|---|---|
-| **Simulations** | Before every Publish | Scripted scenarios E1–E20, played by an AI role-player and judged against success criteria. The release gate |
-| **Guardrails** | On every message, live | Stop the few failures that must never reach a shopper |
-| **Evaluators** | After each real conversation | Monitor quality and which hard cases real shoppers hit |
+Evaluators and guardrails are not available in this workspace. Quality rests on prompting (the hard rules and sections in each Agent Block) and is checked by **platform simulations** before every Publish: scripted scenarios E1–E20, played by an AI role-player and judged against success criteria. They are the release gate (decision A1).
 
 ### Scenarios (the contract)
 
@@ -405,38 +397,13 @@ Platform simulations (**Improve → Simulations**) play the shopper with an AI r
 - **Flakiness**: the role-player and the judge are both LLMs. A failing simulation is re-run once and its transcript read before the prompt is changed.
 - **Exploratory suite** (optional, after NRT passes): about 20 scenarios from **Generate with AI**, reviewed and kept out of NRT. After launch, a real conversation that went wrong becomes a new simulation (**From a real conversation**), so the fix cannot silently regress.
 
-### Guardrails
-
-Few, because each adds a check to every message. The action for each is a **Control Room** rule, recorded in `agent/quality.md`. Jailbreak attempts are stopped earlier, by the Security layer (see *Architecture*).
-
-| Guardrail | Covers | Action |
-|---|---|---|
-| Hallucination (built in) | Hard rule 1: nothing stated that did not come from a tool response | Regenerate the reply |
-| PII detection (built in) | No personal data is needed | Do not echo or keep it; steer back to the gift |
-
-### Evaluators
-
-Run after each conversation; results shown in Analytics.
-
-| Evaluator | Type | Covers |
-|---|---|---|
-| Chat success, AI CSAT (built in) | Score | Overall quality trend |
-| Language coherence (built in) | True/false | Replies in the shopper's language (E13) |
-| Repetition presence (built in) | True/false | Loops after an empty result |
-| Recommendation format (custom) | True/false | At most 3 products per message, each with a reason, ending with a next step (hard rule 4, E14) |
-| Question budget (custom) | True/false | At most one clarifying turn before the first recommendation (the question rule) |
-| Request type (custom) | Label | `vague`, `specific`, `over_budget`, `nothing_suitable`, `out_of_stock`, `off_topic`: which hard cases real shoppers hit |
-
-The custom evaluators' prompts live in `agent/quality.md`.
-
 ### Release criterion
 
 A release is ready to hand over when, in a single run recorded with its date in `agent/evals.md`:
 
 - every simulation in the NRT suite passes;
 - the service logs for that run show the expected tool for E1, E3, E8 and E15–E17;
-- the Security layer is in Enforce mode and blocked no shopping message in that run;
-- the guardrails and evaluators above are active.
+- the Security layer is in Enforce mode and blocked no shopping message in that run.
 
 E1, E3, E8 and E15–E17 test decision D7 (Catalog spec): `search_products` for constraint-led requests, browsing for named product types, browsing by subcategory for an over-budget product, and judging moods from summaries. If the agent keeps needing free-text lookup, D7's revisit path applies.
 
@@ -461,4 +428,4 @@ Reasoning in `archive/agent-spec-decisions.md`.
 
 | # | Decision | Status |
 |---|---|---|
-| A1 | Evaluation in three layers: platform simulations (E1–E20, NRT gates Publish), guardrails, evaluators | Accepted |
+| A1 | Evaluation by platform simulations (E1–E20, NRT gates Publish); evaluators and guardrails are not available in this workspace | Accepted |

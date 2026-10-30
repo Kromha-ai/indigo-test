@@ -92,7 +92,7 @@ Goal: `search_products` (filters only) working, every response within its budget
 
 ## Phase 4: The assistant
 
-Goal: the gift assistant live on the platform, passing the NRT simulation suite, with guardrails and evaluators active (decision A1).
+Goal: the gift assistant live on the platform, passing the NRT simulation suite (decision A1; evaluators and guardrails are not available in this workspace).
 
 - [x] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; about 2.2k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
 - [x] `agent/greeting.md`: the welcome message for the Greeting panel
@@ -101,8 +101,6 @@ Goal: the gift assistant live on the platform, passing the NRT simulation suite,
 - [x] Write `agent/simulations.csv` (19 simulations, E1–E13 and E15–E20, with suites)
 - [ ] Import `agent/simulations.csv` and set the suites (`agent/tools.md`, *Simulations*)
 - [ ] Security layer: edit the generated perimeter (gift shopping plus the shop's own questions), set it to Manual with automatic regeneration off, built-in jailbreak agent for jailbreaks and General Agent for out-of-scope, mode **Enforce**
-- [x] Write `agent/quality.md` (custom evaluator prompts, Control Room rules for the two built-in guardrails)
-- [ ] Configure the evaluators, guardrails and Control Room rules from `agent/quality.md`
 - [ ] Run the NRT suite; record the first run in `agent/evals.md`, including the tool-choice check from the service logs
 - [ ] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
 - [ ] Decision point for D7: check in the transcripts that the agent picks `search_products` for constraint-led requests and browsing for named product types (E1, E3, E8); if it keeps needing free-text lookup, consider D7's revisit path through the spec first

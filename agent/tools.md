@@ -47,7 +47,7 @@ The greeting: `greeting.md`, pasted into the workspace's Greeting panel.
 
 ## 5. Quality
 
-From `quality.md`: built-in evaluators and guardrails activated, custom evaluators created, Control Room rules for the guardrails.
+Evaluators and guardrails are not available in this workspace: the **Improve** menu has only Issues, Simulations and Playground. Quality rests on the agents' prompts and is checked by the simulations.
 
 ## 6. Simulations
 
@@ -83,6 +83,6 @@ Record answers here and in `docs/specs/AGENT_SPEC.md` (*Still to verify*):
 | Tool call timeout | *to record* |
 | Does a secret change need a Publish? | *to record* |
 | Shareable link: how it is produced, access settings, which environment it serves | *to record* |
-| Do the simulation judge, evaluators and guardrails see tool calls? | *to record* |
-| Latency added by the guardrails; model running evaluators and guardrails | *to record* |
+| Does the simulation judge see tool calls? | *to record* |
+| Evaluators and guardrails | Not available in this workspace |
 | Routing of follow-ups: routed afresh, or the active agent keeps the conversation? | *to record* |
