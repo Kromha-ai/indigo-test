@@ -32,7 +32,7 @@ def write_csv(tmp_path: Path, *rows: str) -> Path:
     return path
 
 
-GOOD = "XX-001,Lamp,Home & Living,Lighting,B,10.00,3,4.5,10,anyone,birthday,lamp,,,yes,2,Nice."
+GOOD = "HL-001,Lamp,Home & Living,Lighting,B,10.00,3,4.5,10,anyone,birthday,lamp,,,yes,2,Nice."
 
 
 # --- real export ---------------------------------------------------------------------------
@@ -134,9 +134,9 @@ def test_committed_catalog_is_not_stale(real):
 def test_minimal_fixture_builds():
     result = build(FIXTURES / "minimal.csv")
     by_id = {p["product_id"]: p for p in result.catalog["products"]}
-    assert by_id["AA-003"]["category"] == "Home & Living"
-    assert by_id["AA-002"]["recipients_match"] == ["kids"]
-    assert by_id["AA-002"]["occasions"] == []
+    assert by_id["HL-003"]["category"] == "Home & Living"
+    assert by_id["KD-001"]["recipients_match"] == ["kids"]
+    assert by_id["KD-001"]["occasions"] == []
 
 
 @pytest.mark.parametrize(
@@ -148,11 +148,21 @@ def test_minimal_fixture_builds():
         (GOOD.replace(",birthday,", ",wedding,"), "unknown occasion"),
         (GOOD.replace(",3,4.5", ",-1,4.5"), "unparseable stock"),
         (GOOD.replace(",yes,2,", ",maybe,2,"), "unparseable gift_wrap"),
+        (GOOD.replace("10.00", "NaN"), "unparseable price"),
+        (GOOD.replace("HL-001", "HL-1"), "does not match AA-000"),
+        (GOOD.replace("HL-001", "KD-001"), "ID prefix does not match"),
+        (GOOD.replace(",Lamp,", ",,"), "empty name"),
+        (GOOD.replace(",Nice.", ", "), "empty description"),
+        (GOOD.replace(",4.5,10,", ",0,10,"), "outside"),
+        (GOOD.replace(",4.5,10,", ",nan,10,"), "outside"),
+        (GOOD.replace(",4.5,10,", ",4.5,0,"), "not a positive integer"),
+        (GOOD.replace(",4.5,10,", ",,10,"), "both set or both empty"),
+        (GOOD.replace(",4.5,10,", ",4.5,,"), "both set or both empty"),
     ],
 )
 def test_bad_rows_abort_the_build(tmp_path, row, problem):
     with pytest.raises(BuildError) as error:
-        build(write_csv(tmp_path, GOOD.replace("XX-001", "XX-000"), row))
+        build(write_csv(tmp_path, GOOD.replace("HL-001", "HL-002"), row))
     assert any(problem in p for p in error.value.problems)
 
 

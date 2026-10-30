@@ -13,6 +13,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 logger = logging.getLogger("catalog")
 
@@ -123,6 +124,17 @@ def unauthorized() -> CatalogError:
     )
 
 
+def route_not_found(status_code: int, headers: dict[str, str] | None) -> CatalogError:
+    return CatalogError(
+        "route_not_found",
+        "No tool matches this path and method.",
+        "Call get_categories, get_products_by_category, search_products or get_product_details "
+        "with all their path parameters filled in.",
+        status_code=status_code,
+        headers=headers,
+    )
+
+
 def invalid_parameter(message: str, hint: str) -> CatalogError:
     return CatalogError("invalid_parameter", message, hint, status_code=422)
 
@@ -147,6 +159,13 @@ def install_handlers(app: FastAPI) -> None:
     async def _catalog_error(request: Request, exc: CatalogError) -> JSONResponse:
         request.state.error_code = exc.body.code
         return exc.response()
+
+    @app.exception_handler(StarletteHTTPException)
+    async def _http_error(request: Request, exc: StarletteHTTPException) -> JSONResponse:
+        # Raised by routing itself (unknown path, wrong method); the routes raise CatalogError.
+        request.state.error_code = "route_not_found"
+        headers = dict(exc.headers) if exc.headers else None
+        return route_not_found(exc.status_code, headers).response()
 
     @app.exception_handler(RequestValidationError)
     async def _validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:

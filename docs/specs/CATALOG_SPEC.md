@@ -199,6 +199,7 @@ All errors use one envelope. **Recoverable** cases return `200` with `found: fal
 | `subcategory_not_found` | 200, `found: false` | That category's subcategories; `did_you_mean` if another category has it |
 | `product_not_found` | 200, `found: false` | `hint` to search or browse; `did_you_mean` for IDs one edit away |
 | `unauthorized` | 401 | `hint` names the header |
+| `route_not_found` | 404, 405 | `hint` names the four tools (a path or method no tool uses, e.g. an empty product ID) |
 | `invalid_parameter` | 422 | Plain-language message per field |
 | `rate_limited` | 429 | `Retry-After` |
 | `internal_error` | 500 | Generic message, no stack trace |
@@ -291,7 +292,7 @@ indigo.ai ──HTTPS──▶ system Caddy (:443, automatic Let's Encrypt) ─�
 - **Errors**:
   - `electronics` returns `found: false`, `category_not_found` and `did_you_mean: ["tech-gadgets"]`.
   - `XX-999` returns `found: false` and `product_not_found`.
-  - An empty result returns at least one suggestion.
+  - An empty result returns at least one suggestion when a relaxation would produce results, and none when no single relaxation would (kids products in `home-living` under €10).
 - **Auth**:
   - No data endpoint works without a valid key, and a removed key gets `401` after restart.
   - Over the per-minute limit (600 by default) a request gets `429` with `Retry-After`.

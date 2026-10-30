@@ -1,6 +1,9 @@
 """Every error the agent can meet, with its recovery content."""
 
 import pytest
+from fastapi.testclient import TestClient
+
+from app.main import create_app
 
 
 def get(client, auth, url):
@@ -71,5 +74,42 @@ def test_invalid_parameters(client, auth, query, fragment):
     assert "found" not in response.json()
 
 
-def test_unknown_route_is_not_an_internal_error(client, auth):
-    assert get(client, auth, "/nope").status_code == 404
+def test_electronics_suggests_only_tech_gadgets(client, auth):
+    body = get(client, auth, "/categories/electronics/products").json()
+    assert body["error"]["did_you_mean"] == ["tech-gadgets"]
+
+
+@pytest.mark.parametrize(
+    "method,path,status",
+    [("get", "/nope", 404), ("get", "/products/", 404), ("get", "/categories//products", 404),
+     ("post", "/categories", 405)],
+)  # fmt: skip
+def test_unknown_routes_use_the_envelope(client, auth, method, path, status):
+    response = client.request(method, path, headers=auth)
+    assert response.status_code == status
+    assert response.json()["error"]["code"] == "route_not_found"
+    assert "found" not in response.json()
+
+
+@pytest.mark.parametrize(
+    "path",
+    ["/categories/electronics/products", "/categories/home-living/products?subcategory=Books",
+     "/products/XX-999", "/categories/home-living/products?limit=0", "/nope"],
+)  # fmt: skip
+def test_every_error_carries_a_hint(client, auth, path):
+    error = get(client, auth, path).json()["error"]
+    assert error["code"] and error["message"] and error["hint"]
+
+
+def test_unexpected_failure_uses_the_envelope(settings, catalog):
+    app = create_app(settings, catalog)
+
+    @app.get("/boom")
+    def boom():
+        raise RuntimeError("secret detail")
+
+    response = TestClient(app, raise_server_exceptions=False).get("/boom")
+    assert response.status_code == 500
+    error = response.json()["error"]
+    assert error["code"] == "internal_error" and error["hint"]
+    assert "secret detail" not in response.text

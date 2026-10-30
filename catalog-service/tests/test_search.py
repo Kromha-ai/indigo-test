@@ -33,9 +33,26 @@ def test_cross_listed_products_appear_once(search):
     assert len(seen) == len(set(seen)) == 141 - 2  # in stock, minus the two duplicate listings
 
 
+def all_items(search, **params):
+    items, offset = [], 0
+    while offset is not None:
+        body = search(limit=25, offset=offset, **params).json()
+        items += body["items"]
+        offset = body["next_offset"]
+    return items
+
+
 def test_kids_returns_only_kids_products(search):
-    body = search(recipient="kids").json()
-    assert ids(body) and all(pid.startswith("KI-") for pid in ids(body))
+    seen = [i["product_id"] for i in all_items(search, recipient="kids", include_out_of_stock=True)]
+    assert seen and all(pid.startswith("KI-") for pid in seen)
+
+
+def test_search_items_carry_also_listed_in(search):
+    by_id = {i["product_id"]: i for i in all_items(search)}
+    assert by_id["HL-024"]["also_listed_in"] == [
+        {"product_id": "KD-023", "category_slug": "kitchen-dining"}
+    ]
+    assert "also_listed_in" not in by_id["HL-001"]
 
 
 def test_search_spans_categories(search):
@@ -91,3 +108,15 @@ def test_default_page_and_budget(search):
     assert response.json()["returned"] == 25
     assert len(response.text) / 3.6 < 2600
     assert search(max_price=1000).json()["returned"] == 10
+
+
+def test_every_full_page_stays_within_budget(client, auth):
+    slugs = [c["slug"] for c in client.get("/categories", headers=auth).json()["categories"]]
+    paths = ["/products/search"] + [f"/categories/{slug}/products" for slug in slugs]
+    for path in paths:
+        offset = 0
+        while offset is not None:
+            params = {"limit": 25, "offset": offset, "include_out_of_stock": True}
+            response = client.get(path, params=params, headers=auth)
+            assert len(response.text) / 3.6 < 2600, f"{path} offset {offset}"
+            offset = response.json()["next_offset"]

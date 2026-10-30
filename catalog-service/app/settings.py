@@ -6,6 +6,7 @@ import os
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TypedDict
 
 SERVICE_ROOT = Path(__file__).resolve().parent.parent
 
@@ -32,18 +33,29 @@ class Settings:
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
         """Read the variables that are set; anything missing keeps the field's default."""
         env = os.environ if env is None else env
-        kwargs: dict[str, object] = {
-            "api_keys": tuple(
-                k.strip() for k in env.get("CATALOG_API_KEYS", "").split(",") if k.strip()
-            )
-        }
+        api_keys = tuple(k.strip() for k in env.get("CATALOG_API_KEYS", "").split(",") if k.strip())
+        overrides: _Overrides = {}
         if "CATALOG_DATA_PATH" in env:
             data_path = Path(env["CATALOG_DATA_PATH"])
-            kwargs["data_path"] = data_path if data_path.is_absolute() else SERVICE_ROOT / data_path
+            overrides["data_path"] = (
+                data_path if data_path.is_absolute() else SERVICE_ROOT / data_path
+            )
         if "PUBLIC_BASE_URL" in env:
-            kwargs["public_base_url"] = env["PUBLIC_BASE_URL"].rstrip("/")
+            overrides["public_base_url"] = env["PUBLIC_BASE_URL"].rstrip("/")
         if "RATE_LIMIT_PER_MINUTE" in env:
-            kwargs["rate_limit_per_minute"] = int(env["RATE_LIMIT_PER_MINUTE"])
+            try:
+                overrides["rate_limit_per_minute"] = int(env["RATE_LIMIT_PER_MINUTE"])
+            except ValueError as error:
+                raise ConfigError("RATE_LIMIT_PER_MINUTE must be an integer") from error
         if "LOG_LEVEL" in env:
-            kwargs["log_level"] = env["LOG_LEVEL"]
-        return cls(**kwargs)
+            overrides["log_level"] = env["LOG_LEVEL"]
+        return cls(api_keys=api_keys, **overrides)
+
+
+class _Overrides(TypedDict, total=False):
+    """The optional `Settings` fields, as set from the environment."""
+
+    data_path: Path
+    public_base_url: str
+    rate_limit_per_minute: int
+    log_level: str

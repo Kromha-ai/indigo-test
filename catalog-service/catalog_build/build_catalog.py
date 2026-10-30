@@ -33,19 +33,23 @@ DEFAULT_OUT = SERVICE_ROOT / "data"
 
 SCHEMA_VERSION = 1
 
-CATEGORIES = [
-    "Home & Living",
-    "Kitchen & Dining",
-    "Tech & Gadgets",
-    "Beauty & Wellness",
-    "Books & Stationery",
-    "Games & Puzzles",
-    "Outdoor & Travel",
-    "Jewellery",
-    "Kids",
-    "Pets",
-    "Experiences",
-]
+CATEGORY_PREFIX = {
+    "Home & Living": "HL",
+    "Kitchen & Dining": "KD",
+    "Tech & Gadgets": "TG",
+    "Beauty & Wellness": "BW",
+    "Books & Stationery": "BS",
+    "Games & Puzzles": "GP",
+    "Outdoor & Travel": "OT",
+    "Jewellery": "JW",
+    "Kids": "KI",
+    "Pets": "PT",
+    "Experiences": "EX",
+}
+PRODUCT_ID = re.compile(r"[A-Z]{2}-\d{3}")
+REQUIRED_TEXT = ["name", "subcategory", "brand", "description"]
+RATING_MIN, RATING_MAX = 1.0, 5.0
+CATEGORIES = list(CATEGORY_PREFIX)
 RECIPIENTS = ["her", "him", "couple", "kids", "anyone"]
 OCCASIONS = ["birthday", "thank-you", "christmas", "housewarming", "anniversary", "graduation"]
 ANYONE_MATCHES = ["anyone", "her", "him", "couple"]  # never "kids"
@@ -116,7 +120,7 @@ def _price(raw: str) -> Decimal | None:
         price = Decimal(raw.strip()).quantize(Decimal("0.01"))
     except InvalidOperation:
         return None
-    return price if price >= 0 else None
+    return price if price.is_finite() and price >= 0 else None
 
 
 def _parse_row(row: dict) -> ParsedRow:
@@ -126,12 +130,22 @@ def _parse_row(row: dict) -> ParsedRow:
     def report_problem(message: str) -> None:
         problems.append(f"{pid}: {message}")
 
+    if not PRODUCT_ID.fullmatch(pid):
+        report_problem("product_id does not match AA-000")
+
     category_fix = None
     canonical = CATEGORY_BY_KEY.get(category_key(row["category"]))
     if canonical is None:
         report_problem(f"unknown category {row['category']!r}")
-    elif row["category"] != canonical:
-        category_fix = (pid, row["category"], canonical)
+    else:
+        if row["category"] != canonical:
+            category_fix = (pid, row["category"], canonical)
+        if not pid.startswith(CATEGORY_PREFIX[canonical] + "-"):
+            report_problem(f"ID prefix does not match category {canonical!r}")
+
+    for column in REQUIRED_TEXT:
+        if not row[column].strip():
+            report_problem(f"empty {column}")
 
     price = _price(row["price_eur"])
     if price is None:
@@ -145,15 +159,20 @@ def _parse_row(row: dict) -> ParsedRow:
         report_problem(f"unparseable shipping_days {row['shipping_days']!r}")
 
     rating = reviews = None
+    if bool(row["rating"].strip()) != bool(row["reviews_count"].strip()):
+        report_problem("rating and reviews_count must be both set or both empty")
     if row["rating"].strip():
         try:
             rating = float(row["rating"])
         except ValueError:
             report_problem(f"unparseable rating {row['rating']!r}")
+        else:
+            if not RATING_MIN <= rating <= RATING_MAX:  # also rejects nan
+                report_problem(f"rating {row['rating']!r} outside {RATING_MIN}–{RATING_MAX}")
     if row["reviews_count"].strip():
         reviews = _non_negative_int(row["reviews_count"])
-        if reviews is None:
-            report_problem(f"unparseable reviews_count {row['reviews_count']!r}")
+        if not reviews:
+            report_problem(f"reviews_count {row['reviews_count']!r} is not a positive integer")
 
     recipient = row["recipient"].strip().lower()
     if recipient not in RECIPIENTS:
@@ -170,6 +189,9 @@ def _parse_row(row: dict) -> ParsedRow:
 
     if problems:
         return ParsedRow(record=None, problems=problems)
+    # Each of these reported a problem when it failed to parse.
+    assert canonical is not None and price is not None
+    assert stock is not None and shipping_days is not None
 
     subcategory = row["subcategory"].strip()
     record = {
@@ -382,7 +404,7 @@ def write_outputs(result: BuildResult, out_dir: Path, source: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0] if __doc__ else None)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--synonyms", type=Path, default=DEFAULT_SYNONYMS)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)

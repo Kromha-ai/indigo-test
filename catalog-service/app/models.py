@@ -46,7 +46,9 @@ class CategoryRef(BaseModel):
 # --- products ---------------------------------------------------------------------------------
 
 
-class ProductSummary(BaseModel):
+class _ProductBase(BaseModel):
+    """Fields shared by summaries and details. Each declares its own `also_listed_in`."""
+
     product_id: str = Field(
         description="Product ID, e.g. `HL-003`. Use it with get_product_details."
     )
@@ -73,14 +75,9 @@ class ProductSummary(BaseModel):
     shipping_days: int = Field(
         description="Working days to deliver. `0` means digital, delivered instantly by email."
     )
-    also_listed_in: list[Listing] | None = Field(
-        default=None,
-        description="Present only when the same product is also listed under another ID in "
-        "another category. Never recommend both listings.",
-    )
 
     # Summaries carry `also_listed_in` only for cross-listed products; details always do.
-    _omit_empty_listings: ClassVar[bool] = True
+    _omit_empty_listings: ClassVar[bool] = False
 
     @classmethod
     def from_record(cls, record: ProductRecord) -> Self:
@@ -91,7 +88,20 @@ class ProductSummary(BaseModel):
         return cls(**data)
 
 
-class ProductDetail(ProductSummary):
+class ProductSummary(_ProductBase):
+    also_listed_in: list[Listing] | None = Field(
+        default=None,
+        description="Present only when the same product is also listed under another ID in "
+        "another category. Never recommend both listings.",
+    )
+
+    _omit_empty_listings: ClassVar[bool] = True
+
+
+class ProductDetail(_ProductBase):
+    also_listed_in: list[Listing] = Field(
+        description="Other listings of the same product in other categories. Usually empty."
+    )
     description: str = Field(
         description="Selling copy. The best source for a recommendation reason."
     )
@@ -99,9 +109,6 @@ class ProductDetail(ProductSummary):
     material: str | None = Field(description="Materials, if any.")
     gift_wrap: bool = Field(description="Whether gift wrapping is available.")
     is_digital: bool = Field(description="Delivered digitally (by email), instantly.")
-    also_listed_in: list[Listing] = Field(
-        description="Other listings of the same product in other categories. Usually empty."
-    )
 
     _omit_empty_listings: ClassVar[bool] = False
 

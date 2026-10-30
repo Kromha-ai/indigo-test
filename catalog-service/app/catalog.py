@@ -62,8 +62,8 @@ class ProductFilter:
             checks.append(lambda p: self.recipient in p.recipients_match)
         if self.occasion is not None:
             checks.append(lambda p: self.occasion in p.occasions)
-        if self.max_shipping_days is not None:
-            checks.append(lambda p: p.shipping_days <= self.max_shipping_days)
+        if (max_days := self.max_shipping_days) is not None:
+            checks.append(lambda p: p.shipping_days <= max_days)
         if self.gift_wrap:
             checks.append(lambda p: p.gift_wrap)
         if self.primary_only:

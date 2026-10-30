@@ -65,7 +65,12 @@ def test_api_key_is_a_security_scheme(spec):
 
 
 def test_tools_present(spec):
-    assert {op["operationId"] for _, _, op in operations(spec)} >= {"get_categories"}
+    assert {op["operationId"] for _, _, op in operations(spec)} == {
+        "get_categories",
+        "get_products_by_category",
+        "search_products",
+        "get_product_details",
+    }
 
 
 def test_health_is_not_a_tool(spec):
