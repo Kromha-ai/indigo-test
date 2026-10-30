@@ -51,7 +51,7 @@ Evaluators and guardrails are not available in this workspace: the **Improve** m
 
 ## 6. Simulations
 
-Import `simulations.csv` in **Improve → Simulations → Import**. Before the first import, use **Download template** to confirm the column names.
+Import `simulations.csv` in **Improve → Simulations → Import**. Its columns match the platform template (`name, prompt, success_criteria, good_output, bad_output, suite, max_messages`).
 
 The CSV's `suite` column holds each simulation's main suite. After importing, add every simulation to the **No Regression Test (NRT)** suite, and add the ones below to their extra suites:
 
