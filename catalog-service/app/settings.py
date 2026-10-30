@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -9,6 +10,8 @@ from pathlib import Path
 from typing import TypedDict
 
 SERVICE_ROOT = Path(__file__).resolve().parent.parent
+
+logger = logging.getLogger("catalog")
 
 
 class ConfigError(Exception):
@@ -40,8 +43,14 @@ class Settings:
             overrides["data_path"] = (
                 data_path if data_path.is_absolute() else SERVICE_ROOT / data_path
             )
-        if "PUBLIC_BASE_URL" in env:
-            overrides["public_base_url"] = env["PUBLIC_BASE_URL"].rstrip("/")
+        if env.get("PUBLIC_BASE_URL", "").strip():
+            overrides["public_base_url"] = env["PUBLIC_BASE_URL"].strip().rstrip("/")
+        else:
+            logger.warning(
+                "PUBLIC_BASE_URL is not set: the OpenAPI document advertises %s, which the "
+                "platform cannot reach. Set it in every deployed environment.",
+                cls.public_base_url,
+            )
         if "RATE_LIMIT_PER_MINUTE" in env:
             try:
                 overrides["rate_limit_per_minute"] = int(env["RATE_LIMIT_PER_MINUTE"])

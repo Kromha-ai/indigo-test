@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 
 from app.settings import SERVICE_ROOT, ConfigError, Settings
@@ -87,3 +89,18 @@ def test_absolute_data_path_is_kept(tmp_path):
 def test_bad_rate_limit_refuses_to_start(value):
     with pytest.raises(ConfigError, match="RATE_LIMIT_PER_MINUTE"):
         Settings.from_env({"CATALOG_API_KEYS": "a", "RATE_LIMIT_PER_MINUTE": value})
+
+
+@pytest.mark.parametrize("value", [None, "", "  "])
+def test_missing_public_url_warns_and_keeps_the_default(caplog, value):
+    env = {"CATALOG_API_KEYS": "a"} | ({} if value is None else {"PUBLIC_BASE_URL": value})
+    with caplog.at_level(logging.WARNING, logger="catalog"):
+        settings = Settings.from_env(env)
+    assert settings.public_base_url == "http://localhost:8000"
+    assert "PUBLIC_BASE_URL is not set" in caplog.text
+
+
+def test_set_public_url_does_not_warn(caplog):
+    with caplog.at_level(logging.WARNING, logger="catalog"):
+        Settings.from_env({"CATALOG_API_KEYS": "a", "PUBLIC_BASE_URL": "http://localhost:8000"})
+    assert "PUBLIC_BASE_URL" not in caplog.text

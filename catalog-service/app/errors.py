@@ -178,7 +178,7 @@ def install_handlers(app: FastAPI) -> None:
     @app.exception_handler(Exception)
     async def _unexpected(request: Request, exc: Exception) -> JSONResponse:
         request.state.error_code = "internal_error"
-        logger.exception("unhandled error", exc_info=exc)
+        logger.exception("unhandled error on %s %s", request.method, request.url.path, exc_info=exc)
         return CatalogError(
             "internal_error",
             "The catalogue service had an unexpected problem.",

@@ -3,7 +3,9 @@ import json
 import logging
 
 import pytest
+from fastapi.testclient import TestClient
 
+from app.main import create_app
 from tests.conftest import KEY
 
 
@@ -48,3 +50,18 @@ def test_key_never_appears_in_logs(client, auth, caplog, access_lines):
 def test_query_is_logged(client, auth, access_lines):
     client.get("/categories?debug=1", headers=auth)
     assert access_lines()[0]["query"] == "debug=1"
+
+
+def test_unexpected_failure_is_logged(settings, catalog, caplog, access_lines):
+    app = create_app(settings, catalog)
+
+    @app.get("/boom")
+    def boom():
+        raise RuntimeError("boom")
+
+    TestClient(app, raise_server_exceptions=False).get("/boom")
+    (line,) = access_lines()
+    assert line["status"] == 500
+    assert line["error_code"] == "internal_error"
+    (error,) = [r for r in caplog.records if r.name == "catalog"]
+    assert "GET /boom" in error.getMessage() and error.exc_info
