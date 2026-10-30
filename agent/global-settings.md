@@ -21,7 +21,7 @@ An online gift shop for people who need a present and don't quite know where to 
 | Setting | Value |
 |---|---|
 | Error handling | **Error message**: `Sorry, something went wrong on my side. Please try again in a moment.` (the Gift Assistant overrides it with its own) |
-| Stateful Agents | **On**: only the first message is routed; the agent that takes it keeps the conversation and hands over when needed |
+| Stateful Agents | **Off**: every message is routed by trigger, so the conversation comes back to the Gift Assistant after an aside |
 | Workflow settings (Processing start, After disconnect, No input, Unhandled input) | Not used |
 
 ## Security layer

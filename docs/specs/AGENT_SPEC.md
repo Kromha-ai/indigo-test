@@ -51,7 +51,7 @@ message ──▶ Security layer ── jailbreak attempt ──▶ built-in jai
 - **Out-of-scope requests: on.** Measured against the **workspace perimeter**: generated from the published agents, then edited by hand so that it covers gift shopping *and* the shop's own questions (returns, delivery, orders). Those belong to this shop even though the General Agent answers them. The edited perimeter is marked **Manual**, automatic regeneration is **off** so it never overwrites the edit, and its text is kept in `agent/global-settings.md`.
 - **False positives are checked in every simulation run.** A shopping message blocked by mistake would reach an agent without tools, so a shopping simulation answered by a guardrail agent fails, and the fix goes in the perimeter.
 
-Past the Security layer, the platform's routing sends the conversation's first message to the agent whose trigger matches, and to the General Agent otherwise. With **Stateful Agents** on, that agent keeps the conversation and hands over when the shopper's request changes, so short answers (*"she loves to sing"*) stay with the agent that asked. The **Gift Assistant's trigger is deliberately broad**, because a misrouted shopping message reaches an agent with no tools:
+Past the Security layer, the platform's routing sends each message to the agent whose trigger matches, and to the General Agent otherwise. **Stateful Agents** is off, so a conversation comes back to the Gift Assistant after an aside answered by the General Agent; with it on, the General Agent kept the conversation and never handed it back. The **Gift Assistant's trigger is deliberately broad**, because a misrouted shopping message reaches an agent with no tools, and it covers short answers (*"she loves to sing"*) that make sense only in context:
 
 - **Trigger details**: any message about gifts, products, recommendations, prices, budgets, stock, delivery times or gift wrapping, including vague ones (*"I need a gift"*) follow-ups on products already shown (*"too expensive"*, *"tell me more about the first one"*, *"something cheaper"*), and short answers to the assistant's questions without the word gift (*"for my dad"*, *"he's into football"*, *"about 30"*).
 - **Example questions**: the opening messages of E1–E9 and E15–E17, plus examples of each kind of short answer: a relationship, an interest, a budget, a kind of product.
@@ -88,7 +88,7 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 | User feedback | Off | Off | It would also appear on clarifying questions; quality is measured by simulations |
 | Typebar | On | On | Free text is the point |
 | Error handling | Custom message: *"I can't reach the catalogue right now. Please try again in a moment."* | Default | |
-| Stateful Agents (workspace setting) | On | On | Short answers to the assistant's questions make sense only in context; routed one by one, they can land on the General Agent, which has no tools. On, the agent that took the conversation keeps it |
+| Stateful Agents (workspace setting) | Off | Off | Every message is routed by trigger. With it on, the agent that answered an aside kept the conversation and never handed it back (NRT run 2, E18) |
 | Model | `gpt-4.1-mini (EU)` | `gpt-4.1-mini (EU)` | The platform's default and its recommendation for real-time chat: fast, low cost, good tool calling, hosted in the EU. Reasoning models are too slow for chat; US-hosted models are out for data residency. Whether a stronger model (`claude-4.6-sonnet`) passes more simulations is a bonus comparison (roadmap Phase 7) |
 
 ## Conversation flows
@@ -213,7 +213,7 @@ Not covered by the Tools or Sessions pages. Record the answers here, replacing t
 - How the shareable public link is produced and what access settings it needs. Preview runs against Test and the published web chat against Production; which one the shareable link uses decides whether the handover link shows the published version.
 - Whether the simulation judge **sees tool calls and their results**. If not, rules about prices, stock and duplicates are judged from the visible text only, and tool choice is checked in the service logs (see *Evaluation*).
 - What the Security layer classifies as out of scope with the edited perimeter, read from the simulation runs.
-- How the **Stateful Agents** hand-over works in practice: a conversation that opens with a greeting starts on the General Agent, which has no tools, and must pass to the Gift Assistant when the shopper asks for a gift (E20); after an aside answered by the General Agent, the conversation must come back (E18). Checked by the *Routing* suite (E2, E4, E10, E11, E18–E20).
+- How Stateful Agents decides when to delegate: the platform documents only "delegating to another agent only when needed", and in practice the General Agent did not hand back (E18).
 
 ## Conversation design
 
