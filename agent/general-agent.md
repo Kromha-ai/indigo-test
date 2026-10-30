@@ -1,6 +1,6 @@
 # General Agent
 
-The workspace's default agent, customised as the fallback. It also receives what the Security layer blocks (jailbreak attempts and out-of-scope requests). It has no tools. Tone of voice and company description come from Global Agent Settings (`global-settings.md`).
+The workspace's default agent, customised as the fallback. It also receives the out-of-scope requests the Security layer blocks; jailbreak attempts go to the platform's built-in jailbreak agent. Its rule against changing or revealing its instructions covers any attempt that gets past the Security layer. It has no tools. Tone of voice and company description come from Global Agent Settings (`global-settings.md`).
 
 ## Name
 

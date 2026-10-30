@@ -45,9 +45,10 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Every deploy*, step 2) and add it to `README.md` and `AUTHENTICATION.md`
 - [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
 - [x] Generate the three keys (`platform-test`, `platform-prod`, `local-dev`) and set `CATALOG_API_KEYS` in `deploy/.env` on the droplet
-- [ ] Set the `CATALOG_API_KEY` workspace secret on indigo.ai (Test and Production values) per `docs/guides/secrets-management.md`
+- [x] Set the `CATALOG_API_KEY` workspace secret on indigo.ai (Test and Production values) per `docs/guides/secrets-management.md`
 - [ ] Create the agent from zero in the sandbox workspace
-- [ ] Create the tool collection by importing from the public `/openapi.json` (`AGENT_SPEC.md`, *Tool binding procedure*), assign it to the agent, configure the API key, and call `get_categories` from a test agent
+- [x] Create the tool collection by importing a file of the OpenAPI document (`AGENT_SPEC.md`, *Tool binding procedure*), with the `X-API-Key` header from the secret
+- [x] Assign the tools to the Gift Assistant and call `get_categories` from the Test chat; check the `platform-test` fingerprint in the service logs
 - [ ] Spike: check what the model sees on a 4xx (for the README; not blocking, see decision D2)
 - [ ] Spike: the tool-call timeout (measure with a deliberately slow test endpoint if undocumented; for the README, since the VPS has no cold starts), whether a secret change needs a Publish, and how the public link works (which environment it serves)
 - [ ] Record the spike answers in `AGENT_SPEC.md` (*Still to verify in Phase 1*), and in `AUTHENTICATION.md` / the secrets guide if a secret change needs a Publish
@@ -69,7 +70,7 @@ Prerequisite: Phase 1.
 - [x] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
 - [x] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25)
 - [x] Redeploy (live at catalog.builtbykromha.com, 2026-10-29)
-- [ ] Re-import the tool collection from the public `/openapi.json`, assign the new operations, call each from the test agent
+- [ ] Re-import the tool collection from a fresh download of the OpenAPI document, assign the new operations, call each from the test agent
 
 ## Phase 3: Search, recovery and LLM-ready OpenAPI
 
@@ -93,17 +94,19 @@ Goal: `search_products` (filters only) working, every response within its budget
 
 Goal: the gift assistant live on the platform, passing the NRT simulation suite, with guardrails and evaluators active (decision A1).
 
-- [ ] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; under about 4.5k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
-- [ ] `agent/greeting.md` with 2–3 suggested starters
+- [x] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; about 2.2k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
+- [x] `agent/greeting.md`: the welcome message for the Greeting panel
 - [ ] Configure Global Agent Settings, the Gift Assistant (with the four tools) and the General Agent on the platform, both on `gpt-4.1-mini (EU)`; record every binding step in `agent/tools.md` so it can be reproduced
 - [ ] Format check on the shareable link at phone width: each recommendation fits one screen
-- [ ] Write `agent/simulations.csv` (E1–E13, E15–E18, with suites) and import it
-- [ ] Security layer: edit the generated perimeter (gift shopping plus the shop's own questions), set it to Manual with automatic regeneration off, General Agent as guardrail agent for jailbreaks and out-of-scope, mode **Shadow**
-- [ ] Write `agent/quality.md` (custom evaluator prompts, Control Room rules for the two built-in guardrails) and configure them on the platform
+- [x] Write `agent/simulations.csv` (19 simulations, E1–E13 and E15–E20, with suites)
+- [ ] Import `agent/simulations.csv` and set the suites (`agent/tools.md`, *Simulations*)
+- [ ] Security layer: edit the generated perimeter (gift shopping plus the shop's own questions), set it to Manual with automatic regeneration off, built-in jailbreak agent for jailbreaks and General Agent for out-of-scope, mode **Enforce**
+- [x] Write `agent/quality.md` (custom evaluator prompts, Control Room rules for the two built-in guardrails)
+- [ ] Configure the evaluators, guardrails and Control Room rules from `agent/quality.md`
 - [ ] Run the NRT suite; record the first run in `agent/evals.md`, including the tool-choice check from the service logs
 - [ ] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
 - [ ] Decision point for D7: check in the transcripts that the agent picks `search_products` for constraint-led requests and browsing for named product types (E1, E3, E8); if it keeps needing free-text lookup, consider D7's revisit path through the spec first
-- [ ] Review the Shadow classifications from the runs: no shopping message would be blocked; then switch the Security layer to **Enforce**
+- [ ] Check the runs for Security layer false positives: no shopping message blocked
 - [ ] Re-run the NRT suite until it passes; record the dated result
 - [ ] Publish the workspace (tool collection and agent) to Production; check a production tool call shows the `platform-prod` key fingerprint
 - [ ] Generate the public link and test it in a private window, logged out

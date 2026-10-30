@@ -54,7 +54,7 @@ After any change to the prompt, a tool description or the API:
 
 1. Edit `agent/simulations.csv` if a scenario changed, then import it in **Improve → Simulations** (replacing the previous version).
 2. Run the **NRT** suite, or a smaller suite while iterating (*Tool choice*, *Hard cases*, *Off-topic and safety*, *Routing*).
-3. For the tool-choice scenarios (E1, E3, E8, E15–E17), check which tools were called in the Catalog Service's logs on the droplet:
+3. For the tool-choice scenarios (E1, E3, E8, E15–E17, E19), check which tools were called in the Catalog Service's logs on the droplet:
 
    ```bash
    docker compose -f deploy/docker-compose.yml logs --since 30m catalog-service | grep catalog.access
@@ -62,7 +62,7 @@ After any change to the prompt, a tool description or the API:
 
    Each line shows `operation` (e.g. `search_products`) and `query` (the filters used).
 4. Re-run a failing simulation once and read its transcript before changing the prompt: the role-player and the judge are both LLMs.
-5. While the Security layer is in **Shadow** mode, check what it would have blocked: no shopping message may appear among the jailbreak or out-of-scope classifications. Record it in the run's entry; it is the condition for switching to **Enforce**.
+5. Check that no shopping message was blocked by the Security layer: a shopping simulation answered by the jailbreak agent or the General Agent is a false positive. Record it in the run's entry; the fix is in the perimeter.
 
 ### Recording a run
 
