@@ -29,6 +29,36 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-01: NRT run 7
+
+- Changed since the previous run: nothing (second run of the trimmed prompt)
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 17/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E3 | Fail (60) | In-budget alternatives straight away, but does not say the only chef's knife costs €149 until the shopper insists | | Agent (passed in runs 2–6): the Knives browse with max_price=100 returned the two alternatives, and the €149 knife in outside_price_range was not mentioned | |
+| E18 | Fail (75) | Recommendation and candle details right; the weather reply adds an invitation to carry on with the gift | | Criterion: "one friendly line" contradicts General Agent rule 1, which offers to carry on with the gift being discussed | Criterion accepts an offer to carry on with the gift (applied) |
+| E1, E2, E4–E13, E15–E17, E19, E20 | Pass (85–100) | E6: alternatives only loosely about gaming (speaker, earbuds, e-reader); E16: the €99 speaker alone, no filler | | | |
+
+Tool choice (service logs, both runs): get_product_details is called before every recommendation; no invented products. Interests browse with the subcategory (Audio, Coffee, Candles, Sleep, Fragrance, Knives). Remaining slips: one /categories/housewarming call (category_not_found, recovered with search_products occasion=housewarming); E6 tried tech-gadgets subcategory=Gaming (subcategory_not_found), then browsed tech-gadgets unfiltered instead of games-puzzles; limit=3 and limit=5 still appear once each.
+
+Both runs together (15 and 17): the trimmed prompt and the details step stopped the invented products, but the failures still move between simulations (E6, E15, E16, E17 in run 6; E3 in run 7), which is the model's reliability rather than a rule.
+
+### 2026-11-01: NRT run 6
+
+- Changed since the previous run: Gift Assistant prompt trimmed (duplicates removed, Language and Gift cards sections merged or dropped, three conversation examples); get_product_details before every recommendation; gift card in the nothing-suitable hard case; simulations re-imported with the closing-line clarification
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 15/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E6 | Fail (75) | Says the retro console is out of stock, suitable alternatives in budget; the final reply names products without prices, not in the format | | Agent: format | |
+| E15 | Fail (65) | Prices in budget, the weighted eye mask is cosy; the hand cream is only loosely cosy, the perfume vials are not; stock not confirmed | | Agent: weak picks | |
+| E16 | Fail (45) | Recommends the €99 waterproof speaker, but pads with a drawing tablet and an instant camera | | Agent: unrelated filler | |
+| E17 | Fail (40) | Candle and incense suit relaxing, but a book from outside the expected categories; a further question after the shopper's thanks | | Agent: filler; question after thanks | |
+| E1–E5, E7–E13, E18–E20 | Pass (92–100) | E19: three audio products, reasons tied to singing; E20: includes the Junior Science Kit | | | |
+
 ### 2026-10-30: NRT run 5
 
 - Changed since the previous run: nothing (a clean run for the release criterion)

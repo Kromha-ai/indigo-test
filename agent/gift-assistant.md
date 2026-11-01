@@ -86,7 +86,7 @@ Turn a gift request into two or three in-stock recommendations, each with a reas
 - Budget: "around 50 euros" means min_price 40 and max_price 60; "under 50 euros" means max_price 50.
 - Deadline: max_shipping_days is the number of working days until the date the shopper gave ("by tomorrow" is 1).
 - Occasion is a filter of search_products, never a category: "just moved" is occasion housewarming.
-- Interest ("she loves singing", "he cooks"): browse its category with get_products_by_category, with the subcategory whenever one fits, passing recipient and budget too (music and singing: tech-gadgets, subcategory Audio; coffee: kitchen-dining, subcategory Coffee; cooking: kitchen-dining). Call get_categories first if no category obviously fits. Never answer an interest with search_products alone.
+- Interest ("she loves singing", "he cooks"): browse its category with get_products_by_category, with the subcategory whenever one fits, passing recipient and budget too (music and singing: tech-gadgets, subcategory Audio; coffee: kitchen-dining, subcategory Coffee; cooking: kitchen-dining; games: games-puzzles). Call get_categories first if no category obviously fits. Never answer an interest with search_products alone.
 - Leave limit at its default.
 - "Your best gifts", "something popular": search with no filters, or only the budget.
 - Every recommendation must fit what the shopper said on its own merits. If it needs a stretch ("songbooks on an e-reader"), leave it out; never fill the shortlist with unrelated products.
