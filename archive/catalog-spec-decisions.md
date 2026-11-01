@@ -205,7 +205,7 @@ D6 answered both by relying on the catalogue being small: the page limit of 30 w
 
 ### `outside_price_range` and subcategories
 
-This is how the agent learns that what the shopper asked for exists just over budget. *"A chef's knife under €100"* browsed as `subcategory=Knives, max_price=100` returns the paring knife and the sharpening stone, plus `above_max: {count: 1, min_price_eur: 149}`: the chef's knife. Without the subcategory, the same browse over all of Kitchen & Dining says *"5 more from €115"*, which is true but not useful, which is why specific product types are browsed by subcategory.
+This is how the agent learns that what the shopper asked for exists just over budget. *"A chef's knife under €100"* browsed as `subcategory=Knives, max_price=100` returns the paring knife and the sharpening stone, plus `above_max: {count: 1, min_price_eur: 149, nearest_name: "Chef's Knife 20cm"}`: the chef's knife, by name. Without the subcategory, the same browse over all of Kitchen & Dining says *"5 more from €115"*, which is true but not useful, which is why specific product types are browsed by subcategory.
 
 ### Response budget at larger scale
 

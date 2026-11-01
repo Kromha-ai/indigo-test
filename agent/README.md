@@ -16,5 +16,4 @@ The indigo.ai side of the gift assistant, versioned so it can be reviewed, diffe
 
 | | |
 |---|---|
-| Public link | *to record after the first Publish* |
-| Workspace | *to record* |
+| Public link | [https://clair.platform.indigo.ai/chatbot/0f86001f-e9c2-4599-9748-739a04cb16f9](https://clair.platform.indigo.ai/chatbot/0f86001f-e9c2-4599-9748-739a04cb16f9) (serves Chat bot) |

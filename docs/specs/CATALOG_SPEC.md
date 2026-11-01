@@ -1,6 +1,6 @@
 ---
-Status: Approved
-Last updated: 2026-10-29
+Status: Implemented
+Last updated: 2026-11-01
 ---
 
 # Spec: Catalog Service

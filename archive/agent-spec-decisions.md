@@ -7,7 +7,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 | # | Decision | Status |
 |---|---|---|
 | A1 | Evaluation in three layers: platform simulations, guardrails, evaluators | Accepted |
-| A2 | The Gift Assistant on `gpt-5.6-luna`; the General Agent stays on `gpt-4.1-mini` | Accepted |
+| A2 | Both agents on `gpt-5.6-luna` | Accepted |
 
 ---
 
@@ -50,7 +50,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 
 ---
 
-### A2: The Gift Assistant on gpt-5.6-luna
+### A2: Both agents on gpt-5.6-luna
 
 **Status**: Accepted · 2026-11-01
 
@@ -60,7 +60,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 - On it, the NRT suite never reached the release bar of 18/19 in two consecutive runs. Runs 3–11 scored between 12 and 17 out of 19, and identical runs differed by up to five simulations.
 - The failures moved between simulations from run to run, and most broke rules the prompt states explicitly: unrelated products padding the shortlist, the deadline ignored, more than three products, replies over the length limit. In one run the Gift Assistant recommended products and prices that are not in the catalogue, the hard rule that matters most.
 - Each prompt change fixed what it targeted and nothing measurable beyond it: a broader trigger and Stateful Agents off (routing), a prompt cut by a quarter with duplicates removed, an explicit `get_product_details` step (which stopped the invented products), targeted mappings, and Creativity lowered from 0.3 to 0.1.
-- The General Agent's simulations (E10, E11, E12 and the aside in E18) passed in every run once its rules were settled.
+- The General Agent's simulations (E10, E11, E12 and the aside in E18) passed in nearly every run once its rules were settled; the one slip was a question it should not have asked (E18, run 17).
 
 **Options**:
 
@@ -70,9 +70,9 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 | B | `gpt-4.1 (EU)` | The platform's *power* tier in the same family: the prompt carries over unchanged. Higher price per message and somewhat higher latency |
 | C | **`gpt-5.6-luna (EU)`** | A newer *standard* model, EU-hosted, not a reasoning model, $0.20 / $1.20 per million input / output tokens, 1M context. Cheaper than the *power* tier. On the same prompt and Creativity 0.1 it scored 17/19 and 18/19 (runs 12–13), and its few failures repeat rather than move: a data gap in the service (E3) and one missing conversational rule (E19) |
 | D | `claude-4.6-sonnet (EU)` | *Power* tier, a different family: the prompt would need re-tuning, which mixes two changes in one measurement, and every conversation costs more |
-| E | A stronger model for both agents | Rejected: the General Agent already passes, and its replies are short; a stronger model would add cost for no measured gain |
+| E | Keep the General Agent on `gpt-4.1-mini` | Rejected: `gpt-5.6-luna` costs no more per token, one model for both agents is simpler to run and re-test, and the General Agent on mini occasionally ignored its own rule to carry on with a gift already being discussed (E18, run 17) |
 
-**Decision**: C. The Gift Assistant moves to `gpt-5.6-luna (EU)` with Creativity 0.1; the General Agent stays on `gpt-4.1-mini (EU)`. B was not needed: C cleared the variance problem at a lower tier.
+**Decision**: C, for both agents. The Gift Assistant moves to `gpt-5.6-luna (EU)` with Creativity 0.1, and the General Agent moves to the same model. B was not needed: C cleared the variance problem at a lower tier.
 
 **Consequences**:
 

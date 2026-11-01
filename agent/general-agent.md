@@ -81,7 +81,7 @@ None.
 | Short Memory | 5 messages |
 | Tool calls | None |
 | Creativity | Custom, 0.3 |
-| Model to use | `gpt-4.1-mini (EU)` |
+| Model to use | `gpt-5.6-luna (EU)` |
 | Max answer tokens | 200 |
 | Documents to use | None |
 | Hypercontrol | Off |

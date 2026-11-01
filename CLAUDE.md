@@ -36,7 +36,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | When to use it |
 |---|---|
-| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover, plus a bonus phase (site widget). Open it to see what is next and tick tasks off. |
+| `docs/planning/ROADMAP.md` | Active roadmap: the bonus site-widget phase. Phases 1–5 are complete and archived. Open it to see what is next and tick tasks off. |
 
 ### specs
 
@@ -65,7 +65,8 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | Notes |
 |---|---|
-| `archive/agent-spec-decisions.md` | Reasoning behind the agent spec (A1: evaluation in three layers). The spec is the source of truth |
+| `archive/roadmap-phases-1-5.md` | The completed roadmap, from walking skeleton to handover (2026-10-29 to 2026-11-01) |
+| `archive/agent-spec-decisions.md` | Reasoning behind the agent spec (A1: evaluation by simulations; A2: both agents on `gpt-5.6-luna`). The spec is the source of truth |
 | `archive/catalog-spec-decisions.md` | Reasoning behind the Catalog spec (D2–D7, including superseded D5 and D6), moved out of the spec on 2026-10-29. The spec is the source of truth |
 
 ---

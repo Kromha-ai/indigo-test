@@ -1,6 +1,6 @@
 ---
-Status: Draft
-Last updated: 2026-10-29
+Status: Implemented
+Last updated: 2026-11-01
 ---
 
 # Spec: Gift Assistant (indigo.ai agent)
@@ -89,7 +89,7 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 | Typebar | On | On | Free text is the point |
 | Error handling | Custom message: *"I can't reach the catalogue right now. Please try again in a moment."* | Default | |
 | Stateful Agents (workspace setting) | Off | Off | Every message is routed by trigger. With it on, the agent that answered an aside kept the conversation and never handed it back (NRT run 2, E18) |
-| Model | `gpt-5.6-luna (EU)` | `gpt-4.1-mini (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2); the General Agent's short replies are reliable on the platform's default. Reasoning models are too slow for chat; US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
+| Model | `gpt-5.6-luna (EU)` | `gpt-5.6-luna (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2). The General Agent uses the same model: it costs no more per token than `gpt-4.1-mini`, and one model for both agents is simpler to run and re-test. Reasoning models are too slow for chat; US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
 
 ## Conversation flows
 
@@ -203,16 +203,16 @@ All agent configuration the platform stores as text is also versioned under `age
 - **Prompt variables**: a Prompt Block can read the current session as `$conversation` (JSON, last 100 user turns), `$context` (role-prefixed text) or `$context_1`…`$context_5` (the last 1–5 exchanges). Agent Blocks do not need them: they receive the conversation through their Short Memory setting (see *Agent settings*).
 - **Analytics**: chats, CSAT and AI quality are counted per session, returning users per `$user_ref`. Relevant to reading the eval and demo traffic, not to the build.
 
-### Still to verify in Phase 1
+### Observed on the platform
 
-Not covered by the Tools or Sessions pages. Record the answers here, replacing this list.
+Not covered by the Tools or Sessions pages; observed while building and in the simulation runs.
 
-- What the model sees when a tool returns 4xx: the body, or a generic failure. No longer blocking: recoverable cases return `200` + `found: false` (Catalog spec, D2). Recorded for the README.
-- **Tool call timeout**: how long the platform waits for a tool response. This is not the 10-minute session timeout. If it is not documented, measure it: add a temporary delay to a test endpoint and find where the call fails.
-- How the shareable public link is produced and what access settings it needs. Preview runs against Test and the published web chat against Production; which one the shareable link uses decides whether the handover link shows the published version.
-- Whether the simulation judge **sees tool calls and their results**. If not, rules about prices, stock and duplicates are judged from the visible text only, and tool choice is checked in the service logs (see *Evaluation*).
-- What the Security layer classifies as out of scope with the edited perimeter, read from the simulation runs.
-- How Stateful Agents decides when to delegate: the platform documents only "delegating to another agent only when needed", and in practice the General Agent did not hand back (E18).
+- **Tool errors**: what the model sees on a 4xx does not matter here. Every recoverable case returns `200` with `found: false`, `error.hint` and `did_you_mean` (Catalog spec, D2).
+- **Tool call timeout**: not measured. The service answers in under 10 ms, so it never comes close.
+- **Public link**: the chatbot's shareable link opens logged out and serves **Production**, the published version, with the `platform-prod` key.
+- **The simulation judge does not see tool calls or their results.** It judges the visible text only, so tool choice, stock and catalogue membership are checked in the service logs (see *Evaluation*).
+- **Security layer**: with the edited perimeter, no shopping message was blocked in any run, and off-topic and jailbreak messages were handled by the General Agent and the built-in jailbreak agent.
+- **Stateful Agents**: with it on, the agent that answered an aside kept the conversation and never handed it back (E18); with it off, every message is routed afresh by trigger.
 
 ## Conversation design
 
@@ -282,7 +282,7 @@ The widget is a narrow column, often on a phone. The message has to be readable 
 
 - **Products per message: 3** (2 when only two fit well; 1 when the shopper asked for one specific thing and it fits). Three gives real choice without a scroll. More than three is a search result.
 - **Each product is a block of two lines at most:**
-  - Line 1: **name** and price.
+  - Line 1: name and price, as `Product name · €price`.
   - Line 2: the reason, about 20 words at most, linking the product to what the shopper said and adding one concrete fact that helps them decide.
 - **Fields that earn their place**:
   - Always: name and price.
@@ -428,4 +428,4 @@ Reasoning in `archive/agent-spec-decisions.md`.
 | # | Decision | Status |
 |---|---|---|
 | A1 | Evaluation by platform simulations (E1–E20, run against Live after each Publish); evaluators and guardrails are not available in this workspace | Accepted |
-| A2 | The Gift Assistant on `gpt-5.6-luna (EU)`; the General Agent stays on `gpt-4.1-mini (EU)` | Accepted |
+| A2 | Both agents on `gpt-5.6-luna (EU)` | Accepted |

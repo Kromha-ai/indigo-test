@@ -29,6 +29,48 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-01: NRT run 19
+
+- Changed since the previous run: nothing (second run with the General Agent on gpt-5.6-luna)
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-5.6-luna (EU)
+- Result: 16/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E18 | Fail (75) | Short weather reply without a forecast, but asks who the gift is for instead of offering to carry on; back on the Ember Ceramic Candle with details | | General Agent: its weather example ends with "Who are you shopping for?", which contradicts its rule 1 (also run 17, on gpt-4.1-mini) | |
+| E2 | Fail (60) | Asks who it is for, what they like and the budget: three questions where the criterion allows two; then three cooking gifts | | Prompt: "whatever is missing among who it is for, what they are into and the budget" allows three, the spec two | |
+| E4 | Fail (25) | Keeps part of the context; offers a €50 gift card and the €78 pour-over set again, over the new €60 limit | | Gift Assistant: shows again a product above the new limit (also runs 5, 12, 18) | |
+| Other 16 | Pass | | | | |
+
+### 2026-11-01: NRT run 18
+
+- Changed since the previous run: General Agent model gpt-4.1-mini (EU) to gpt-5.6-luna (EU)
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-5.6-luna (EU)
+- Result: 17/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E20 | Fail (55) | One suitable product, no repeated question; but not the Junior Science Kit, and a single product instead of a few | | Gift Assistant | |
+| E4 | Fail (70) | The €46 moka pot in budget; then the €78 pour-over set again, over budget | | Gift Assistant: shows again a product above the new limit | |
+| Other 17 | Pass | | | | |
+
+### 2026-11-01: NRT run 17 (final)
+
+- Changed since the previous run: nothing
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 18/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E18 | Fail (78) | Short weather reply with no forecast; back on the Ember Ceramic Candle with details and no repeated questions; but the weather reply also asks "Who is the gift for?" | | General Agent: asks who the gift is for although a gift is already being discussed (its rule 1); first time since run 7 | Watch |
+| Other 18 | Pass | | | | |
+
+### 2026-11-01: NRT run 16
+
+- Changed since the previous run: nothing (README and walkthrough only)
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 19/19
+
 ### 2026-11-01: NRT run 15
 
 - Changed since the previous run: nothing (second run for the release criterion)

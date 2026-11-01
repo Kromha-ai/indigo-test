@@ -1,6 +1,6 @@
 # Platform setup
 
-How the workspace is configured, step by step, so it can be rebuilt. Fill in the blanks (*to record*) while configuring.
+How the workspace is configured, step by step, so it can be rebuilt.
 
 ## 1. Secret
 
@@ -40,8 +40,8 @@ From `global-settings.md`: tone of voice, company description, Security layer in
 
 | Agent | Source | Tools | Model |
 |---|---|---|---|
-| Gift Assistant | `gift-assistant.md` | The 4 operations of *Gift Shop Catalog* | `gpt-4.1-mini (EU)` |
-| General Agent | `general-agent.md` | None | `gpt-4.1-mini (EU)` |
+| Gift Assistant | `gift-assistant.md` | The 4 operations of *Gift Shop Catalog* | `gpt-5.6-luna (EU)` |
+| General Agent | `general-agent.md` | None | `gpt-5.6-luna (EU)` |
 
 The greeting: `greeting.md`, pasted into the workspace's Greeting panel.
 
@@ -71,19 +71,19 @@ The CSV's `suite` column holds each simulation's main suite. After importing, ad
 ## 7. Checks
 
 - [x] A Test-environment tool call succeeds, and the service logs show the `platform-test` key's fingerprint (`docker compose -f deploy/docker-compose.yml logs --tail=20 catalog-service` on the droplet).
-- [ ] After Publish, a Production tool call shows the `platform-prod` fingerprint.
+- [x] After Publish, a Production tool call shows the `platform-prod` fingerprint.
 
 ## Observed on the platform
 
-Record answers here and in `docs/specs/AGENT_SPEC.md` (*Still to verify*):
+Also summarised in `docs/specs/AGENT_SPEC.md` (*Observed on the platform*):
 
 | Question | Answer |
 |---|---|
-| What the model sees when a tool returns 4xx | *to record* |
-| Tool call timeout | *to record* |
-| Shareable link: how it is produced, access settings, which environment it serves | *to record* |
-| Does the simulation judge see tool calls? | *to record* |
+| What the model sees when a tool returns 4xx | Not needed: every recoverable case returns `200` with `found: false`, `error.hint` and `did_you_mean` |
+| Tool call timeout | Not measured: the service answers in under 10 ms (`latency_ms` in the access log) |
+| Shareable link: how it is produced, access settings, which environment it serves | The chatbot's public link; opens logged out and serves **Production** (published version, `platform-prod` key) |
+| Does the simulation judge see tool calls? | **No**: it judges the visible text only ("stock not confirmed", "not clear the alternatives are in the catalogue"). Tool choice is checked in the service logs |
 | Which environment simulations run against | **Live (Production)**: an agent must be published before simulations can test it |
 | Language of the judge's explanations | The workspace language (Italian) |
 | Evaluators and guardrails | Not available in this workspace |
-| Routing of follow-ups: routed afresh, or the active agent keeps the conversation? | *to record* |
+| Routing of follow-ups: routed afresh, or the active agent keeps the conversation? | With **Stateful Agents off**, every message is routed afresh by trigger. With it on, the agent that answered an aside kept the conversation (E18) |
