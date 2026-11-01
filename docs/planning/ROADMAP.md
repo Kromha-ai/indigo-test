@@ -42,15 +42,15 @@ Goal: a deployed, authenticated service with `get_categories` bound as a tool on
 - [x] `deploy/`: `docker-compose.yml` (service only, bound to `127.0.0.1`, one worker, `--proxy-headers`, `restart: unless-stopped`), `catalog.caddy` (site block imported by the droplet's system Caddy), `.env.example`
 - [x] Droplet: DNS A record for `catalog.builtbykromha.com` (check it resolves first), Docker, clone to `/var/www/indigo-test`, `deploy/.env`, `docker compose up`, `import` the site block in `/etc/caddy/Caddyfile` and reload Caddy; smoke-test `https://catalog.builtbykromha.com/health`
 - [x] Check the public spec URL on the deployed host (`PLAYBOOK.md`, *Every deploy*, step 2) and add it to `README.md` and `AUTHENTICATION.md`
-- [ ] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
+- [x] Read the rest of the platform guide (*Getting Started*, *Build Your AI Agents*) in a signed-in browser; note the platform's vocabulary
 - [x] Generate the three keys (`platform-test`, `platform-prod`, `local-dev`) and set `CATALOG_API_KEYS` in `deploy/.env` on the droplet
 - [x] Set the `CATALOG_API_KEY` workspace secret on indigo.ai (Test and Production values) per `docs/guides/secrets-management.md`
-- [ ] Create the agent from zero in the sandbox workspace
+- [x] Create the agent from zero in the sandbox workspace
 - [x] Create the tool collection by importing a file of the OpenAPI document (`AGENT_SPEC.md`, *Tool binding procedure*), with the `X-API-Key` header from the secret
 - [x] Assign the tools to the Gift Assistant and call `get_categories` from the Test chat; check the `platform-test` fingerprint in the service logs
 - [ ] Spike: check what the model sees on a 4xx (for the README; not blocking, see decision D2)
-- [ ] Spike: the tool-call timeout (measure with a deliberately slow test endpoint if undocumented; for the README, since the VPS has no cold starts), whether a secret change needs a Publish, and how the public link works (which environment it serves)
-- [ ] Record the spike answers in `AGENT_SPEC.md` (*Still to verify in Phase 1*), and in `AUTHENTICATION.md` / the secrets guide if a secret change needs a Publish
+- [ ] Spike: the tool-call timeout (measure with a deliberately slow test endpoint if undocumented; for the README, since the VPS has no cold starts) and how the public link works (which environment it serves)
+- [ ] Record the spike answers in `AGENT_SPEC.md` (*Still to verify in Phase 1*)
 - [x] Mark `CATALOG_SPEC.md` **Approved**
 
 ## Phase 2: Browse and detail tools

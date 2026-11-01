@@ -50,7 +50,7 @@ Example for `platform-prod`; the same steps apply to any key.
 
 1. Generate a new key.
 2. Add it to `CATALOG_API_KEYS` in `deploy/.env` on the droplet alongside the old one (`old,new`), then `docker compose -f deploy/docker-compose.yml up -d` to restart with the new environment.
-3. Update the **Production** value of the `CATALOG_API_KEY` workspace secret. *To verify in Phase 1: whether a secret change takes effect immediately or needs a Publish.* Confirm that a production tool call succeeds and the logs show the new fingerprint.
+3. Update the **Production** value of the `CATALOG_API_KEY` workspace secret. Confirm that a production tool call succeeds and the logs show the new fingerprint.
 4. Remove the old key from `CATALOG_API_KEYS` and restart the same way.
 5. Confirm a request with the old key returns `401`.
 

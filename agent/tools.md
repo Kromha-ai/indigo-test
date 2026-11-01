@@ -81,7 +81,6 @@ Record answers here and in `docs/specs/AGENT_SPEC.md` (*Still to verify*):
 |---|---|
 | What the model sees when a tool returns 4xx | *to record* |
 | Tool call timeout | *to record* |
-| Does a secret change need a Publish? | *to record* |
 | Shareable link: how it is produced, access settings, which environment it serves | *to record* |
 | Does the simulation judge see tool calls? | *to record* |
 | Which environment simulations run against | **Live (Production)**: an agent must be published before simulations can test it |

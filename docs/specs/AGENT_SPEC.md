@@ -209,7 +209,6 @@ Not covered by the Tools or Sessions pages. Record the answers here, replacing t
 
 - What the model sees when a tool returns 4xx: the body, or a generic failure. No longer blocking: recoverable cases return `200` + `found: false` (Catalog spec, D2). Recorded for the README.
 - **Tool call timeout**: how long the platform waits for a tool response. This is not the 10-minute session timeout. If it is not documented, measure it: add a temporary delay to a test endpoint and find where the call fails.
-- Whether changing a secret's value takes effect immediately or needs a Publish (it matters for key rotation).
 - How the shareable public link is produced and what access settings it needs. Preview runs against Test and the published web chat against Production; which one the shareable link uses decides whether the handover link shows the published version.
 - Whether the simulation judge **sees tool calls and their results**. If not, rules about prices, stock and duplicates are judged from the visible text only, and tool choice is checked in the service logs (see *Evaluation*).
 - What the Security layer classifies as out of scope with the edited perimeter, read from the simulation runs.
