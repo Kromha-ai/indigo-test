@@ -29,6 +29,35 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-10-30: NRT run 5
+
+- Changed since the previous run: nothing (a clean run for the release criterion)
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 14/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E2 | Fail (70) | Two questions, then three relevant products around €40; but ends with a follow-up question | | The judge counts the closing line as a question | Every criterion: the closing line is part of the format |
+| E4 | Fail (65) | Keeps the context and offers the €46 moka pot, but recommends the €78 pour-over set again, over the new budget | | Agent | |
+| E6 | Fail (62) | Says the console is unavailable, alternatives in budget; some only loosely about gaming; prices and reasons on one line | | Agent (passed in runs 3 and 4) | |
+| E19 | Fail (45) | Recommends at once, but products and prices that do not match the catalogue, including jewellery instead of audio | | **Invented products** (hard rule 1): "Audio Recorder €75", "Wireless Earbuds €59", "Music-themed Jewelry €68" are not in the catalogue (the earbuds are €189); no get_product_details call in the whole run | Stronger model |
+| E20 | Fail (55) | Children's products, but not the Junior Science Kit | | Agent (passed in run 4's re-run) | |
+| Other 14 | Pass (88–100) | | | | |
+
+Failures move between simulations from run to run (E7 and E20 failed in run 4, E4, E6, E19 and E20 here), which points to the agent model's reliability with this prompt rather than to any single rule.
+
+### 2026-10-30: NRT run 4
+
+- Changed since the previous run: every criterion ignores the welcome message; closing line offers directions for the same gift; General Agent offers to carry on with a gift already discussed
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 17/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E7 | Fail (65) | Products suit a child, one clarifying turn; but lead-in, names, prices and reasons run together instead of separate lines | Pass (95) | Flaky | None |
+| E20 | Fail (45) | Suits an 8-year-old, no adult items; but not the Junior Science Kit, and suggests items not shown to be in the catalogue | Pass (100) | Flaky; watch for invented products | None |
+| E1–E6, E8–E13, E15–E19 | Pass (82–100) | E2: prices €42–46 slightly above "about 40" | | | |
+
 ### 2026-10-30: NRT run 3
 
 - Changed since the previous run: format without bold; occasion as a filter, default limit, subcategory for interests and specific products; deadline hard case; no re-asking; General Agent rule 2; Stateful Agents Off; E12 and E13 criteria
