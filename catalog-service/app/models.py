@@ -124,6 +124,11 @@ class ProductDetailResponse(BaseModel):
 class AboveMax(BaseModel):
     count: int = Field(description="Matching products priced above `max_price`.")
     min_price_eur: float = Field(description="Cheapest of them, in EUR.")
+    nearest_product_id: str = Field(description="ID of the cheapest of them.")
+    nearest_name: str = Field(
+        description="Name of the cheapest of them: name it to the shopper with its price when "
+        "it is what they asked for."
+    )
 
 
 class BelowMin(BaseModel):

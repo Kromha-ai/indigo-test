@@ -95,10 +95,10 @@ class ProductFilter:
 class QueryResult:
     items: list[ProductRecord]
     total: int
-    # Prices of products passing every other filter but outside the band; None when the
+    # Products passing every other filter but outside the band; None when the
     # corresponding bound is not set.
-    prices_above_max: list[float] | None = None
-    prices_below_min: list[float] | None = None
+    above_max: list[ProductRecord] | None = None
+    below_min: list[ProductRecord] | None = None
     # When nothing matches: (change in plain words, products it would match), best first.
     suggestions: list[tuple[str, int]] = field(default_factory=list)
 
@@ -215,9 +215,9 @@ class Catalog:
         matching = sorted(filter(f.in_price_band, candidates), key=SORT_KEYS[sort])
         result = QueryResult(items=matching[offset : offset + limit], total=len(matching))
         if f.max_price is not None:
-            result.prices_above_max = [p.price_eur for p in candidates if p.price_eur > f.max_price]
+            result.above_max = [p for p in candidates if p.price_eur > f.max_price]
         if f.min_price is not None:
-            result.prices_below_min = [p.price_eur for p in candidates if p.price_eur < f.min_price]
+            result.below_min = [p for p in candidates if p.price_eur < f.min_price]
         if not matching:
             result.suggestions = self._relaxations(f, candidates)
         return result

@@ -19,7 +19,6 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 | 4 | The assistant | Not started |
 | 5 | Hardening and handover | Not started |
 | 6 (bonus) | Site widget | Not started |
-| 7 (bonus) | Model comparison | Not started |
 
 ---
 
@@ -96,7 +95,7 @@ Goal: the gift assistant live on the platform, passing the NRT simulation suite 
 
 - [x] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; about 2.2k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
 - [x] `agent/greeting.md`: the welcome message for the Greeting panel
-- [ ] Configure Global Agent Settings, the Gift Assistant (with the four tools) and the General Agent on the platform, both on `gpt-4.1-mini (EU)`; record every binding step in `agent/tools.md` so it can be reproduced
+- [ ] Configure Global Agent Settings, the Gift Assistant (with the four tools, on `gpt-5.6-luna (EU)`, decision A2) and the General Agent (on `gpt-4.1-mini (EU)`) on the platform; record every binding step in `agent/tools.md` so it can be reproduced
 - [ ] Format check on the shareable link at phone width: each recommendation fits one screen
 - [x] Write `agent/simulations.csv` (19 simulations, E1–E13 and E15–E20, with suites)
 - [ ] Import `agent/simulations.csv` and set the suites (`agent/tools.md`, *Simulations*)
@@ -135,13 +134,3 @@ Prerequisite: Phase 5. Not needed for the handover; the shareable link is the de
 - [ ] Embed the widget in a minimal demo page and test it at phone width
 - [ ] Re-run the NRT suite in the widget; record the results
 - [ ] README: link to the demo page
-
-## Phase 7 (bonus): Model comparison
-
-Goal: confirm the Gift Assistant runs on the best model for this job, measured, not assumed.
-
-Prerequisite: Phase 4 (the NRT suite passes on `gpt-4.1-mini`).
-
-- [ ] Run the NRT suite with the Gift Assistant on `claude-4.6-sonnet (EU)`, everything else unchanged
-- [ ] Compare with the `gpt-4.1-mini` run: pass rate, which scenarios differ (E14–E17 are the likely ones), observed reply latency, price per conversation from the model selector
-- [ ] Record the comparison in `agent/tools.md`; switch only if Sonnet passes clearly more for an acceptable latency, then re-run NRT and Publish

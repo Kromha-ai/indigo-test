@@ -81,7 +81,7 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 |---|---|---|---|
 | Short Memory | 10 messages | 5 messages | The default (3) drops the shopper's earlier constraints, e.g. E4 or an answer to the clarifying question. Sessions end after 10 minutes anyway |
 | Tool calls | All | — | Earlier results stay available (*"the first one"*) |
-| Creativity | Low (about 0.3) | Low | Factual, still natural |
+| Creativity | Very low (0.1) | Low (about 0.3) | Factual and consistent: the same request gets the same tool calls and picks |
 | Max answer tokens | About 400 | About 200 | A hard ceiling on the message format |
 | Hypercontrol | Off | Off | Adds latency to every reply; format is checked by simulations |
 | Documents to use | None | None | The catalogue comes from the tools |
@@ -89,7 +89,7 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 | Typebar | On | On | Free text is the point |
 | Error handling | Custom message: *"I can't reach the catalogue right now. Please try again in a moment."* | Default | |
 | Stateful Agents (workspace setting) | Off | Off | Every message is routed by trigger. With it on, the agent that answered an aside kept the conversation and never handed it back (NRT run 2, E18) |
-| Model | `gpt-4.1-mini (EU)` | `gpt-4.1-mini (EU)` | The platform's default and its recommendation for real-time chat: fast, low cost, good tool calling, hosted in the EU. Reasoning models are too slow for chat; US-hosted models are out for data residency. Whether a stronger model (`claude-4.6-sonnet`) passes more simulations is a bonus comparison (roadmap Phase 7) |
+| Model | `gpt-5.6-luna (EU)` | `gpt-4.1-mini (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2); the General Agent's short replies are reliable on the platform's default. Reasoning models are too slow for chat; US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
 
 ## Conversation flows
 
@@ -187,7 +187,7 @@ All agent configuration the platform stores as text is also versioned under `age
 - **OpenAPI 3.1 is accepted** by the importer.
 - **The chat renders paragraphs and line breaks, but not bold.** The platform turns the reply into HTML (`<p>`, `<br />`) and bold does not survive, so recommendation messages are plain text with line breaks, as in the target shape below.
 - **Models.** The Agent Block's model selector offers, among others:
-  - **EU-hosted proprietary models**: `gpt-4.1-mini` (the platform default and its *speed* recommendation), `gpt-4.1` (*power*), `claude-4.6-sonnet` (*power*), `claude-4.5-haiku` (*speed*), `mistral-small-4`, and the *reasoning* models `gpt-5.1`, `gpt-5-mini` and `gpt-5-nano` (higher latency, because they reason before answering).
+  - **EU-hosted proprietary models**: `gpt-4.1-mini` (the platform default and its *speed* recommendation), `gpt-4.1` (*power*), `claude-4.6-sonnet` (*power*), `claude-4.5-haiku` (*speed*), `mistral-small-4`, `gpt-5.6-luna` (*standard*, $0.20 / $1.20 per million input / output tokens, 1M context), and the *reasoning* models `gpt-5.1`, `gpt-5-mini` and `gpt-5-nano` (higher latency, because they reason before answering).
   - **US-hosted open-weight models** on Groq (`gpt-oss-120b`, `gpt-oss-20b`): very low latency.
   - **EU-hosted open-weight models** (DeepSeek, GLM, Kimi, Qwen, Gemma): still being enabled workspace by workspace, and not usable for evaluators yet.
 
@@ -429,3 +429,4 @@ Reasoning in `archive/agent-spec-decisions.md`.
 | # | Decision | Status |
 |---|---|---|
 | A1 | Evaluation by platform simulations (E1–E20, run against Live after each Publish); evaluators and guardrails are not available in this workspace | Accepted |
+| A2 | The Gift Assistant on `gpt-5.6-luna (EU)`; the General Agent stays on `gpt-4.1-mini (EU)` | Accepted |

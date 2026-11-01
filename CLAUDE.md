@@ -36,7 +36,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 
 | Document | When to use it |
 |---|---|
-| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover, plus two bonus phases (site widget, model comparison). Open it to see what is next and tick tasks off. |
+| `docs/planning/ROADMAP.md` | Active roadmap: five phases from walking skeleton to handover, plus a bonus phase (site widget). Open it to see what is next and tick tasks off. |
 
 ### specs
 

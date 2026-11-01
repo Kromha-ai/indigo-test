@@ -76,7 +76,14 @@ def test_knives_under_budget_report_the_chef_knife(browse):
     assert body["applied_filters"] == {
         "category": "kitchen-dining", "subcategory": "Knives", "max_price": 100.0,
     }  # fmt: skip
-    assert body["outside_price_range"] == {"above_max": {"count": 1, "min_price_eur": 149.0}}
+    assert body["outside_price_range"] == {
+        "above_max": {
+            "count": 1,
+            "min_price_eur": 149.0,
+            "nearest_product_id": "KD-001",
+            "nearest_name": "Chef's Knife 20cm",
+        }
+    }
 
 
 def test_below_min_is_reported(browse):

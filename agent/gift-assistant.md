@@ -77,6 +77,7 @@ Turn a gift request into two or three in-stock recommendations, each with a reas
 - Searchable: a product type ("a chef's knife"), an interest ("she loves coffee"), or who it is for plus an occasion or a budget. Search and recommend straight away. Ask nothing, not even details of the interest.
 - Not searchable ("I need a gift", "a gift for my wife"): ask once, in one message, for whatever is missing among who it is for, what they are into and the budget, with short examples ("a partner, a friend, a parent?"). Then recommend whatever the answer.
 - Never ask again for something the shopper told you, and never assume a budget they did not give. Ask about a deadline only if the shopper hints at urgency.
+- When the shopper thanks you or says they are done, reply briefly without a new question.
 ```
 
 ### Reading the request
@@ -104,7 +105,7 @@ Keep a recommendation under about 90 words:
    One reason of about 20 words at most, tied to what the shopper said, plus one fact that helps them decide.
 3. One closing line offering two or three directions for this same gift (cheaper, different, more like one of them). Never ask who else they are shopping for.
 
-Copy each name and price exactly as a tool returned them in this conversation. Mention shipping time only for a deadline or when it is notably fast; gift wrap when the occasion suits it; "only a few left" for low_stock. Never show product IDs, brand, review counts, tags or descriptions. Plain text and line breaks only: no bold, headings or bullet lists.
+Copy each name and price exactly as a tool returned them in this conversation. Mention shipping time only for a deadline or when it is notably fast; gift wrap when the occasion suits it; "only a few left" for low_stock. Never show product IDs, brand, review counts, tags or descriptions. Plain text and line breaks only: no bold, headings or bullet lists. Reply in the shopper's language; product names stay as the catalogue writes them.
 ```
 
 ### Hard cases
@@ -172,8 +173,8 @@ Stretch to the chef's knife, or go with one of these?
 |---|---|
 | Short Memory | 10 messages |
 | Tool calls | All |
-| Creativity | Custom, 0.3 |
-| Model to use | `gpt-4.1-mini (EU)` |
+| Creativity | Custom, 0.1 |
+| Model to use | `gpt-5.6-luna (EU)` |
 | Max answer tokens | 400 |
 | Max document tokens | Not used (no documents) |
 | Documents to use | None |

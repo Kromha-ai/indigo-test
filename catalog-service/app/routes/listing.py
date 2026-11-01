@@ -105,13 +105,17 @@ def list_query(
 
 def _outside_price_range(result: QueryResult) -> OutsidePriceRange:
     outside = OutsidePriceRange()
-    if result.prices_above_max:
+    if result.above_max:
+        nearest = min(result.above_max, key=lambda p: (p.price_eur, p.product_id))
         outside.above_max = AboveMax(
-            count=len(result.prices_above_max), min_price_eur=min(result.prices_above_max)
+            count=len(result.above_max),
+            min_price_eur=nearest.price_eur,
+            nearest_product_id=nearest.product_id,
+            nearest_name=nearest.name,
         )
-    if result.prices_below_min:
+    if result.below_min:
         outside.below_min = BelowMin(
-            count=len(result.prices_below_min), max_price_eur=max(result.prices_below_min)
+            count=len(result.below_min), max_price_eur=max(p.price_eur for p in result.below_min)
         )
     return outside
 

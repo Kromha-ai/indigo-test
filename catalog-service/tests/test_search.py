@@ -91,6 +91,7 @@ def test_stock_sort_and_gift_wrap_false_do_not_narrow(search, params):
 def test_search_reports_outside_price_range(search):
     body = search(occasion="housewarming", min_price=40, max_price=60).json()
     assert body["outside_price_range"]["above_max"]["min_price_eur"] == 62.0
+    assert body["outside_price_range"]["above_max"]["nearest_name"] == "Slate Cheese Board Set"
     assert body["outside_price_range"]["below_min"]["max_price_eur"] == 36.0
 
 

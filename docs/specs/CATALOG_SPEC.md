@@ -146,13 +146,14 @@ They differ as follows:
 {"found": true, "category": {"slug": "kitchen-dining", "name": "Kitchen & Dining"},
  "items": [], "total": 2, "returned": 2, "offset": 0, "next_offset": null,
  "applied_filters": {"subcategory": "Knives", "max_price": 100},
- "outside_price_range": {"above_max": {"count": 1, "min_price_eur": 149.00}},
+ "outside_price_range": {"above_max": {"count": 1, "min_price_eur": 149.00,
+                                       "nearest_product_id": "KD-001", "nearest_name": "Chef's Knife 20cm"}},
  "suggestions": []}
 ```
 
 - `found: true` and `category` are on browse responses only. An unknown category returns the recoverable `category_not_found` (`found: false`).
 - `applied_filters` echoes the normalised input.
-- `outside_price_range` (present when a price filter is set) counts the products that match every other filter but fall outside the band: `above_max: {count, min_price_eur}` and/or `below_min: {count, max_price_eur}`, each carrying the nearest price.
+- `outside_price_range` (present when a price filter is set) counts the products that match every other filter but fall outside the band: `above_max: {count, min_price_eur, nearest_product_id, nearest_name}` and/or `below_min: {count, max_price_eur}`, each carrying the nearest price. `above_max` also names its cheapest product, so the agent can tell the shopper what they asked for costs more ("our only chef's knife is €149") without another call; ties on price go to the lower ID.
 - `suggestions`: see *Empty results*.
 
 ### Response budget
@@ -281,7 +282,7 @@ indigo.ai ──HTTPS──▶ system Caddy (:443, automatic Let's Encrypt) ─�
 - **Browse**:
   - `"Home and Living"` resolves to `home-living` and includes `HL-013`. The default page returns 10 of `total: 26` with `next_offset: 10`.
   - `home-living` with `occasion=housewarming`, €40–60 includes `HL-024` with `also_listed_in` pointing to `KD-023`.
-  - `kitchen-dining` with `subcategory=Knives`, `max_price=100` returns `KD-002` and `KD-003`, with `outside_price_range.above_max = {count: 1, min_price_eur: 149}`.
+  - `kitchen-dining` with `subcategory=Knives`, `max_price=100` returns `KD-002` and `KD-003`, with `outside_price_range.above_max = {count: 1, min_price_eur: 149, nearest_product_id: KD-001, nearest_name: Chef's Knife 20cm}`.
   - `best_rated` puts `TG-006` first in Tech & Gadgets.
 - **Search**:
   - `occasion=housewarming`, €40–60 returns 13 products, without the duplicate tumbler set.

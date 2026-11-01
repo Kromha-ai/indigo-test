@@ -29,6 +29,94 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-01: NRT run 13
+
+- Changed since the previous run: nothing (second run on gpt-5.6 luna)
+- Agents and model: Gift Assistant gpt-5.6 luna, General Agent gpt-4.1-mini (EU)
+- Result: 18/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E19 | Fail (78) | Three relevant audio products straight after "she loves to sing"; but after the shopper's thanks, asks again about preferences or budget | | Agent: a question after thanks | |
+| Other 18 | Pass | | | | |
+
+### 2026-11-01: NRT run 12
+
+- Changed since the previous run: Gift Assistant model gpt-4.1-mini (EU) to gpt-5.6 luna (Creativity 0.1, prompt unchanged)
+- Agents and model: Gift Assistant gpt-5.6 luna, General Agent gpt-4.1-mini (EU)
+- Result: 17/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E3 | Fail (78) | Two alternatives under €100, the paring knife not passed off as a chef's knife; the €149 chef's knife only named after the follow-up | | Service: outside_price_range.above_max gives a count and a lowest price, not which product it is, so the model cannot tell the €149 product is the chef's knife (also run 7) | |
+| E4 | Fail (20) | After the €60 limit, recommends the €78 pour-over set again, then generic kitchen gifts, losing the coffee context | | Agent (also run 5) | |
+| Other 17 | Pass | | | | |
+
+### 2026-11-01: NRT run 11
+
+- Changed since the previous run: nothing (second run at Creativity 0.1)
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 14/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E3 | Fail (72) | Says the chef's knife costs €149 and offers in-budget alternatives; over about 90 words, and the lead-in "found one" suggests a chef's knife under €100 | | Agent: length, wording | Stronger model |
+| E6 | Fail (48) | Console out of stock; four products in the first reply; the second reply not in the format | | Agent: format, product count | Stronger model |
+| E9 | Fail (15) | Promises to look for something that "ships by tomorrow"; no digital gift card | | Agent | Stronger model |
+| E16 | Fail (65) | The €99 speaker, padded with a poetry anthology | | Agent: filler | Stronger model |
+| E17 | Fail (60) | Candle and incense suit; a book outside the expected categories | | Agent: filler | Stronger model |
+| Other 14 | Pass | | | | |
+
+### 2026-11-01: NRT run 10
+
+- Changed since the previous run: Gift Assistant Creativity 0.3 to 0.1; reply-in-the-shopper's-language line at the end of the message format
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 16/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E4 | Fail (78) | The €46 moka pot, in budget, coffee and dad kept; the birthday not mentioned | | Agent (borderline) | Stronger model |
+| E7 | Fail (78) | Suitable products, format right; about 106 words, over the 90 limit, with shipping and gift wrap details | | Agent: length | Stronger model |
+| E20 | Fail (55) | Children's products, no repeat question; no Junior Science Kit, and alternatives not clearly from the catalogue | | Agent | Stronger model |
+| Other 16 | Pass | E13 passes with the language line | | | |
+
+Runs 6–11 on gpt-4.1-mini (15, 17, 12, ≤13, 16, 14): neither trimming, targeted fixes nor lower creativity reached 18/19 twice. The recurring failures (E6 gaming alternatives, E9 deadline, E16 and E17 filler) break rules the prompt states explicitly. Next: the Gift Assistant on gpt-4.1 (decision A2).
+
+### 2026-11-01: NRT run 9
+
+- Changed since the previous run: nothing (second run with the games mapping)
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: at most 13/19 (the pasted results were cut off after E2)
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E9 | Fail (20) | Promises gifts that arrive by tomorrow without checking shipping times; no digital gift card | | Agent (passed in runs 2–7) | Stronger model |
+| E1 | Fail (65) | No questions, three products; the €32 coaster set is outside €40–60; weak reasons; an unneeded question afterwards | | Agent | Stronger model |
+| E4 | Fail (75) | An in-budget coffee option, no repeat; but the dad and the birthday are not kept explicitly | | Agent | Stronger model |
+| E6 | Fail (55) | Console out of stock; one gaming accessory (the mechanical keyboard), the rest about running and listening | | Agent | Stronger model |
+| E15 | Fail (76) | Candle and diffuser are cosy; the coaster set is not | | Agent | Stronger model |
+| E17 | Fail (65) | Candle and incense suit; a book outside the expected categories | | Agent | Stronger model |
+| E2, E13 | Pass (100) | | | | |
+
+### 2026-11-01: NRT run 8
+
+- Changed since the previous run: games mapping in the interest line; E18 criterion accepts an offer to carry on with the gift
+- Agents and model: Gift Assistant gpt-4.1-mini (EU), General Agent gpt-4.1-mini (EU)
+- Result: 12/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E1 | Fail (65) | Three products straight away, but only one in €40–60 (others €32 and €36); reasons not tied to the move | | Agent | Stronger model |
+| E6 | Fail (35) | Console out of stock; alternatives a candle, a kitchen knife and an e-reader; the first suggestions generic audio | | Agent: the games mapping did not help | Stronger model |
+| E9 | Fail (15) | Ignores the deadline, keeps asking after the budget, no gift card | | Agent (passed in runs 2–7) | Stronger model |
+| E13 | Fail (45) | Three products in €40–60, but the reply and reasons are in English | | Agent: Language section removed in the trim | Reply-in-the-shopper's-language line back in the prompt |
+| E15 | Fail (68) | Weighted eye mask cosy, cream trio plausible; perfume vials not cosy | | Agent | Stronger model |
+| E16 | Fail (65) | The €99 speaker, padded with a poetry anthology and a fountain pen | | Agent | Stronger model |
+| E17 | Fail (65) | Candle and incense suit; a book (atlas) outside the expected categories | | Agent | Stronger model |
+| E2–E5, E7, E8, E10–E12, E18–E20 | Pass (88–100) | E18 passes with the new criterion; E5: says gift cards are usually available, then that it finds none | | | |
+
+Runs 6–9 (15, 17, 12, at most 13) with the same prompt: the score swings by five between identical runs, and E1, E9 and E16, stable before, now fail. No change to the prompt moves the result in a measurable way; the agent model is the limit.
+
 ### 2026-11-01: NRT run 7
 
 - Changed since the previous run: nothing (second run of the trimmed prompt)
