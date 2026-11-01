@@ -14,9 +14,9 @@ The order is deliberate. Phase 1 puts a thin service on the real platform first,
 | Phase | Goal | Status |
 |---|---|---|
 | 1 | Walking skeleton on the platform | In progress: service live at catalog.builtbykromha.com (2026-10-29); platform tasks next |
-| 2 | Browse and detail tools | Deployed 2026-10-29; re-import on indigo.ai pending |
-| 3 | Search, recovery, and LLM-ready OpenAPI | Deployed 2026-10-29; re-import on indigo.ai pending |
-| 4 | The assistant | Not started |
+| 2 | Browse and detail tools | Done |
+| 3 | Search, recovery, and LLM-ready OpenAPI | Done |
+| 4 | The assistant | Done 2026-11-01: NRT passes (runs 14–15), published, public link tested |
 | 5 | Hardening and handover | Not started |
 | 6 (bonus) | Site widget | Not started |
 
@@ -69,7 +69,7 @@ Prerequisite: Phase 1.
 - [x] `category_not_found` with fuzzy match and a synonym table; `subcategory_not_found`; `product_not_found` with near-ID suggestions, all as `200` + `found: false` (D2); `found: true` on success
 - [x] HTTP-boundary tests for each tool, each error code, pagination edges (`offset` past the end, `limit` 1 and 25)
 - [x] Redeploy (live at catalog.builtbykromha.com, 2026-10-29)
-- [ ] Re-import the tool collection from a fresh download of the OpenAPI document, assign the new operations, call each from the test agent
+- [x] Re-import the tool collection from a fresh download of the OpenAPI document, assign the new operations, call each from the test agent
 
 ## Phase 3: Search, recovery and LLM-ready OpenAPI
 
@@ -86,7 +86,7 @@ Goal: `search_products` (filters only) working, every response within its budget
 - [x] Tests for the spec acceptance criteria (search housewarming €40–60 = 13 products with no duplicate tumbler set; search `recipient=kids` returns only `KI-*`; `electronics` and Knives-under-€100 already covered in Phase 2)
 - [x] Structured request logging with key fingerprint (brought forward, done 2026-10-29)
 - [x] Redeploy (live, verified against the public `/openapi.json`, 2026-10-29)
-- [ ] Re-import the tool collection, check every operation in the test agent
+- [x] Re-import the tool collection, check every operation in the test agent
 - [x] Per-key rate limit (`429 rate_limited`) (brought forward, done 2026-10-29)
 
 ## Phase 4: The assistant
@@ -95,18 +95,18 @@ Goal: the gift assistant live on the platform, passing the NRT simulation suite 
 
 - [x] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; about 2.2k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
 - [x] `agent/greeting.md`: the welcome message for the Greeting panel
-- [ ] Configure Global Agent Settings, the Gift Assistant (with the four tools, on `gpt-5.6-luna (EU)`, decision A2) and the General Agent (on `gpt-4.1-mini (EU)`) on the platform; record every binding step in `agent/tools.md` so it can be reproduced
-- [ ] Format check on the shareable link at phone width: each recommendation fits one screen
+- [x] Configure Global Agent Settings, the Gift Assistant (with the four tools, on `gpt-5.6-luna (EU)`, decision A2) and the General Agent (on `gpt-4.1-mini (EU)`) on the platform; record every binding step in `agent/tools.md` so it can be reproduced
+- [x] Format check on the shareable link at phone width: each recommendation fits one screen
 - [x] Write `agent/simulations.csv` (19 simulations, E1–E13 and E15–E20, with suites)
-- [ ] Import `agent/simulations.csv` and set the suites (`agent/tools.md`, *Simulations*)
-- [ ] Security layer: edit the generated perimeter (gift shopping plus the shop's own questions), set it to Manual with automatic regeneration off, built-in jailbreak agent for jailbreaks and General Agent for out-of-scope, mode **Enforce**
-- [ ] Run the NRT suite; record the first run in `agent/evals.md`, including the tool-choice check from the service logs
-- [ ] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
-- [ ] Decision point for D7: check in the transcripts that the agent picks `search_products` for constraint-led requests and browsing for named product types (E1, E3, E8); if it keeps needing free-text lookup, consider D7's revisit path through the spec first
-- [ ] Check the runs for Security layer false positives: no shopping message blocked
-- [ ] Re-run the NRT suite until it passes; record the dated result
-- [ ] Publish the workspace (tool collection and agent) to Production; check a production tool call shows the `platform-prod` key fingerprint
-- [ ] Generate the public link and test it in a private window, logged out
+- [x] Import `agent/simulations.csv` and set the suites (`agent/tools.md`, *Simulations*)
+- [x] Security layer: edit the generated perimeter (gift shopping plus the shop's own questions), set it to Manual with automatic regeneration off, built-in jailbreak agent for jailbreaks and General Agent for out-of-scope, mode **Enforce**
+- [x] Run the NRT suite; record the first run in `agent/evals.md`, including the tool-choice check from the service logs
+- [x] Iterate: fix failures in the prompt or the tool descriptions (and in the spec first, if behaviour changes the contract)
+- [x] Decision point for D7: check in the transcripts that the agent picks `search_products` for constraint-led requests and browsing for named product types (E1, E3, E8); if it keeps needing free-text lookup, consider D7's revisit path through the spec first
+- [x] Check the runs for Security layer false positives: no shopping message blocked
+- [x] Re-run the NRT suite until it passes; record the dated result
+- [x] Publish the workspace (tool collection and agent) to Production; check a production tool call shows the `platform-prod` key fingerprint
+- [x] Generate the public link and test it in a private window, logged out
 
 ## Phase 5: Hardening and handover
 

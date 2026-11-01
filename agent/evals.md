@@ -29,6 +29,28 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-01: NRT run 15
+
+- Changed since the previous run: nothing (second run for the release criterion)
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 18/19 (release criterion met: two consecutive runs at 18/19 or more, no invented products)
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E6 | Fail (68) | Console out of stock; the mechanical keyboard is a fitting alternative in budget; the drawing tablet does not suit a gamer, and the first suggestions are only loosely about gaming | | Agent: filler | Watch |
+| Other 18 | Pass | | | | |
+
+### 2026-11-01: NRT run 14
+
+- Changed since the previous run: outside_price_range.above_max names its cheapest product (service redeployed, tool collection re-imported); reply to thanks without a new question
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 18/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E9 | Fail (70) | Takes the deadline into account and offers the digital gift cards; but the closing line offers to look for a physical gift that arrives in time, though physical products take at least 2 days | | Agent: the closing line offers a direction the tools already ruled out | Watch |
+| Other 18 | Pass | E3 and E19 pass with the fixes | | | |
+
 ### 2026-11-01: NRT run 13
 
 - Changed since the previous run: nothing (second run on gpt-5.6 luna)
