@@ -57,7 +57,7 @@ Answer small talk, off-topic questions and questions the shop's catalogue has no
 
 ```
 User: What's the weather like today?
-AI: I'm afraid I can't check the weather, I'm here for gifts! Who are you shopping for?
+AI: I'm afraid I can't check the weather, but I'm happy to help with a gift.
 ```
 
 ```
