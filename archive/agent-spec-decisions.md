@@ -72,12 +72,14 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 | D | `claude-4.6-sonnet (EU)` | *Power* tier, a different family: the prompt would need re-tuning, which mixes two changes in one measurement, and every conversation costs more |
 | E | `gpt-5.6-luna` for the General Agent too | Same price per token, and one model is simpler to run. Tried in runs 18–20 (17, 16 and 15), then back on mini in run 21 (16): no measurable difference, since the failures were the Gift Assistant's. Not adopted: the General Agent only declines and redirects, which mini does well, and keeping it unchanged means one less variable. Its one slip on mini (E18, run 17) came from its own conversation example, since fixed |
 
-**Decision**: C. The Gift Assistant moves to `gpt-5.6-luna (EU)` with Creativity 0.1; the General Agent stays on `gpt-4.1-mini (EU)`. B was not needed: C reduced the variance enough to meet the release bar (runs 14–17) at a lower tier. Some variance remains (runs 18–21 scored 15 to 17), concentrated on follow-up turns.
+**Decision**: C. The Gift Assistant moves to `gpt-5.6-luna (EU)` with Creativity 0.1; the General Agent stays on `gpt-4.1-mini (EU)`. B was not needed: C reduced the variance enough to meet the release bar (runs 14–17) at a lower tier. Some variance remains: runs 18–23 scored 15 to 17, with the failures scattered across simulations and none of them invented products.
 
 **Consequences**:
 
 - The release bar is unchanged: NRT at 18/19 or more in two consecutive runs, with no invented products.
-- With the variance gone, a remaining failure points at a cause that can be fixed: E3 led to `outside_price_range.above_max` naming its cheapest product, and E19 to a rule for replying to thanks.
+- With less variance, a failure that repeats points at a cause that can be fixed: E3 led to `outside_price_range.above_max` naming its cheapest product, and E19 to a rule for replying to thanks.
+- A failure that comes and goes does not. E4 (padding the shortlist after "too expensive", when only one coffee product fits under €60) fails in about half the runs; a rule to recommend a single product when only one fits did not fix it and made single-product answers more frequent elsewhere, so it was reverted (runs 22–23).
+- The next steps for the remaining variance are a *power* model (left out to keep each conversation cheap) and the platform's evaluators (not available in this workspace).
 - The *power* models are not compared: they would raise the cost of every conversation.
 
 **Revisit if** a later model update brings back moving failures, or reply latency is noticeable in conversation (then B).

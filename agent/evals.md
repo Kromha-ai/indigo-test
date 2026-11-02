@@ -29,6 +29,34 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-02: NRT run 23
+
+- Changed since the previous run: nothing
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 16/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E20 | Fail (82) | Suitable for an 8-year-old, with a reason, but a single product | | Gift Assistant: single product (also runs 18, 21) | |
+| E6 | Fail (78) | Relevant, in budget, says the retro console is out of stock; the alternative's name, price and reason are on one line | | Gift Assistant: format | |
+| E2 | Fail (55) | First reply within the question limit; after the answer, a single product instead of two or three | | Gift Assistant: single product | |
+| Other 16 | Pass | E4 passes | | | |
+
+### 2026-11-02: NRT run 22
+
+- Changed since the previous run: "too expensive" recommends just one product when only one fits
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 16/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E1 | Fail (78) | Number, prices, variety and format right; only the runner's reason mentions the new flat | | Gift Assistant: reasons not tied to the request | |
+| E4 | Fail (0) | Proposes the €78 pour-over set again after the €60 limit, and suggests stretching to it | | Gift Assistant: the fix did not hold | |
+| E20 | Fail (55) | Friendly greeting, no repeated question; misses the €62 Junior Science Kit and offers generic games | | Gift Assistant | |
+| Other 16 | Pass | | | | |
+
+Runs 21–23: 16, 16, 16. The one-product line did not fix E4 (failed in run 22, passed in run 23), and single-product answers grew (E20 in runs 21 and 23, E2 in run 23). Reverted after this run; no further suites.
+
 ### 2026-11-02: NRT run 21
 
 - Changed since the previous run: General Agent model back to gpt-4.1-mini (EU)
