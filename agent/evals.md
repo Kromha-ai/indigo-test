@@ -29,6 +29,18 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-02: NRT runs 31–32 (final)
+
+- Changed since the previous run: interests are browsed without occasion; the reason comes from the description and from what the shopper said
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), reasoning Low, Creativity 0.1, General Agent gpt-4.1-mini (EU)
+- Result: 18/19, 18/19. Release bar met
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E20 | Fail (70), Pass | Run 31: the Junior Science Kit with a reason, plus building blocks and art supplies that do not fit the science interest | | Gift Assistant: filler (also run 30) | |
+| E7 | Pass, Fail (85) | Run 32: children's products in the right format, about 95 words against about 90 | | Gift Assistant: length, marginal | |
+| Other 17 | Pass | E1 and E4 pass in both runs | | | |
+
 ### 2026-11-02: NRT runs 29–30
 
 - Changed since the previous run: "too expensive" does not name `outside_price_range` products; E20's criterion accepts the Junior Science Kit alone
