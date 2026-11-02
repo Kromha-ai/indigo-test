@@ -29,6 +29,19 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-02: NRT runs 29–30
+
+- Changed since the previous run: "too expensive" does not name `outside_price_range` products; E20's criterion accepts the Junior Science Kit alone
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), reasoning Low, Creativity 0.1, General Agent gpt-4.1-mini (EU)
+- Result: 17/19, 17/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E1 | Fail (78), Pass | Three distinct products at fitting prices, no questions, right format; the reasons do not tie the products to the move or the budget | | Gift Assistant: reasons not tied to the request (also runs 22, 28) | Message format: the reason comes from the description and from what the shopper said |
+| E4 | Fail (60), Fail (35) | Run 29: recommends the €46 moka pot, but also says nothing fits under €60 and mentions the €78 set. Run 30: no over-budget product, but kitchen gifts unrelated to coffee | | Gift Assistant: it browses coffee with `occasion=birthday`. The moka pot is tagged housewarming and thank-you only, so the call under €60 returns 0 and `outside_price_range` names the €78 set (logs, run 29) | Interests are browsed without occasion |
+| E20 | Pass, Fail (75) | Run 30: the Junior Science Kit and building blocks fit; a story collection pads the list | | Gift Assistant: filler | |
+| Other 16 | Pass | | | | |
+
 ### 2026-11-02: NRT runs 27–28
 
 - Changed since the previous run: Creativity 0.3 back to 0.1, reasoning stays Low
