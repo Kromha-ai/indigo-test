@@ -29,6 +29,29 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-02: NRT runs 27–28
+
+- Changed since the previous run: Creativity 0.3 back to 0.1, reasoning stays Low
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), reasoning Low, General Agent gpt-4.1-mini (EU)
+- Result: 17/19, 16/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E4 | Fail (15), Fail (15) | Keeps the context but offers no coffee option under €60; repeats the €78 set instead | | Under investigation: only the €46 moka pot fits, and `outside_price_range` names the €78 set as the nearest over-budget product, with a description telling the model to name it | "Too expensive": do not name outside_price_range products |
+| E20 | Fail (78), Fail (78) | The €62 Junior Science Kit with a fitting reason, but a single product | | Criterion: it is the only science product for children, and the prompt forbids padding, but the criterion asks for products in the plural | Criterion accepts the kit alone |
+| E1 | Pass, Fail (78) | Format, length, number and prices right; only the runner's reason mentions the new flat | | Gift Assistant: reasons not tied to the request (also run 22) | |
+| Other 16 | Pass | | | | |
+
+Kept: reasoning Low, Creativity 0.1. Runs 21–23 with reasoning None: 16, 16, 16; runs 27–28 with reasoning Low: 17, 16. The difference is small, but the failures now repeat instead of moving: E4 and E20 failed the same way in both runs, which points at causes that can be fixed.
+
+### 2026-11-02: NRT runs 24–26
+
+- Changed since the previous run: the one-product "too expensive" line reverted; Gift Assistant reasoning None to Low; Creativity 0.1 to 0.3
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), reasoning Low, General Agent gpt-4.1-mini (EU)
+- Result: 19/19, 17/19, 16/19
+
+Failures not recorded.
+
 ### 2026-11-02: NRT run 23
 
 - Changed since the previous run: nothing

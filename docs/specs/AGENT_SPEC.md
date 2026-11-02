@@ -89,7 +89,7 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 | Typebar | On | On | Free text is the point |
 | Error handling | Custom message: *"I can't reach the catalogue right now. Please try again in a moment."* | Default | |
 | Stateful Agents (workspace setting) | Off | Off | Every message is routed by trigger. With it on, the agent that answered an aside kept the conversation and never handed it back (NRT run 2, E18) |
-| Model | `gpt-5.6-luna (EU)` | `gpt-4.1-mini (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2). The General Agent stays on `gpt-4.1-mini`: on `gpt-5.6-luna` the simulations showed no measurable difference, and a declining reply is all it needs to give. Reasoning models are too slow for chat; US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
+| Model | `gpt-5.6-luna (EU)` | `gpt-4.1-mini (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2). The General Agent stays on `gpt-4.1-mini`: on `gpt-5.6-luna` the simulations showed no measurable difference, and a declining reply is all it needs to give. `gpt-5.6-luna` is a reasoning model with a configurable reasoning effort; it runs at Low, with which the remaining failures repeat instead of moving between runs; more effort would add latency to every reply. US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
 
 ## Conversation flows
 
@@ -187,7 +187,7 @@ All agent configuration the platform stores as text is also versioned under `age
 - **OpenAPI 3.1 is accepted** by the importer.
 - **The chat renders paragraphs and line breaks, but not bold.** The platform turns the reply into HTML (`<p>`, `<br />`) and bold does not survive, so recommendation messages are plain text with line breaks, as in the target shape below.
 - **Models.** The Agent Block's model selector offers, among others:
-  - **EU-hosted proprietary models**: `gpt-4.1-mini` (the platform default and its *speed* recommendation), `gpt-4.1` (*power*), `claude-4.6-sonnet` (*power*), `claude-4.5-haiku` (*speed*), `mistral-small-4`, `gpt-5.6-luna` (*standard*, $0.20 / $1.20 per million input / output tokens, 1M context), and the *reasoning* models `gpt-5.1`, `gpt-5-mini` and `gpt-5-nano` (higher latency, because they reason before answering).
+  - **EU-hosted proprietary models**: `gpt-4.1-mini` (the platform default and its *speed* recommendation), `gpt-4.1` (*power*), `claude-4.6-sonnet` (*power*), `claude-4.5-haiku` (*speed*), `mistral-small-4`, `gpt-5.6-luna` (*standard*, a reasoning model with configurable effort, from None up, $0.20 / $1.20 per million input / output tokens, 1M context), and the *reasoning* models `gpt-5.1`, `gpt-5-mini` and `gpt-5-nano` (higher latency, because they reason before answering).
   - **US-hosted open-weight models** on Groq (`gpt-oss-120b`, `gpt-oss-20b`): very low latency.
   - **EU-hosted open-weight models** (DeepSeek, GLM, Kimi, Qwen, Gemma): still being enabled workspace by workspace, and not usable for evaluators yet.
 
@@ -371,7 +371,7 @@ E1–E20 define what the assistant must do. `agent/simulations.csv` implements t
 | E17 | "A pamper gift for a friend who's had a rough month" | Searches or browses Beauty & Wellness; lands on bath, skincare or relaxation products |
 | E18 | Shopping, then *"what's the weather like?"*, then *"anyway, about that candle…"* | The aside gets a short friendly reply, which may offer to carry on with the gift; the conversation returns to the Gift Assistant with its context: the candle is recognised, no constraint is asked again |
 | E19 | *"I want a gift for my wife"*, then *"she loves to sing"* | One message of questions at most, then recommendations straight after the interest: audio products for her (the €99 speaker, the €189 earbuds, the €279 headphones), each with a reason about music. Every message stays with the Gift Assistant: never "I can't check products", never unrelated best-rated items |
-| E20 | *"Hi"*, then *"I'd really like a present for my son, he's 8 and loves science"* | The greeting gets a short reply; the request passes to the Gift Assistant, which recommends children's products (the €62 Junior Science Kit), never "I can't check products" and never adult items |
+| E20 | *"Hi"*, then *"I'd really like a present for my son, he's 8 and loves science"* | The greeting gets a short reply; the request passes to the Gift Assistant, which recommends the €62 Junior Science Kit, the only science product for children (alone is fine: no padding), never "I can't check products" and never adult items |
 
 E14 is not a separate simulation: its format criteria are part of the success criteria of E1, E3, E6 and E7.
 

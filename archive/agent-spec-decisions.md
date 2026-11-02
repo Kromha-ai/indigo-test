@@ -68,7 +68,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 |---|---|---|
 | A | Stay on `gpt-4.1-mini` and keep changing the prompt | Fastest and cheapest. Rejected: with this much variance between identical runs, a prompt change cannot be measured, and the rules being broken are already stated plainly |
 | B | `gpt-4.1 (EU)` | The platform's *power* tier in the same family: the prompt carries over unchanged. Higher price per message and somewhat higher latency |
-| C | **`gpt-5.6-luna (EU)`** | A newer *standard* model, EU-hosted, not a reasoning model, $0.20 / $1.20 per million input / output tokens, 1M context. Cheaper than the *power* tier. On the same prompt and Creativity 0.1 it scored 17/19 and 18/19 (runs 12–13), and its few failures repeat rather than move: a data gap in the service (E3) and one missing conversational rule (E19) |
+| C | **`gpt-5.6-luna (EU)`** | A newer *standard* model, EU-hosted, a reasoning model with configurable effort (run with reasoning None, so no added latency), $0.20 / $1.20 per million input / output tokens, 1M context. Cheaper than the *power* tier. On the same prompt and Creativity 0.1 it scored 17/19 and 18/19 (runs 12–13), and its few failures repeat rather than move: a data gap in the service (E3) and one missing conversational rule (E19) |
 | D | `claude-4.6-sonnet (EU)` | *Power* tier, a different family: the prompt would need re-tuning, which mixes two changes in one measurement, and every conversation costs more |
 | E | `gpt-5.6-luna` for the General Agent too | Same price per token, and one model is simpler to run. Tried in runs 18–20 (17, 16 and 15), then back on mini in run 21 (16): no measurable difference, since the failures were the Gift Assistant's. Not adopted: the General Agent only declines and redirects, which mini does well, and keeping it unchanged means one less variable. Its one slip on mini (E18, run 17) came from its own conversation example, since fixed |
 
@@ -79,6 +79,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 - The release bar is unchanged: NRT at 18/19 or more in two consecutive runs, with no invented products.
 - With less variance, a failure that repeats points at a cause that can be fixed: E3 led to `outside_price_range.above_max` naming its cheapest product, and E19 to a rule for replying to thanks.
 - A failure that comes and goes does not. E4 (padding the shortlist after "too expensive", when only one coffee product fits under €60) fails in about half the runs; a rule to recommend a single product when only one fits did not fix it and made single-product answers more frequent elsewhere, so it was reverted (runs 22–23).
+- Its reasoning effort went from None to Low after run 23. The scores barely moved (16, 16, 16 with None; 17, 16 with Low, runs 27–28), but the failures stopped moving: the same two failed the same way in both runs. Creativity 0.3 with reasoning Low was tried too and scored worse than 0.1. E4 and E20 remain the recurring failures.
 - The next steps for the remaining variance are a *power* model (left out to keep each conversation cheap) and the platform's evaluators (not available in this workspace).
 - The *power* models are not compared: they would raise the cost of every conversation.
 
