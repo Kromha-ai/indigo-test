@@ -66,7 +66,7 @@ Each project has its own `CLAUDE.md` with stack-specific commands and convention
 | Document | Notes |
 |---|---|
 | `archive/roadmap-phases-1-5.md` | The completed roadmap, from walking skeleton to handover (2026-10-29 to 2026-11-01) |
-| `archive/agent-spec-decisions.md` | Reasoning behind the agent spec (A1: evaluation by simulations; A2: both agents on `gpt-5.6-luna`). The spec is the source of truth |
+| `archive/agent-spec-decisions.md` | Reasoning behind the agent spec (A1: evaluation by simulations; A2: the Gift Assistant on `gpt-5.6-luna`). The spec is the source of truth |
 | `archive/catalog-spec-decisions.md` | Reasoning behind the Catalog spec (D2–D7, including superseded D5 and D6), moved out of the spec on 2026-10-29. The spec is the source of truth |
 
 ---
