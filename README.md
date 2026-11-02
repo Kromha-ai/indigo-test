@@ -141,22 +141,19 @@ The Catalog Service becomes the agent's tools through its OpenAPI document. Ever
 ```
 Three ideas for her new flat, all around €50:
 
-Reed Diffuser, Cedar · €46
-Makes a new place smell like home straight away, with no flame, and it ships in 2 days.
+**Reed Diffuser, Cedar · €46**: Makes a new place smell like home straight away, with no flame, and it ships in 2 days.
 
-Ceramic Planter, Medium · €52
-A first plant for the flat: it comes with its own saucer, and gift wrap is available.
+**Ceramic Planter, Medium · €52**: A first plant for the flat: it comes with its own saucer, and gift wrap is available.
 
-Linen Table Runner · €48
-Dresses up her new table for the first dinner she hosts there.
+**Linen Table Runner · €48**: Dresses up her new table for the first dinner she hosts there.
 
 Something more personal, cheaper, or more like one of these?
 ```
 
 - **Three products**: real choice without a scroll. Fewer when fewer genuinely fit; the shortlist is never padded with unrelated products.
-- **Two lines each**: name and price, then a reason tied to what the shopper said plus one fact that helps them decide. Shipping time, gift wrap and low stock appear only when they matter; IDs, brands, tags and descriptions never do.
+- **One paragraph each**: name and price in bold, then on the same line a reason tied to what the shopper said plus one fact that helps them decide. Shipping time, gift wrap and low stock appear only when they matter; IDs, brands, tags and descriptions never do.
 - **One closing line** offering directions for the same gift (cheaper, different, more like one of them), never a new question about someone else.
-- **Plain text and line breaks**: the platform's chat does not render bold.
+- **Bold only the name and price**: the name and price stand out when the shopper scans the reply; no headings, lists or tables.
 
 **The hard cases:**
 

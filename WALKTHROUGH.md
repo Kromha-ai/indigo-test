@@ -38,7 +38,7 @@ Design choices that cut across the tools:
 
 **The question rule.** At most one round of questions, and only when the request cannot be searched yet. A request with a product type, an interest, or a recipient plus an occasion or budget gets recommendations straight away. Each question costs a shopper, and three varied options are a better clarifying question than a second round.
 
-**The message format.** Three products, two lines each (name and price, then a reason tied to what the shopper said), a one-line lead-in and one closing line with directions: about 90 words, one phone screen. Plain text, because the platform's chat does not render bold.
+**The message format.** Three products, one paragraph each (name and price, then a reason tied to what the shopper said), a one-line lead-in and one closing line with directions: about 90 words, one phone screen. Only the name and price are in bold, so the shopper can scan them; no headings or lists, so every reply has the same shape. Name and reason share one line: with the reason on its own line, the model's blank lines sometimes split a product from its reason.
 
 **What the simulations changed.** The behaviour is specified as scenarios and run as 19 platform simulations. Fifteen runs shaped the result:
 
@@ -58,5 +58,5 @@ Design choices that cut across the tools:
 | A database | 150 products fit in memory; a new export means rebuild, review, redeploy |
 | Personal data | Nothing about the shopper is needed or stored |
 | Evaluators and guardrails | Not available in this workspace. Quality rests on the prompts and the simulations |
-| Product cards and quick replies | The platform's chat shows plain text; cards belong to a web-widget phase, not to the shareable link |
+| Product cards and quick replies | The platform's chat renders text and markdown, not cards; cards belong to a web-widget phase, not to the shareable link |
 | A stronger *power* model | It would raise the cost of every conversation. The current model has met the release bar; it is the next step if the remaining variance matters more than cost |
