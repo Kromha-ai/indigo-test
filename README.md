@@ -10,6 +10,7 @@ The shop's only data was a CSV export of its catalogue. This repository turns it
 | API base URL | `https://catalog.builtbykromha.com` |
 | OpenAPI document (public) | [`/openapi.json`](https://catalog.builtbykromha.com/openapi.json) · Swagger UI [`/docs`](https://catalog.builtbykromha.com/docs) · ReDoc [`/redoc`](https://catalog.builtbykromha.com/redoc) |
 | Authentication | `X-API-Key` header on every data endpoint. See [`AUTHENTICATION.md`](AUTHENTICATION.md) |
+| Time spent | About 20 hours |
 
 ## The tools
 
