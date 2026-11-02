@@ -89,7 +89,7 @@ The platform's suggested general rule *"never ask the user questions"* is not us
 | Typebar | On | On | Free text is the point |
 | Error handling | Custom message: *"I can't reach the catalogue right now. Please try again in a moment."* | Default | |
 | Stateful Agents (workspace setting) | Off | Off | Every message is routed by trigger. With it on, the agent that answered an aside kept the conversation and never handed it back (NRT run 2, E18) |
-| Model | `gpt-5.6-luna (EU)` | `gpt-5.6-luna (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2). The General Agent uses the same model: it costs no more per token than `gpt-4.1-mini`, and one model for both agents is simpler to run and re-test. Reasoning models are too slow for chat; US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
+| Model | `gpt-5.6-luna (EU)` | `gpt-4.1-mini (EU)` | The Gift Assistant needs a model that follows every shopping rule consistently, which `gpt-4.1-mini` did not (decision A2). The General Agent stays on `gpt-4.1-mini`: on `gpt-5.6-luna` the simulations showed no measurable difference, and a declining reply is all it needs to give. Reasoning models are too slow for chat; US-hosted models are out for data residency. *Power* models (`gpt-4.1`, `claude-4.6-sonnet`) are not used: they would raise the cost of every conversation |
 
 ## Conversation flows
 
@@ -428,4 +428,4 @@ Reasoning in `archive/agent-spec-decisions.md`.
 | # | Decision | Status |
 |---|---|---|
 | A1 | Evaluation by platform simulations (E1–E20, run against Live after each Publish); evaluators and guardrails are not available in this workspace | Accepted |
-| A2 | Both agents on `gpt-5.6-luna (EU)` | Accepted |
+| A2 | The Gift Assistant on `gpt-5.6-luna (EU)`; the General Agent stays on `gpt-4.1-mini (EU)` | Accepted |

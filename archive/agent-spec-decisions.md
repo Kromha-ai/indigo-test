@@ -7,7 +7,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 | # | Decision | Status |
 |---|---|---|
 | A1 | Evaluation in three layers: platform simulations, guardrails, evaluators | Accepted |
-| A2 | Both agents on `gpt-5.6-luna` | Accepted |
+| A2 | The Gift Assistant on `gpt-5.6-luna`; the General Agent stays on `gpt-4.1-mini` | Accepted |
 
 ---
 
@@ -50,7 +50,7 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 
 ---
 
-### A2: Both agents on gpt-5.6-luna
+### A2: The Gift Assistant on gpt-5.6-luna
 
 **Status**: Accepted · 2026-11-01
 
@@ -70,9 +70,9 @@ The *why* behind the assistant's specification. **The spec is the source of trut
 | B | `gpt-4.1 (EU)` | The platform's *power* tier in the same family: the prompt carries over unchanged. Higher price per message and somewhat higher latency |
 | C | **`gpt-5.6-luna (EU)`** | A newer *standard* model, EU-hosted, not a reasoning model, $0.20 / $1.20 per million input / output tokens, 1M context. Cheaper than the *power* tier. On the same prompt and Creativity 0.1 it scored 17/19 and 18/19 (runs 12–13), and its few failures repeat rather than move: a data gap in the service (E3) and one missing conversational rule (E19) |
 | D | `claude-4.6-sonnet (EU)` | *Power* tier, a different family: the prompt would need re-tuning, which mixes two changes in one measurement, and every conversation costs more |
-| E | Keep the General Agent on `gpt-4.1-mini` | Rejected: `gpt-5.6-luna` costs no more per token, one model for both agents is simpler to run and re-test, and the General Agent on mini occasionally ignored its own rule to carry on with a gift already being discussed (E18, run 17) |
+| E | `gpt-5.6-luna` for the General Agent too | Same price per token, and one model is simpler to run. Tried in runs 18–20 (17, 16 and 15), then back on mini in run 21 (16): no measurable difference, since the failures were the Gift Assistant's. Not adopted: the General Agent only declines and redirects, which mini does well, and keeping it unchanged means one less variable. Its one slip on mini (E18, run 17) came from its own conversation example, since fixed |
 
-**Decision**: C, for both agents. The Gift Assistant moves to `gpt-5.6-luna (EU)` with Creativity 0.1, and the General Agent moves to the same model. B was not needed: C cleared the variance problem at a lower tier.
+**Decision**: C. The Gift Assistant moves to `gpt-5.6-luna (EU)` with Creativity 0.1; the General Agent stays on `gpt-4.1-mini (EU)`. B was not needed: C reduced the variance enough to meet the release bar (runs 14–17) at a lower tier. Some variance remains (runs 18–21 scored 15 to 17), concentrated on follow-up turns.
 
 **Consequences**:
 

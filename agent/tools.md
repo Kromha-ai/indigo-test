@@ -41,7 +41,7 @@ From `global-settings.md`: tone of voice, company description, Security layer in
 | Agent | Source | Tools | Model |
 |---|---|---|---|
 | Gift Assistant | `gift-assistant.md` | The 4 operations of *Gift Shop Catalog* | `gpt-5.6-luna (EU)` |
-| General Agent | `general-agent.md` | None | `gpt-5.6-luna (EU)` |
+| General Agent | `general-agent.md` | None | `gpt-4.1-mini (EU)` |
 
 The greeting: `greeting.md`, pasted into the workspace's Greeting panel.
 

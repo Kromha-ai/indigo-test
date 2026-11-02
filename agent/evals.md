@@ -29,6 +29,37 @@ Security layer: <any shopping message answered by the jailbreak agent or the Gen
 
 ## Runs
 
+### 2026-11-02: NRT run 21
+
+- Changed since the previous run: General Agent model back to gpt-4.1-mini (EU)
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-4.1-mini (EU)
+- Result: 16/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E4 | Fail (55) | Re-proposes the €78 pour-over set over the €60 limit, plus a €50 gift card | | Gift Assistant: only the €46 moka pot fits coffee under €60, and the model pads the shortlist (also runs 5, 12, 18, 19, 20) | "Too expensive": if only one product fits, recommend just that one |
+| E17 | Fail (65) | Perfume vials are not a pamper gift | | Gift Assistant: filler | |
+| E20 | Fail (78) | Only one recommendation | | Gift Assistant | |
+| Other 16 | Pass | | | | |
+
+The General Agent back on gpt-4.1-mini scores the same as on gpt-5.6-luna, so its model does not explain the drop after run 17: the Gift Assistant varies from run to run on gpt-5.6-luna too, less than on gpt-4.1-mini.
+
+### 2026-11-01: NRT run 20
+
+- Changed since the previous run: General Agent's weather example no longer asks who the gift is for; at most two questions before recommending; "too expensive" never shows again a product above the new limit
+- Agents and model: Gift Assistant gpt-5.6-luna (EU), General Agent gpt-5.6-luna (EU)
+- Result: 15/19
+
+| Simulation | Result | Platform explanation (summarised) | Re-run | Cause | Fix |
+|---|---|---|---|---|---|
+| E4 | Fail (35) | Respects the €60 limit, no repeat of the €78 set; but drops the coffee-loving dad and offers unrelated kitchen gifts | | Under investigation | |
+| E6 | Fail (60) | First recommendation right; asked about the console, does not say the retro one is out of stock and offers alternatives without names, prices or reasons | | Under investigation | |
+| E15 | Fail (72) | Eye mask and candle are cosy; a travel mug is not | | Gift Assistant: filler | |
+| E19 | Fail (15) | Recommends a candle, a book and silk pillowcases, nothing audio | | Under investigation | |
+| Other 15 | Pass | E2 and E18 pass with the fixes | | | |
+
+Runs 14–17 (General Agent on gpt-4.1-mini): 18, 18, 19, 18. Runs 18–20 (General Agent on gpt-5.6-luna): 17, 16, 15. The follow-up failures (E4, E6, E19, E20) look like turns answered without the catalogue.
+
 ### 2026-11-01: NRT run 19
 
 - Changed since the previous run: nothing (second run with the General Agent on gpt-5.6-luna)

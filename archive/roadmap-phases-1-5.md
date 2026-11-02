@@ -94,7 +94,7 @@ Goal: the gift assistant live on the platform, passing the NRT simulation suite 
 
 - [x] Write `agent/global-settings.md` (tone of voice, company description), `agent/gift-assistant.md` (trigger, Agent Block sections, settings; about 2.2k tokens) and `agent/general-agent.md` (the customised fallback), from the agent spec's *Architecture*
 - [x] `agent/greeting.md`: the welcome message for the Greeting panel
-- [x] Configure Global Agent Settings, the Gift Assistant (with the four tools, on `gpt-5.6-luna (EU)`, decision A2) and the General Agent (also on `gpt-5.6-luna (EU)`) on the platform; record every binding step in `agent/tools.md` so it can be reproduced
+- [x] Configure Global Agent Settings, the Gift Assistant (with the four tools, on `gpt-5.6-luna (EU)`, decision A2) and the General Agent (on `gpt-4.1-mini (EU)`) on the platform; record every binding step in `agent/tools.md` so it can be reproduced
 - [x] Format check on the shareable link at phone width: each recommendation fits one screen
 - [x] Write `agent/simulations.csv` (19 simulations, E1–E13 and E15–E20, with suites)
 - [x] Import `agent/simulations.csv` and set the suites (`agent/tools.md`, *Simulations*)
